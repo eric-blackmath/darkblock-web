@@ -14,7 +14,7 @@ function App() {
       <Form />
     </div>
 
-  );
+  ); 
 }
 
 export default App;
