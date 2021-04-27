@@ -6,7 +6,6 @@ function Form() {
 
   return (
     <form>
-        <input type="file" />
         <h2>Level of Encryption</h2>
         <DiscreteSlider />
     </form>
