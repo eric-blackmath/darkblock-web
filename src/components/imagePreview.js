@@ -1,61 +1,105 @@
-import React, { Component } from 'react';
-import '../App.scss';
- 
+import React, { Component } from "react";
+import "../App.scss";
+import $ from "jquery";
+
 class ImagePreview extends Component {
-  state =  {
+  componentDidMount() {
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $("#blah").attr("src", e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#artfile").change(function () {
+      readURL(this);
+    });
+    var $fileInput = $(".file-input");
+    var $droparea = $(".file-drop-area");
+
+    // highlight drag area
+    $fileInput.on("dragenter focus click", function () {
+      $droparea.addClass("is-active");
+    });
+
+    // back to normal state
+    $fileInput.on("dragleave blur drop", function () {
+      $droparea.removeClass("is-active");
+    });
+
+    // change inner text
+    $fileInput.on("change", function () {
+      var filesCount = $(this)[0].files.length;
+      var $textContainer = $(this).prev();
+
+      if (filesCount === 1) {
+        // if single file is selected, show file name
+        var fileName = $(this).val().split("\\").pop();
+        $textContainer.text(fileName);
+      } else {
+        // otherwise show number of files
+        $textContainer.text(filesCount + " files selected");
+      }
+    });
+  }
+  state = {
     selectedFile: null,
-    imagePreviewUrl: null
+    imagePreviewUrl: null,
   };
- 
-  fileChangedHandler = event => {
+
+  fileChangedHandler = (event) => {
     this.setState({
-      selectedFile: event.target.files[0]
-    })
- 
+      selectedFile: event.target.files[0],
+    });
+
     let reader = new FileReader();
-     
+
     reader.onloadend = () => {
       this.setState({
-        imagePreviewUrl: reader.result
+        imagePreviewUrl: reader.result,
       });
-    }
- 
-    reader.readAsDataURL(event.target.files[0])
- 
-  }
- 
-  submit = () => {
- 
-    var fd = new FormData();
- 
-    fd.append('file', this.state.selectedFile);
- 
-    var request = new XMLHttpRequest();
- 
-    request.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-        alert('Uploaded!');
-      }
     };
-    request.open("POST", "https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload", true);
-    request.send(fd);
-  }
- 
+
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
   render() {
- 
-    let $imagePreview = (<div className="previewText image-container"></div>);
+    let $imagePreview = <div className="previewText image-container"></div>;
     if (this.state.imagePreviewUrl) {
-      $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="200" /> </div>);
+      $imagePreview = (
+        <div className="image-container">
+          <img className="preview-image" src={this.state.imagePreviewUrl} alt="icon" />{" "}
+        </div>
+      );
     }
- 
+
     return (
       <div className="App">
-         <input type="file" name="avatar" onChange={this.fileChangedHandler} />
-         <button type="button" onClick={this.submit} > Upload </button>
-         { $imagePreview }
+        {/* <input className="imagePreview" type="file" name="imagePreview" onChange={this.fileChangedHandler} /> */}
+        <div className="box">
+          <div className="file-drop-area">
+            <span className="fake-btn">Choose files</span>
+            <span>Click or drop your files here</span>
+            <span className="file-msg">No file chosen</span>
+            <input
+              onChange={this.fileChangedHandler}
+              className="file-input"
+              id="keyfile"
+              type="file"
+              multiple
+            />
+          </div>
+        </div>
+        {/* <button type="button" onClick={this.submit} > Upload </button> */}
+        {$imagePreview}
       </div>
     );
   }
 }
- 
+
 export default ImagePreview;

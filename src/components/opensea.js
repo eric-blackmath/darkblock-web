@@ -1,4 +1,3 @@
-  
   function Opensea() {
 
     const options = {method: 'GET'};
@@ -9,7 +8,6 @@
       return (
         <div></div>
     );
-
   }
   
   export default Opensea;
