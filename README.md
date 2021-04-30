@@ -1,3 +1,4 @@
-# Darkblock React App
-# npm install
-# npm start
+Darkblock React App
+To Start, npm install
+npm start
+node server.js
