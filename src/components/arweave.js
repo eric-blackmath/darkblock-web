@@ -1,34 +1,41 @@
 import React, { Component } from "react";
 import "../App.scss";
-// import $ from "jquery";
 import Arweave from 'arweave';
 
+const fs = require('fs');
+var wallet;
+var key;
 
-class arweaveUpload extends Component {
-  componentDidMount() {
-    const arweave = Arweave.init({
-        host: 'arweave.net',
-        port: 1984,
-        protocol: 'http'
-    });
+const arweave = Arweave.init({
+  host: 'arweave.net',
+  port: 1984,
+  protocol: 'http'
+});
 
-    let data = fs.readFileSync('path/to/file.pdf');
-let transaction = await arweave.createTransaction({ data: data }, key);
-transaction.addTag('Content-Type', 'application/pdf');
-await arweave.transactions.sign(transaction, key);
-let uploader = await arweave.transactions.getUploader(transaction);
-while (!uploader.isComplete) {
-  await uploader.uploadChunk();
-  console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
-}
+class Upload extends Component {
+  async componentDidMount() {
 
-const response = await arweave.transactions.post(transaction);
+    let walletFile = fs.readFileSync('path/to/wallet.json');//to wallet file
+    wallet = JSON.parse(walletFile);
+    key = await arweave.wallets.jwkToAddress(wallet);
+
+    let data = fs.readFileSync('path/to/file.pdf');//this is being uploaded
+    let transaction = await arweave.createTransaction({ data: data }, key);
+    // transaction.addTag('Content-Type', 'application/pdf');
+    await arweave.transactions.sign(transaction, key);
+    
+    const response = await arweave.transactions.post(transaction);
+    console.log(response.status);
+
+  }
+  render() {
     return (
-      <div className="App">
-      
+      <div className="arweave-upload">
+        <div></div>
       </div>
     );
   }
 }
 
-export default arweaveUpload;
+
+export default Upload;
