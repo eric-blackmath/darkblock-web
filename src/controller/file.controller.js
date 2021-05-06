@@ -2,7 +2,6 @@ const uploadFile = require("../middleware/upload");
 const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
 
-
 const upload = async (req, res) => {
   try {
     await uploadFile(req, res);
@@ -13,6 +12,18 @@ const upload = async (req, res) => {
 
     res.status(200).send({
       message: "Uploaded the file successfully: " + req.file.originalname,
+      // put arweave stuff then delete itself, same directory path
+      // let walletFile = fs.readFileSync('C:/Users/eflat/Documents/arweave-wallet/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w');//to wallet file
+      // wallet = JSON.parse(walletFile);
+      // key = await arweave.wallets.jwkToAddress(wallet);
+
+      // let data = fs.readFileSync('path/to/file.pdf');//this is being uploaded
+      // let transaction = await arweave.createTransaction({ data: data }, key);
+      // // transaction.addTag('Content-Type', 'application/pdf');
+      // await arweave.transactions.sign(transaction, key);
+
+      // const response = await arweave.transactions.post(transaction);
+      // console.log(response.status);
     });
   } catch (err) {
     res.status(500).send({
@@ -23,6 +34,7 @@ const upload = async (req, res) => {
 
 const getListFiles = (req, res) => {
   const directoryPath = __basedir + "/resources/static/assets/uploads/";
+
 
   fs.readdir(directoryPath, function (err, files) {
     if (err) {

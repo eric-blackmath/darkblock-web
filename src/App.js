@@ -5,7 +5,6 @@ import Metamask from "../src/components/metamask";
 import Opensea from "../src/components/opensea";
 import Form from "../src/components/form";
 import ImagePreview from "../src/components/imagePreview";
-import Upload from "../src/components/arweave";
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
       <ImagePreview />
       <Opensea />
       <Form />
-      <Upload />
     </div>
   );
 }

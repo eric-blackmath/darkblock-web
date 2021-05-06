@@ -15,7 +15,7 @@ const arweave = Arweave.init({
 class Upload extends Component {
   async componentDidMount() {
 
-    let walletFile = fs.readFileSync('path/to/wallet.json');//to wallet file
+    let walletFile = fs.readFileSync('C:/Users/eflat/Documents/arweave-wallet/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w');//to wallet file
     wallet = JSON.parse(walletFile);
     key = await arweave.wallets.jwkToAddress(wallet);
 
