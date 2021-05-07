@@ -6,7 +6,8 @@ const Arweave = require('arweave');
 // Initialize arweave
 const arweave = Arweave.init({
   host: "arweave.net",
-  protocol: "http",
+  port: 443,
+  protocol: "https",
   logging: true,
 });
 
@@ -45,7 +46,7 @@ const upload = async (req, res) => {
     await arweave.transactions.sign(transaction, wallet);
 
     const response = await arweave.transactions.post(transaction);
-    console.log(response.status);
+    console.log(response);
 
     // We did it!
     res.status(200).send({
