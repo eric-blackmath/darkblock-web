@@ -33,24 +33,18 @@ const upload = async (req, res) => {
       "C:/Users/Scima/Downloads/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json"
     ); //to wallet file
     wallet = JSON.parse(walletFile);
-    console.log(1);
-    key = await arweave.wallets.jwkToAddress(wallet);
 
     // Create a transaction and send it off to arweave
     console.log(2);
     let transaction = await arweave.createTransaction({
       data: data
-    }, key);
-    console.log(3);
+    }, wallet);
     transaction.addTag("Content-Type", "image/jpeg");
-    console.log(31);
 
     // Wait for arweave to sign it and give us the ok
-    await arweave.transactions.sign(transaction, key);
-    console.log(4);
+    await arweave.transactions.sign(transaction, wallet);
 
     const response = await arweave.transactions.post(transaction);
-    console.log(5);
     console.log(response.status);
 
     // We did it!
