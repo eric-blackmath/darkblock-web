@@ -47,6 +47,7 @@ const upload = async (req, res) => {
 
     const response = await arweave.transactions.post(transaction);
     console.log(response);
+    console.log(transaction);
 
     // We did it!
     res.status(200).send({
