@@ -31,12 +31,11 @@ const upload = async (req, res) => {
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/Users/eflat/Documents/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json"
+      "C:/Users/eflat/Documents/arweave-wallet/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json"
     ); //to wallet file
     wallet = JSON.parse(walletFile);
 
     // Create a transaction and send it off to arweave
-    console.log(2);
     let transaction = await arweave.createTransaction({
       data: data
     }, wallet);
