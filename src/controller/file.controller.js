@@ -1,44 +1,64 @@
 const uploadFile = require("../middleware/upload");
 const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
-// const Arweave = require('arweave');
+const Arweave = require('arweave');
 
- 
-// const arweave = Arweave.init({
-//   host: "arweave.net",
-//   port: 1984,
-//   protocol: "http",
-// });
+// Initialize arweave
+const arweave = Arweave.init({
+  host: "arweave.net",
+  protocol: "http",
+  logging: true,
+});
 
+// Upload file endpoint
 const upload = async (req, res) => {
+
+  console.log("Upload endpoint reached");
+
   try {
     await uploadFile(req, res);
 
+    // Make sure the user uploaded a file
     if (req.file == undefined) {
-      return res.status(400).send({ message: "Please upload a file!" });
+      return res.status(400).send({
+        message: "Please upload a file!"
+      });
     }
-    // put arweave stuff then delete itself, same directory path
+
+    // Get the data from the file we have uploaded
+    let data = fs.readFileSync(req.file.path); //this is being uploaded
+
+    // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/Users/eflat/Documents/arweave-wallet/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json"
+      "C:/Users/Scima/Downloads/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json"
     ); //to wallet file
     wallet = JSON.parse(walletFile);
+    console.log(1);
     key = await arweave.wallets.jwkToAddress(wallet);
 
-    let data = fs.readFileSync(
-      "C:/Users/eflat/darkblock-react/resources/static/assets/uploads/cursor.png"
-    ); //this is being uploaded
-    let transaction = await arweave.createTransaction({ data: data }, key);
+    // Create a transaction and send it off to arweave
+    console.log(2);
+    let transaction = await arweave.createTransaction({
+      data: data
+    }, key);
+    console.log(3);
     transaction.addTag("Content-Type", "image/jpeg");
-    // transaction.addTag('Content-Type', 'application/pdf');
+    console.log(31);
+
+    // Wait for arweave to sign it and give us the ok
     await arweave.transactions.sign(transaction, key);
+    console.log(4);
 
     const response = await arweave.transactions.post(transaction);
+    console.log(5);
     console.log(response.status);
 
+    // We did it!
     res.status(200).send({
       message: "Uploaded the file successfully: " + req.file.originalname,
-      
     });
+
+    // If something goes wrong, send an error
   } catch (err) {
     res.status(500).send({
       message: `Could not upload the file: ${req.file.originalname}. ${err}`,
@@ -82,6 +102,7 @@ const download = (req, res) => {
   });
 };
 
+// Export all ya need
 module.exports = {
   upload,
   getListFiles,
