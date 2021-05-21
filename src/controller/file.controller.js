@@ -23,6 +23,7 @@ const upload = async (req, res) => {
     if (req.file == undefined) {
       return res.status(400).send({
         message: "Please upload a file!"
+        
       });
     }
 
@@ -54,7 +55,7 @@ const upload = async (req, res) => {
     });
 
     // If something goes wrong, send an error
-  } catch (err) {
+  } catch (err) { 
     res.status(500).send({
       message: `Could not upload the file: ${req.file.originalname}. ${err}`,
     });

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../App.scss";
 import $ from "jquery";
 
+
 class ImagePreview extends Component {
   componentDidMount() {
     function readURL(input) {
@@ -81,6 +82,7 @@ class ImagePreview extends Component {
     return (
       <div className="App">
         {/* <input className="imagePreview" type="file" name="imagePreview" onChange={this.fileChangedHandler} /> */}
+        <form action="http://localhost:8080/upload" key="file" method="post" encType="multipart/form-data">
         <div className="box">
           <div className="file-drop-area">
             <span className="fake-btn">Choose files</span>
@@ -89,14 +91,20 @@ class ImagePreview extends Component {
             <input
               onChange={this.fileChangedHandler}
               className="file-input"
-              id="keyfile"
+              id="file"
+              key="file"
               type="file"
+              name="file"
               multiple
             />
           </div>
         </div>
-        {/* <button type="button" onClick={this.submit} > Upload </button> */}
         {$imagePreview}
+        <input type="submit" value="Submit" />
+        </form>
+
+        {/* <button type="button" onClick={this.submit} > Upload </button> */}
+        
       </div>
     );
   }
