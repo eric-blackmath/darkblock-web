@@ -41,12 +41,12 @@ export default class OpenSea extends Component {
     this.state = {
       images: "",
     };
-  }
+  } 
 
-  getData() {
+  getData() { 
     axios
       .get(
-        "https://api.opensea.io/api/v1/events?account_address=0x1fa2e96809465732c49f00661d94ad08d38e68df&event_type=created&only_opensea=false&offset=0&limit=25"
+        "https://api.opensea.io/api/v1/events?account_address=0x1fa2e96809465732c49f00661d94ad08d38e68df&event_type=created&only_opensea=false&offset=0&limit=20"
       )
       .then((res) => {
         console.log(res.data);
