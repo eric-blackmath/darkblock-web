@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div className="container">
       <Meta />
-      {/* <ImagePreview /> */}
+      {/* <ImagePreview /> */} 
       <Users />
       <Form />
     </div>
