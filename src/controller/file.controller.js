@@ -40,8 +40,13 @@ const upload = async (req, res) => {
     let transaction = await arweave.createTransaction({
       data: data
     }, wallet);
-    transaction.addTag("Content-Type", "image/jpeg");
-
+    transaction.addTag("Creator-App", "Darkblock");
+    transaction.addTag("Content-Type", "image");
+    transaction.addTag("NFT-Contract", "contract-number");
+    transaction.addTag("NFT-Creator", "wallet-number");
+    transaction.addTag("Platform", "Ethereum ERC-721");
+    transaction.addTag("Encryption-Level", "None");
+    // transaction.addTag("owner", "text/html");
     // Wait for arweave to sign it and give us the ok
     await arweave.transactions.sign(transaction, wallet);
 
