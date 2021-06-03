@@ -1,41 +1,41 @@
-import React, { Component } from "react";
-import "../App.scss";
-import Arweave from 'arweave';
+// import React, { Component } from "react";
+// import "../App.scss";
+// import Arweave from 'arweave';
 
-const fs = require('fs');
-var wallet;
-var key;
+// const fs = require('fs');
+// var wallet;
+// var key;
 
-const arweave = Arweave.init({
-  host: 'arweave.net',
-  port: 1984,
-  protocol: 'http'
-});
+// const arweave = Arweave.init({
+//   host: 'arweave.net',
+//   port: 1984,
+//   protocol: 'http'
+// });
 
-class Upload extends Component {
-  async componentDidMount() {
+// class Upload extends Component {
+//   async componentDidMount() {
 
-    let walletFile = fs.readFileSync('C:/Users/eflat/Documents/arweave-wallet/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w');//to wallet file
-    wallet = JSON.parse(walletFile);
-    key = await arweave.wallets.jwkToAddress(wallet);
+//     let walletFile = fs.readFileSync('/Users/eric/Documents/arweave-wallet/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json');//to wallet file
+//     wallet = JSON.parse(walletFile);
+//     key = await arweave.wallets.jwkToAddress(wallet);
 
-    let data = fs.readFileSync('path/to/file.pdf');//this is being uploaded
-    let transaction = await arweave.createTransaction({ data: data }, key);
-    // transaction.addTag('Content-Type', 'application/pdf');
-    await arweave.transactions.sign(transaction, key);
+//     let data = fs.readFileSync('path/to/file.pdf');//this is being uploaded
+//     let transaction = await arweave.createTransaction({ data: data }, key);
+//     // transaction.addTag('Content-Type', 'application/pdf');
+//     await arweave.transactions.sign(transaction, key);
     
-    const response = await arweave.transactions.post(transaction);
-    console.log(response.status);
+//     const response = await arweave.transactions.post(transaction);
+//     console.log(response.status);
 
-  }
-  render() {
-    return (
-      <div className="arweave-upload">
-        <div></div>
-      </div>
-    );
-  }
-}
+//   }
+//   render() {
+//     return (
+//       <div className="arweave-upload">
+//         <div></div>
+//       </div>
+//     );
+//   }
+// }
 
 
-export default Upload;
+// export default Upload;
