@@ -2,8 +2,10 @@ import React, {Component} from "react";
 // import MetaMaskLoginButton from 'react-metamask-login-button';
 
 import Meta from "../src/components/meta";
-import Users from "../src/components/opensea";
-import Form from "../src/components/form";
+import Users from "../src/components/rarible";
+import Image from "../src/components/image";
+import Axios from "../src/components/axios";
+// import Form from "../src/components/form";
 // import ImagePreview from "../src/components/imagePreview";
 
 // import Contacts from './components/contacts'
@@ -14,8 +16,9 @@ class App extends Component {
       <div className="container">
       <Meta />
       {/* <ImagePreview /> */} 
-      <Users />
-      <Form />
+      <Axios />
+      {/* <Image /> */}
+      {/* <Form /> */}
     </div>
       // <Contacts contacts={this.state.contacts} />
     )

@@ -41,35 +41,33 @@ export default class OpenSea extends Component {
     this.state = {
       images: "",
     };
-  } 
+  }
 
-  getData() { 
+  getData() {
     axios
       .get(
-        "https://api.rarible.com/protocol/v0.1/ethereum/nft/items/byCreator?creator=0xbc355f371084200cd177131154ca8829fba0e623"
-        // https://api.opensea.io/api/v1/events?account_address=0x1fa2e96809465732c49f00661d94ad08d38e68df&event_type=created&only_opensea=false&offset=0&limit=10
+        "https://api-mainnet.rarible.com/marketplace/api/v1/ownerships/0x212bd7ec0afc0ca712f6ad7b462acfa00662dd6c%3A42%3A0xb3dbf8b63970b4441a6b3d883f3921ebb4aa662d"
+        // "https://api.rarible.com/protocol/v0.1/ethereum/nft/items/byCreator?creator=0xbc355f371084200cd177131154ca8829fba0e623"
+        // "https://api.opensea.io/api/v1/events?account_address=0x1fa2e96809465732c49f00661d94ad08d38e68df&event_type=created&only_opensea=false&offset=0&limit=10"
       )
       .then((res) => {
         console.log(res.data);
-        // var data = res.data.asset_events;  
+        var data = res.data.item;
         var loopData = "";
-        // var i;
-        // for (i = 0; i < data.length; i++) {
-        //   loopData += `<form action="http://localhost:8080/upload" key="file" method="post" enctype="multipart/form-data">
-        //   <div>
-        //   <input type="file" name="file">
-        //   <img id="file" key="file" name="file" src=${data[i].asset.image_preview_url} alt="file" />
-        //   <p>${data[i].asset.name}</p>
-        //   <input name="file" id="darkblock" type="checkbox" /><label for="darkblock">select to make darkblock</label>
-        //   <a target="_blank" href=${data[i].asset.permalink}>Link to Opensea</a>
-        //   </div>
-        //   <input type="submit" value="submit" />
-        //   </form>`;
-        // }
-        // <input type="image" src=${data[i].asset.image_preview_url} alt="name" name="file"></input>
-        // <form action="http://localhost:8080/upload" key="file" method="post" enctype="multipart/form-data"></form>
+        var i;
+        for (i = 0; i < data.length; i++) {
+          loopData += `<form action="http://localhost:8080/upload" key="file" method="post" enctype="multipart/form-data">
+          <div>
+          <input type="file" name="file">
+          <p>hello</p>
+          <img id="file" key="file" name="file" src=${data[i].properties.imagePreview} alt="file" />
+          <p>${data[i].id}</p>
+          </div>
+          <input type="submit" value="submit" />
+          </form>`;
+        }
         console.log(loopData);
-        // this.setState({ images: loopData });
+        this.setState({ images: loopData });
       });
   }
   componentDidMount() {
@@ -79,9 +77,8 @@ export default class OpenSea extends Component {
     console.log();
     return (
       <>
-      {/* <div>{$imagePreview}</div> */}
         <div
-          className="nft-grid"
+          // className="nft-grid"
           dangerouslySetInnerHTML={{ __html: this.state.images }}
         ></div>
       </>
