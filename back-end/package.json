@@ -1,0 +1,34 @@
+{
+  "name": "darkblock-backend",
+  "version": "1.0.0",
+  "description": "Back-end for Darkblock.io",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "arweave": "^1.10.13",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "fs-web": "^1.0.1",
+    "multer": "^1.4.2",
+    "node-sass": "^5.0.0",
+    "web-vitals": "^1.0.1",
+    "web3": "^1.3.5"
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "node",
+    "back-end",
+    "darkblock"
+  ],
+  "author": "SajidJaved",
+  "license": "ISC"
+}

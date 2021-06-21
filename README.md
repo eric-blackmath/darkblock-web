@@ -1,4 +1,3 @@
 Darkblock React App  
-To Start, npm install  
-npm start  
-node server.js  
+npm install, for both directories separately
+npm run dev - to fire up both front-end + back-end
