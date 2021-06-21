@@ -30,11 +30,12 @@ export default class Dashboard extends React.Component {
 
       for (var i=0; i<data.length; i++){
 
+        console.log(`NFT : ${JSON.stringify(data[i])}`)
         //
         RaribleApi.getNftMetaById(data[i].id).then((data) => {
 
           //handle the meta-data of nfts
-          console.log(`Nft Meta Name : ${JSON.stringify(data)}`)
+          console.log(`Nft Meta : ${JSON.stringify(data)}`)
           nfts.push(data) 
           this.setState({ data: nfts });
 

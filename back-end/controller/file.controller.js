@@ -103,9 +103,27 @@ const download = (req, res) => {
   });
 };
 
+const verifyNFTs = (req, res) => {
+  //get and parse the ids from request
+  //make a request to arweave 
+  //parse the request
+  //send the matching id's to the front
+
+  var resJson = {
+    "1" : "0xd07dc4262bcdbf85190c01c996b4c06a461d2430:345559",
+    "2" : "0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:5",
+    "3" : "0xd07dc4262bcdbf85190c01c996b4c06a461d2430:458892",
+    "4" : "0xd07dc4262bcdbf85190c01c996b4c06a461d2430:520245",
+  }
+  
+  console.log(`Verifying id's`)
+  res.status(200).send(resJson)
+};
+
 // Export all ya need
 module.exports = {
   upload,
   getListFiles,
   download,
+  verifyNFTs
 };
