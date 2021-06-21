@@ -11,7 +11,7 @@ const arweave = Arweave.init({
   logging: true,
 });
 
-// Upload file endpoint
+// Upload file and make the transaction endpoint
 const upload = async (req, res) => {
 
   console.log("Upload endpoint reached");
@@ -32,7 +32,7 @@ const upload = async (req, res) => {
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "/Users/eric/Documents/arweave-wallet/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json"
+      "C:/Users/livingRoom/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
     ); //to wallet file
     wallet = JSON.parse(walletFile);
 
@@ -51,8 +51,8 @@ const upload = async (req, res) => {
     await arweave.transactions.sign(transaction, wallet);
 
     const response = await arweave.transactions.post(transaction);
-    console.log(response);
-    console.log(transaction);
+    console.log(`Transaction Post Response : ${response.data}`);
+    console.log(`Transaction : ${transaction}`);
 
     // We did it!
     res.status(200).send({

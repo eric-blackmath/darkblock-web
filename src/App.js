@@ -1,18 +1,35 @@
-import React, { Component } from "react";
+import React, { useState } from 'react';
 
-import Meta from "../src/components/meta";
-import Axios from "../src/components/axios";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 
-class App extends Component {
-  render() {
+
+function App() {
+  const [address, setAddress] = useState();
+
+  //if no address, user cannot access dashboard
+  if(!address) {
+    return <Login setAddress={setAddress} />
+  }
+
     return (
       <div className="container">
-        <Meta />
-        <Axios />
+
+      <BrowserRouter>
+        <Switch>
+
+          <Route path="/dashboard">
+            <Dashboard address={ address }/>
+          </Route>
+  
+        </Switch>
+      </BrowserRouter>
+
       </div>
     );
   }
-}
+
 
 export default App;
