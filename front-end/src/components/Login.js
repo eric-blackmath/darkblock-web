@@ -1,29 +1,30 @@
 import React from "react";
-
-
+import wallet from "../images/wallet.svg";
+import logo from "../images/dark-logo.svg";
 //Logs user into metamask and fetches their account address
 export default function Login({ setAddress }) {
-  
-const getAccount = async () => {
+  const getAccount = async () => {
+    const ethereum = window.ethereum;
+    ethereum.request({ method: "eth_requestAccounts" });
 
-  const ethereum = window.ethereum;
-  ethereum.request({ method: "eth_requestAccounts" });
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const account = accounts[0];
+    setAddress(account); //when address is set, user is redirected to dashboard
+  };
 
-  const accounts = await ethereum.request({
-    method: "eth_requestAccounts",
-  });
-  const account = accounts[0];  
-  setAddress(account) //when address is set, user is redirected to dashboard 
-}
-
-    return (
-      <div>
-        <button onClick={getAccount} className="enableEthereumButton">Enable Ethereum</button>
-        <h2>
-          Account: {setAddress}
-        </h2>
+  return (
+      <div className="nav">
+        <div>
+          <img src={logo} alt="darkblock logo" />
+        </div>
+        <div className="nav-content">
+          <button onClick={getAccount} className="login-button">
+            <img className="wallet-icon" src={wallet} alt="wallet icon" />
+            Connect Wallet
+          </button>
+        </div>
       </div>
-    );
-  }
-
-
+  );
+}
