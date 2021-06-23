@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
-import Nav from "./components/Nav";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -15,7 +14,6 @@ function App() {
 
   return (
     <div className="container">
-      <Nav />
       <BrowserRouter>
         <Switch>
           <Route path="/dashboard">

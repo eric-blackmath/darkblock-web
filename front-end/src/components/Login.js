@@ -6,6 +6,7 @@ export default function Login({ setAddress }) {
   
 const getAccount = async () => {
 
+  //handle the case of when metamask is not installed
   const ethereum = window.ethereum;
   ethereum.request({ method: "eth_requestAccounts" });
 

@@ -2,29 +2,24 @@ import React from "react";
 
 import "../App.scss";
 
-export default class NFTITem extends React.Component {
+const NFTITem = ({ nftMeta, selectionHandler, nftIndex }) => {
+  var handleToUpdate = selectionHandler;
 
-  render() {
-    return (
-
-        <div className="nft-item" >
-
-            <h2>NFTItem</h2>
-            <form action="http://localhost:5000/upload" key="file" method="POST" encType="multipart/form-data">
-            <div> 
-            <img alt="preview-img" src={this.props.nft.image.url.PREVIEW} />
-            <div>
-            <input class="nft-title" readOnly value={this.props.nft.name} />
-            <input class="nft-desc" readOnly value={this.props.nft.description} />
-            </div>
-            <div>
-            <input type="file" name="file" accept="image/*" />
-            <input type="submit" value="submit" />
-            </div>
-            </div>
-            </form>
-
+  return (
+    <div className="nft-item">
+      <h2>NFTItem</h2>
+      <div>
+        <img alt="preview-img" src={nftMeta.image.url.PREVIEW} />
+        <div>
+          <input class="nft-title" readOnly value={nftMeta.name} />
+          <input class="nft-desc" readOnly value={nftMeta.description} />
+        </div>
+        <div>
+          <button onClick={() => handleToUpdate(nftIndex)}>Select</button>
+        </div>
+      </div>
     </div>
-        );
-  }
-}
+  );
+};
+
+export default NFTITem;
