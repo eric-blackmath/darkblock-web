@@ -16,3 +16,21 @@ export const postTransaction = (data) => {
       throw error;
     });
 };
+
+//gets an arr of id's matched
+export const verifyNFTs = (data) => {
+  // params: {
+  //   ids: "Here are some ids to verify",
+  // },
+  const URL = `http://localhost:5000/verify`;
+  return axios
+    .post(URL, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => response)
+    .catch((error) => {
+      throw error;
+    });
+};

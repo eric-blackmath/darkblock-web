@@ -3,6 +3,7 @@ import "../App.scss";
 import * as RaribleApi from "../api/rarible-api";
 import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
+import { logDOM } from "@testing-library/react";
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -20,6 +21,34 @@ export default class Dashboard extends React.Component {
     this.selectionHandler = this.selectionHandler.bind(this);
   }
 
+  verifyNFTs(ids) {
+    const data = new FormData(); //we put the file and tags inside formData and send it across
+    data.append("ids", ids);
+
+    try {
+      NodeApi.verifyNFTs(data).then((res) => {
+        //handle the response
+        //check if we got any matches
+        var matches = res.data;
+        if (matches) {
+          //here we have some matches : separate the ids by comma and compare with items
+          console.log(`Verify Response : ${JSON.stringify(matches)}`);
+        }
+      });
+    } catch (err) {
+      //catch some errors here
+      console.log(err);
+    }
+  }
+
+  getContractAndIds(nfts) {
+    var ids = "";
+    for (let i = 0; i < nfts.length; i++) {
+      ids += `"${nfts[i].contract}:${nfts[i].tokenId}debug",`;
+    }
+    return ids.substring(0, ids.length - 1);
+  }
+
   componentDidMount() {
     var nftsTemp = [];
 
@@ -27,6 +56,9 @@ export default class Dashboard extends React.Component {
       //handle the nfts | extract data for the nft verification
 
       var data = res.items;
+      var idsString = this.getContractAndIds(data);
+      console.log(idsString);
+      this.verifyNFTs(idsString);
 
       this.setState({ nfts: data });
 
