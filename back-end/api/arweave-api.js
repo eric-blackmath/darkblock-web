@@ -9,6 +9,12 @@ const arweave = Arweave.init({
   logging: true,
 });
 
+/**
+ * @param  {string} arweaveWallet
+ * @param  {file} data
+ * @param  {string[]} tags
+ *
+ */
 const makeTransaction = async (arweaveWallet, data, tags) => {
   // Create a transaction and send it off to arweave
   let transaction = await arweave.createTransaction(
@@ -42,6 +48,7 @@ const makeTransaction = async (arweaveWallet, data, tags) => {
 
 const verifyNFTsById = (queryArweave) => {
   const URL = `https://arweave.net/graphql`;
+  console.log(`Query : ${queryArweave}`);
 
   return axios(
     URL,
