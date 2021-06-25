@@ -1,10 +1,15 @@
-const uploadFile = require("../middleware/upload");
+const uploadFile = require("../middleware/multer");
 const ArweaveApi = require("../api/arweave-api");
 const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
 const ParseUtil = require("../utils/parse");
 
-// Upload file and make the transaction endpoint
+/**
+ * @param  {request} req //request with file+tags in the body
+ * @param  {} res
+ * Uploads the file, takes data from the request, encrypts the file,
+ * attaches the tags and make the transaction to arweave
+ */
 const upload = async (req, res) => {
   console.log(`Upload endpoint reached : `);
 
@@ -46,6 +51,13 @@ const upload = async (req, res) => {
   }
 };
 
+/**
+ * @param  {request} req //a post request with Nft-Id's(ids) in the body
+ * @param  {} res
+ * parses ids from the body, puts it in a query, hits arweave
+ * api for verification, returns a string of nft-ids all the matches
+ * seprarated by a comma
+ */
 const verifyNFTs = async (req, res) => {
   var arweaveQuery = await ParseUtil.getFullQuery(req);
   var matches = "";
@@ -60,6 +72,11 @@ const verifyNFTs = async (req, res) => {
   res.status(200).send(matches);
 };
 
+/**
+ * @param  {request} req
+ * @param  {} res
+ * Lists all the files in the local upload directory
+ */
 const getListFiles = (req, res) => {
   const directoryPath = __basedir + "/resources/static/assets/uploads/";
 
@@ -82,6 +99,11 @@ const getListFiles = (req, res) => {
   });
 };
 
+/**
+ * @param  {request} req //request with name of the file as param
+ * @param  {} res
+ * downloads the file with provided name
+ */
 const download = (req, res) => {
   const fileName = req.params.name;
   const directoryPath = __basedir + "/resources/static/assets/uploads/";

@@ -13,6 +13,8 @@ const arweave = Arweave.init({
  * @param  {string} arweaveWallet
  * @param  {file} data
  * @param  {string[]} tags
+ * attaches tags with data, and post the transaction to the arweave
+ * api for the wallet(arweave)
  *
  */
 const makeTransaction = async (arweaveWallet, data, tags) => {
@@ -46,6 +48,11 @@ const makeTransaction = async (arweaveWallet, data, tags) => {
   console.log(`Transaction Response : ${JSON.stringify(response.data)}`);
 };
 
+/**
+ * @param  {string} queryArweave //full query containing ids
+ * makes a get request to the arweave/graphql endopint with the query
+ * and returns the transactions which matches
+ */
 const verifyNFTsById = (queryArweave) => {
   const URL = `https://arweave.net/graphql`;
   console.log(`Query : ${queryArweave}`);

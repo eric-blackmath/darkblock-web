@@ -3,7 +3,6 @@ import "../App.scss";
 import * as RaribleApi from "../api/rarible-api";
 import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
-import { logDOM } from "@testing-library/react";
 
 export default class Dashboard extends React.Component {
   constructor(props) {
