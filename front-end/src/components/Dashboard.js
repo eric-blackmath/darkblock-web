@@ -109,7 +109,7 @@ export default class Dashboard extends React.Component {
           </form>
         ) : null}
 
-        <ul className="list-group">
+        <ul className="list-group nft-item">
           {this.state.nftsMeta.map((listitem) => (
             <NFTItem
               key={this.state.nftsMeta.indexOf(listitem)}
