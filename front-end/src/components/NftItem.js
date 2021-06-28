@@ -26,8 +26,8 @@ const NFTITem = ({
         </div>
         <Card.Body>
           <Card.Title className="nft-title">{nftMeta.name}</Card.Title>
-          <Card.Text>Created By</Card.Text>
-          <Card.Text>Owned By</Card.Text>
+          <Card.Text className="meta-data">Created By: <span className="meta-bold">{user.name}</span></Card.Text>
+          <Card.Text className="meta-data">Owned By: <span className="meta-bold">{user.name}</span></Card.Text>
         </Card.Body>
       </Card>
           {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
