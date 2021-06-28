@@ -65,6 +65,7 @@ const verifyNFTs = async (req, res) => {
     if (transactions.length > 0) {
       //extract 'field' [NFT-Id] from transactions.tags
       matches = ParseUtil.getIdOfMatches(transactions, "NFT-Id");
+      console.log(`Ids in Controller : ${matches}`);
     } else {
       //no matches
     }

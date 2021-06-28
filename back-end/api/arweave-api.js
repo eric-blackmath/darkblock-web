@@ -55,7 +55,6 @@ const makeTransaction = async (arweaveWallet, data, tags) => {
  */
 const verifyNFTsById = (queryArweave) => {
   const URL = `https://arweave.net/graphql`;
-  console.log(`Query : ${queryArweave}`);
 
   return axios(
     URL,

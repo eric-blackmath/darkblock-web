@@ -30,6 +30,39 @@ export const getNftMetaById = (id) => {
   })
     .then((response) => response.data)
     .catch((error) => {
+      console.log(`Error : ${error.message}`);
+      throw error;
+    });
+};
+
+//fetches nfts associated to accountAddress
+export const getUserProfile = (accountAddress) => {
+  //switch the address var in production
+  const URL = `https://api-mainnet.rarible.com/marketplace/api/v2/profiles/${dummy_account}`;
+  return axios(URL, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json", // whatever you want
+    },
+  })
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+//fetches nfts associated to accountAddress
+export const getNftById = (id) => {
+  //switch the address var in production
+  const URL = `https://api.rarible.com/protocol/v0.1/ethereum/nft/items/${id}`;
+  return axios(URL, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((response) => response.data)
+    .catch((error) => {
       throw error;
     });
 };

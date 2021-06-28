@@ -28,13 +28,13 @@ const getFullQuery = async (req) => {
  */
 const getIdOfMatches = (transactions, field) => {
   var matches = "";
-  transactions.forEach((transaction) => {
-    var tags = transaction.node.tags;
+  for (let i = 0; i < transactions.length; i++) {
+    var tags = transactions[i].node.tags;
     let result = tags.find((o) => o.name === field);
     matches += result.value + ",";
     console.log(`Transactions Arr Search:${result.value}`);
-  });
-  return matches;
+  }
+  return matches.substring(0, matches.length - 1);
 };
 
 module.exports = {
