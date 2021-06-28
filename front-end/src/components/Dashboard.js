@@ -3,123 +3,136 @@ import "../App.scss";
 import * as RaribleApi from "../api/rarible-api";
 import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
+import Pagination from "./Pagination";
+import { UserContext } from "../util/UserContext";
+import { useState, useEffect, useContext } from "react";
 
-export default class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      accountAddress: this.props.address, //we have account address from metamask login here
-      nfts: [],
-      nftsMeta: [],
-      selectedNftIndex: "",
-      showFileChooser: false,
-      file: "",
-      fileName: "",
-    };
+export default function Dashboard({ address }) {
+  const [nfts, setNfts] = useState([]);
+  const [nftsMeta, setNftsMeta] = useState([]);
+  const [darkblockedNfts, setDarkblockedNfts] = useState([]);
+  const [selectedNftIndex, setSelectedIndex] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const user = useContext(UserContext);
 
-    this.selectionHandler = this.selectionHandler.bind(this);
-  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  componentDidMount() {
-    var nftsTemp = [];
-
-    RaribleApi.getNfts(this.state.accountAddress).then((res) => {
-      //handle the nfts | extract data for the nft verification
-
-      var data = res.items;
-
-      this.setState({ nfts: data });
-
-      for (var i = 0; i < data.length; i++) {
-        // console.log(`NFT : ${JSON.stringify(data[i])}`);
-        //
-        RaribleApi.getNftMetaById(data[i].id).then((data) => {
-          //handle the meta-data of nfts
-          // console.log(`Nft Meta : ${JSON.stringify(data)}`);
-          nftsTemp.push(data);
-          this.setState({ nftsMeta: nftsTemp });
-        });
-      }
-    });
-  }
-
-  selectionHandler(nftIndex) {
-    //nft is selected
-    this.setState({
-      selectedNftIndex: nftIndex,
-      showFileChooser: true, //enables the file choose
-    });
-
-    console.log(`NFT Selected : ${this.state.selectedNftIndex}`);
-  }
-
-  onChange = (e) => {
-    //file is picked
-    this.setState({
-      file: e.target.files[0],
-      fileName: e.target.files[0].name,
-    });
-  };
-
-  onSubmit = async (e) => {
-    e.preventDefault();
-
+  const verifyNFTs = async (ids) => {
     const data = new FormData(); //we put the file and tags inside formData and send it across
-    data.append("file", this.state.file);
-    data.append(
-      "contract",
-      this.state.nfts[this.state.selectedNftIndex].contract
-    );
-    data.append("token", this.state.nfts[this.state.selectedNftIndex].tokenId);
-    data.append("wallet", this.state.accountAddress);
+    data.append("ids", ids);
 
     try {
-      NodeApi.postTransaction(data).then((data) => {
-        //handle the response
-        console.log(`Message : ${data.message}`);
-      });
+      const verifyRes = await NodeApi.verifyNFTs(data);
+      //handle the response
+      //check if we got any matches
+      var matches = verifyRes.data;
+      if (matches) {
+        //here we have some matches : separate the ids by comma and compare with items
+        var matchesArr = matches.split(",");
+        setDarkblockedNfts(matchesArr);
+        console.log(`Verify Response : ${JSON.stringify(matches)}`);
+      }
     } catch (err) {
       //catch some errors here
-      console.log(e);
+      console.log(err);
     }
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        {this.state.showFileChooser ? (
-          <form onSubmit={this.onSubmit}>
-            <div className="custom-file mb-4">
-              <input
-                type="file"
-                className="custom-file-input"
-                id="customFile"
-                onChange={this.onChange}
-              />
-              <label className="custom-file-label" htmlFor="customFile">
-                {this.state.filename}
-              </label>
-            </div>
+  const getContractAndTokens = (nfts) => {
+    var ids = "";
 
-            <input
-              type="submit"
-              value="Upload"
-              className="btn btn-primary btn-block mt-4"
-            />
-          </form>
-        ) : null}
+    for (let i = 0; i < nfts.length; i++) {
+      ids += `"${nfts[i].contract}:${nfts[i].tokenId}debug",`;
+    }
+    return ids.substring(0, ids.length - 1);
+  };
 
-        <ul className="list-group nft-item">
-          {this.state.nftsMeta.map((listitem) => (
+  const fetchData = async () => {
+    var nftsMetaTemp = [];
+
+    // await this.getUserProfile();
+
+    const nftRes = await RaribleApi.getNfts(address);
+    //handle the nfts | extract data for the nft verification
+    var data = nftRes.items;
+
+    if (data.length > 0) {
+      //make sure we have nfts
+      var idsString = getContractAndTokens(data);
+
+      await verifyNFTs(idsString);
+
+      console.log(`After Verification Mark`);
+      //for pagination, if data is less than 10, we dont want pagination
+      if (data.length < 10) {
+        setPostsPerPage(data.length);
+      }
+      setNfts(data);
+
+      for (var i = 0; i < data.length; i++) {
+        var nftMetaRes = await RaribleApi.getNftMetaById(data[i].id);
+        nftsMetaTemp.push(nftMetaRes);
+        if (nftsMetaTemp.length === 10) {
+          setNftsMeta(nftsMetaTemp);
+        }
+      }
+      setNftsMeta(nftsMetaTemp);
+      setIsLoaded(true);
+    }
+  };
+
+  const selectionHandler = (nftIndex) => {
+    //nft is selected
+    setSelectedIndex(nftIndex);
+    console.log(`NFT Selected : ${selectedNftIndex}`);
+  };
+
+  const checkIfDarkblocked = (contract, token) => {
+    return darkblockedNfts.includes(`${contract}:${token}debug`);
+  };
+
+  // Pagination setup
+  const indexOfLastNft = currentPage * postsPerPage;
+  const indexOfFirstNft = indexOfLastNft - postsPerPage;
+  const currentNftsMeta = nftsMeta.slice(indexOfFirstNft, indexOfLastNft);
+  // Change page
+  var paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  return (
+    <React.Fragment>
+      {/* <button>Go to detailsView</button> */}
+      {isLoaded ? (
+        <ul className="list-group">
+          {currentNftsMeta.map((listitem, index) => (
             <NFTItem
-              key={this.state.nftsMeta.indexOf(listitem)}
+              key={index}
+              nft={nfts[nftsMeta.indexOf(listitem)]}
               nftMeta={listitem}
-              nftIndex={this.state.nftsMeta.indexOf(listitem)}
-              selectionHandler={this.selectionHandler}
+              user={user}
+              nftIndex={index} //for selection of nft
+              selectionHandler={selectionHandler}
+              darkblocked={checkIfDarkblocked(
+                nfts[nftsMeta.indexOf(listitem)].contract,
+                nfts[nftsMeta.indexOf(listitem)].tokenId
+              )}
             />
           ))}
         </ul>
-      </React.Fragment>
-    );
-  }
+      ) : (
+        <label>Loading</label>
+      )}
+
+      {nfts.length > 10 ? (
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={nftsMeta.length}
+          paginate={paginate}
+        />
+      ) : null}
+    </React.Fragment>
+  );
 }

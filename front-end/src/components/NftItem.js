@@ -1,9 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "../App.scss";
 import Card from "react-bootstrap/Card";
 
-const NFTITem = ({ nftMeta, selectionHandler, nftIndex }) => {
+const NFTITem = ({
+  nft,
+  nftMeta,
+  user,
+  selectionHandler,
+  nftIndex,
+  darkblocked,
+}) => {
   var handleToUpdate = selectionHandler;
   console.log(nftMeta);
   return (
@@ -22,24 +30,10 @@ const NFTITem = ({ nftMeta, selectionHandler, nftIndex }) => {
           <Card.Text>Owned By</Card.Text>
         </Card.Body>
       </Card>
-      {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
-      {/* <section className="main--container">
-        <div style={{maxWidth:"280px"}}>
-        <article className="card">
-          <div className="image-container">
-          <img className="preview-image" alt="nft" src={nftMeta.image.url.PREVIEW} />
-          
-          </div>
-          <article className="content">
-            <p className="nft-title">{nftMeta.name}</p>
-            <p className="nft-title">{nftMeta.creator}</p>
-          </article>
-        </article>
+          {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
+          <Link to={"/details/" + nft.id}>Select</Link>
+          <br></br>
         </div>
-        <div>
-        </div>
-      </section> */}
-    </div>
   );
 };
 

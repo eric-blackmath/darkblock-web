@@ -13,7 +13,8 @@ app.use(cors());
 const initRoutes = require("./routes");
 
 //recognize the incoming Request Object as strings or arrays.
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 initRoutes(app);
 const port = 5000;
