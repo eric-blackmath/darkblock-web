@@ -16,7 +16,7 @@ const NFTITem = ({
   console.log(nftMeta);
   return (
     <div className="nft-item">
-      <Card style={{ width: "18rem" }}>
+      <Card>
         <div className="image-container">
           <Card.Img
             className="preview-image"
@@ -28,7 +28,7 @@ const NFTITem = ({
           <Card.Title className="nft-title">{nftMeta.name}</Card.Title>
           <Card.Text className="meta-data">Created By: <span className="meta-bold">{user.name}</span></Card.Text>
           <Card.Text className="meta-data">Owned By: <span className="meta-bold">{user.name}</span></Card.Text>
-        </Card.Body>
+        </Card.Body>x
       </Card>
           {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
           <Link to={"/details/" + nft.id}>Select</Link>
