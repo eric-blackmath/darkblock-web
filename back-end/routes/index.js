@@ -7,6 +7,7 @@ let routes = (app) => {
   router.get("/files", controller.getListFiles);
   router.get("/files/:name", controller.download);
   router.post("/verify", controller.verifyNFTs);
+  router.get("/protocol", controller.protocolTest);
 
   app.use(router);
 };

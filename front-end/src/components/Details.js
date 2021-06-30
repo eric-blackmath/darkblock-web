@@ -4,7 +4,6 @@ import { UserContext } from "../util/UserContext";
 import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
 
-// 0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const user = useContext(UserContext);
@@ -37,6 +36,7 @@ export default function DetailsView() {
 
   const onChange = (e) => {
     //file is picked
+    //TODO handle when user cancels the process
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };

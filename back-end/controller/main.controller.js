@@ -3,6 +3,8 @@ const ArweaveApi = require("../api/arweave-api");
 const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
 const ParseUtil = require("../utils/parse");
+const protocolUtil = require("../utils/protocol-util");
+const encrypt = require("../utils/encrypt");
 
 /**
  * @param  {request} req //request with file+tags in the body
@@ -35,7 +37,7 @@ const upload = async (req, res) => {
     const arweaveWallet = JSON.parse(walletFile);
 
     //make the transaction
-    await ArweaveApi.makeTransaction(arweaveWallet, data, tags);
+    await ArweaveApi.makeTransaction(arweaveWallet, data, tags, req.file);
 
     // We did it!
     res.status(200).send({
@@ -117,10 +119,21 @@ const download = (req, res) => {
   });
 };
 
+const protocolTest = async (req, res) => {
+  const wallet = "0xbc355f371084200cd177131154ca8829fba0e623";
+
+  const encryptionKeys = await protocolUtil.getEncryptionKeys(
+    wallet,
+    "sign123"
+  );
+  console.log(`Organized : ${encryptionKeys.artid}`);
+};
+
 // Export all ya need
 module.exports = {
   upload,
   getListFiles,
   download,
   verifyNFTs,
+  protocolTest,
 };
