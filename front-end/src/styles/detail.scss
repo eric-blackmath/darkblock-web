@@ -1,0 +1,148 @@
+.detail-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 24px;
+  grid-row-gap: 0px;
+  margin-top: 64px;
+}
+
+.detail-preview-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 64px;
+}
+
+.nft-detail-preview {
+  padding: 16px;
+  border: 1px solid #c4c4c4;
+}
+
+.nft-detail-name {
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
+  margin: 0;
+  font-size: 64px;
+  padding: 0 120px;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 48px;
+  }
+}
+
+.detail-name-container {
+  display: flex;
+  justify-content: center;
+}
+
+.nft-deatil-owner {
+  text-align: center;
+  margin-bottom: 0;
+  margin-top: 16px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.owner-color {
+  color: #e8ab0c;
+  font-weight: 700;
+}
+
+.create-darkblock {
+  background-color: #121212;
+  color: #ffffff;
+  padding: 40px;
+}
+
+.create-title {
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 36px;
+  margin: 0;
+}
+
+.detail-about-nft {
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+// .create-darkblock-container {
+//   padding: 40px;
+// }
+
+.create-subtitle {
+  font-size: 16px;
+  color: #9a9a9a;
+  margin: 0;
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.flex-grid-thirds {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.flex-grid-thirds .col {
+  padding: 16px;
+  border-right: 1px solid #c4c4c4;
+  border-bottom: 1px solid #c4c4c4;
+  width: 100%;
+}
+
+.flex-grid-thirds .col:nth-child(3) {
+    border-right: none;
+  }
+  
+
+.col {
+  color: #9a9a9a;
+}
+
+@media (max-width: 400px) {
+  .flex-grid-thirds {
+    display: block;
+    .col {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+  }
+}
+
+.about-span {
+  display: flex;
+  color: #121212;
+}
+
+.about-description {
+  font-size: 16px;
+  color: #121212;
+  margin: 0;
+}
+
+.artist-statement {
+  font-size: 16px;
+  color: #9a9a9a;
+  margin: 0;
+  margin-bottom: 8px;
+  padding: 16px;
+}
+
+.about-the-nft {
+  border: 1px solid #c4c4c4;
+}

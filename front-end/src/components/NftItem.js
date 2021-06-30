@@ -16,7 +16,7 @@ const NFTITem = ({
   console.log(nftMeta);
   return (
     <div className="nft-item">
-      <Card style={{ width: "18rem" }}>
+      <Card>
         <div className="image-container">
           <Card.Img
             className="preview-image"
