@@ -1,22 +1,33 @@
 import React from "react";
 
 import "../App.scss";
-import logo from "../images/dark-logo.svg"
-import wallet from "../images/wallet.svg"
+import logo from "../images/dark-logo.svg";
+import wallet from "../images/wallet.svg";
 
-export default class Nav extends React.Component {
+class Nav extends React.Component {
+  componentDidMount() {}
+
   render() {
     return (
       <div className="nav">
-          <div>
-          <img src={logo} alt="darkblock logo" />
-          </div>
-          <div className="nav-content">
-              <h2 className="nav-item">My NFT's</h2>
-              <h2 className="nav-item">Created By Me</h2>
-              <img src={wallet} alt="wallet icon" />
-          </div>
+        <div>
+          <a href="/">
+            <img src={logo} alt="darkblock logo" />
+          </a>
+        </div>
+        <div className="nav-content">
+          <a className="nav-link" href="/dashboard">
+            {" "}
+            <h2 className="nav-item">My NFT's</h2>
+          </a>
+          <a className="nav-link" href="/details">
+            <h2 className="nav-item">Created By Me</h2>
+          </a>
+          <img src={wallet} alt="wallet icon" />
+        </div>
       </div>
     );
   }
 }
+
+export default Nav;

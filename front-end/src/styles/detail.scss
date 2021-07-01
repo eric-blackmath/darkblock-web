@@ -55,6 +55,7 @@
   background-color: #121212;
   color: #ffffff;
   padding: 40px;
+  border-radius: 4px;
 }
 
 .create-title {
@@ -88,7 +89,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
-  grid-column-gap: 0px;
+  grid-column-gap: 24px;
   grid-row-gap: 0px;
 }
 
@@ -106,12 +107,12 @@
 }
 
 .flex-grid-thirds .col:nth-child(3) {
-    border-right: none;
-  }
-  
+  border-right: none;
+}
 
 .col {
   color: #9a9a9a;
+  font-size: 12px;
 }
 
 @media (max-width: 400px) {
@@ -126,12 +127,15 @@
 
 .about-span {
   display: flex;
+  font-size: 16px;
   color: #121212;
+  margin-top: 8px;
 }
 
 .about-description {
   font-size: 16px;
   color: #121212;
+  margin-top: 8px;
   margin: 0;
 }
 
@@ -145,4 +149,125 @@
 
 .about-the-nft {
   border: 1px solid #c4c4c4;
+}
+
+.detail-page-container {
+  padding: 120px;
+  background-color: #f9f9f9;
+  @media (max-width: 1024px) {
+    padding: 48px;
+  }
+}
+
+.chain-info {
+  margin-top: 40px;
+}
+
+.chain-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #acacac;
+}
+
+.blockchain {
+  border-bottom: 1px solid #acacac;
+}
+
+.chain-span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 12ch;
+  margin-left: auto;
+}
+
+.contract-address {
+  color: #e8ab0c;
+  font-weight: 700;
+}
+
+.date-created {
+  max-width: 9ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.upgrade-level {
+  border-bottom: 1px solid #888888;
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.upgrade-type {
+  font-weight: 700;
+  font-size: 19px;
+  display: flex;
+  justify-content: center;
+}
+
+.upgrade-number {
+  color: #c4c4c4;
+  margin: 16px 0;
+}
+
+.upgrade-title {
+  // text-align: center;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.upgrade-detail-list {
+  list-style-position: outside;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+//   align-items: center;
+}
+
+.about-darkblock {
+  color: #c4c4c4;
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0;
+  margin-top: 40px;
+}
+
+.textarea {
+  resize: none;
+  outline: none;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  height: 100%;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-top: 16px;
+  color: #9a9a9a;
+  background-color: #38383b;
+}
+
+.create-darkblock-button {
+  background: #ffc324;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 16px;
+  color: #000000;
+  font-size: 16px;
+  margin-left: auto;
+}
+
+.button-container {
+  display: flex;
+  margin-top: 24px;
 }

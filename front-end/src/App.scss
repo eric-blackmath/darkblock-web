@@ -9,7 +9,7 @@
 // font-family: 'Open Sans', sans-serif;
 
 body {
-  margin: 8px;
+  // margin: 8px;
   font-family: 'Open Sans', sans-serif;
 
 }
@@ -78,14 +78,24 @@ body {
 }
 
 .nav {
-  width: 100%;
+  font-family: 'abril-display';
   display: flex;
   align-items: center;
+  padding: 0 48px;
+  // position: fixed;
+  width: -webkit-fill-available;
+  background-color: white;
+  box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.08);
 }
 
 .nav-content {
   display: flex;
   margin-left: auto;
+}
+
+.nav-link{
+  color: inherit;
+  text-decoration: none;
 }
 
 .nav-item {
@@ -146,6 +156,11 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 12px;
+  margin: 0;
+}
+
+.created-by{
+  margin-top: 12px;
 }
 
 .meta-bold{
