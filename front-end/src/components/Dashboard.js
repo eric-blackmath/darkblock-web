@@ -13,7 +13,7 @@ export default function Dashboard({ address }) {
   const [darkblockedNfts, setDarkblockedNfts] = useState([]);
   const [selectedNftIndex, setSelectedIndex] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [postsPerPage, setPostsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const user = useContext(UserContext);
 
@@ -68,7 +68,7 @@ export default function Dashboard({ address }) {
 
       console.log(`After Verification Mark`);
       //for pagination, if data is less than 10, we dont want pagination
-      if (data.length < 10) {
+      if (data.length < 8) {
         setPostsPerPage(data.length);
       }
       setNfts(data);
@@ -76,9 +76,9 @@ export default function Dashboard({ address }) {
       for (var i = 0; i < data.length; i++) {
         var nftMetaRes = await RaribleApi.getNftMetaById(data[i].id);
         nftsMetaTemp.push(nftMetaRes);
-        if (nftsMetaTemp.length === 10) {
-          setNftsMeta(nftsMetaTemp);
-        }
+        // if (nftsMetaTemp.length === 10) {
+        //   setNftsMeta(nftsMetaTemp);
+        // }
       }
       setNftsMeta(nftsMetaTemp);
       setIsLoaded(true);

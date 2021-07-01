@@ -2,6 +2,7 @@ const axios = require("axios");
 const Arweave = require("arweave");
 const protocolUtil = require("../utils/protocol-util");
 const encrypt = require("../utils/encrypt");
+const mime = require("mime-types");
 
 //uuidv4(); - will generate a v4 uuid
 
@@ -28,16 +29,16 @@ const makeTransaction = async (arweaveWallet, data, tags, file) => {
     "sign123"
   );
 
-  //encrypt the data
-  const encData = await encrypt.encryptData(
-    JSON.stringify(data),
-    encryptionKeys.aesKey
-  );
+  //gives us mime type for ext
+  const contentType = mime.lookup(file.originalname);
 
-  // Create a transaction and send it off to arweave
+  //encrypt the data
+  const encData = await encrypt.encryptData(data, encryptionKeys.aesKey);
+
+  // Create a transaction
   let transaction = await arweave.createTransaction(
     {
-      data: encData,
+      data: encData + "",
     },
     arweaveWallet
   );
@@ -51,9 +52,9 @@ const makeTransaction = async (arweaveWallet, data, tags, file) => {
   transaction.addTag("Platform", "Ethereum ERC-721");
   transaction.addTag("Authorizing-Signature", "TBD");
   transaction.addTag("ArtId", encryptionKeys.artid);
-  transaction.addTag("Encryption-Level", "None");
+  transaction.addTag("Encryption-Level", "AES-256");
   transaction.addTag("Creator-App", "Darkblock");
-  transaction.addTag("Content-Type", "image");
+  transaction.addTag("Content-Type", `encrypted(${contentType})`);
   transaction.addTag("RSA-Public", encryptionKeys.rsaPublicKey);
 
   // Wait for arweave to sign it and give us the ok

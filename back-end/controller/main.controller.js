@@ -3,8 +3,6 @@ const ArweaveApi = require("../api/arweave-api");
 const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
 const ParseUtil = require("../utils/parse");
-const protocolUtil = require("../utils/protocol-util");
-const encrypt = require("../utils/encrypt");
 
 /**
  * @param  {request} req //request with file+tags in the body
@@ -26,8 +24,9 @@ const upload = async (req, res) => {
         message: "Please upload a file!",
       });
     }
+
     // Get the data from the file we have uploaded
-    let data = fs.readFileSync(req.file.path); //this is being uploaded
+    let data = fs.readFileSync(req.file.path, { encoding: "base64" });
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
@@ -120,13 +119,32 @@ const download = (req, res) => {
 };
 
 const protocolTest = async (req, res) => {
-  const wallet = "0xbc355f371084200cd177131154ca8829fba0e623";
+  console.log(`Protocol Initializing`);
 
-  const encryptionKeys = await protocolUtil.getEncryptionKeys(
-    wallet,
-    "sign123"
-  );
-  console.log(`Organized : ${encryptionKeys.artid}`);
+  const wallet = "0xbc355f371084200cd177131154ca8829fba0e623";
+  const artId = "ad57fdc4-baf6-4714-ad23-eaadbcbc0a72";
+
+  const msgParams = [
+    {
+      type: "string", // Any valid solidity type
+      name: "Message", // Any string label you want
+      value: "Hi, Alice!", // The value to sign
+    },
+    {
+      type: "uint32",
+      name: "A number",
+      value: "1337",
+    },
+  ];
+
+  // web3.eth.getAccounts(console.log);
+
+  // var msgHash = ethUtil.keccak256(artId);
+
+  // web3.eth.sign(wallet, msgHash, function (err, result) {
+  //   if (err) return console.error(err);
+  //   console.log("SIGNED:" + result);
+  // });
 };
 
 // Export all ya need

@@ -9,9 +9,7 @@ const encryptAES = (aesKey, rsaPublic) => {
 };
 
 const encryptData = (data, key) => {
-  return CryptoJS.AES.encrypt(data, key).ciphertext.toString(
-    CryptoJS.enc.Base64
-  );
+  return CryptoJS.AES.encrypt(data, key);
 };
 
 function encryptData2(passPhrase, plainText) {

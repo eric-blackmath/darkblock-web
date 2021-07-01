@@ -3,12 +3,6 @@ import * as RaribleApi from "../api/rarible-api";
 import { UserContext } from "../util/UserContext";
 import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
-<<<<<<< HEAD
-
-=======
-import "../styles/detail.scss";
-// 0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10
->>>>>>> 63655011df0cc315cd33f3a061831689f6e2dce1
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const user = useContext(UserContext);
@@ -21,6 +15,7 @@ export default function DetailsView() {
   const { id } = useParams();
 
   useEffect(() => {
+    //!TODO Handle the id validation, then init requests
     fetchDataForNft();
     console.log(`Redirect Params : ${id}`);
   }, []);
@@ -86,7 +81,7 @@ export default function DetailsView() {
           </div>
           <div className="detail-container">
             {" "}
-            <div >
+            <div>
               <h1 className="detail-about-nft">About the NFT</h1>
               <div className="about-the-nft">
                 <div className="flex-grid-thirds">
@@ -102,9 +97,7 @@ export default function DetailsView() {
                 </div>
                 <div className="artist-statement">
                   Artist Statement
-                  <p className="about-description">
-                    {user.description}
-                  </p>
+                  <p className="about-description">{user.description}</p>
                 </div>
               </div>
               {/* <div>Username : {user.name}</div>

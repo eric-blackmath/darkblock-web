@@ -2,12 +2,16 @@ import React from "react";
 import wallet from "../images/wallet.svg";
 import logo from "../images/dark-logo.svg";
 import * as RaribleApi from "../api/rarible-api";
+import web3 from "web3";
+import sigUtil from "eth-sig-util";
+var ethUtil = require("ethereumjs-util");
 
 //Logs user into metamask and fetches their account address
 export default function Login({ setAddress, setUser }) {
+  const ethereum = window.ethereum;
+
   const getAccount = async () => {
     //handle the case of when metamask is not installed
-    const ethereum = window.ethereum;
 
     const accounts = await ethereum.request({
       method: "eth_requestAccounts",
@@ -16,10 +20,43 @@ export default function Login({ setAddress, setUser }) {
 
     const user = await fetchUserProfile(account);
 
+    // signMsg("this string", account);
+
     console.log(`Login User : ${user.name}`);
     setUser(user);
     setAddress(account); //when address is set, user is redirected to dashboard
   };
+
+  function signMsg(msgParams, from) {
+    var msgHash = ethUtil.keccak256(msgParams);
+
+    window.ethereum.sign(from, msgHash, function (err, result) {
+      if (err) return console.error(err);
+      console.log("SIGNED:" + result);
+    });
+    // web3.currentProvider.sendAsync(
+    //   {
+    //     method: "eth_signTypedData",
+    //     params: [msgParams, from],
+    //     from: from,
+    //   },
+    //   function (err, result) {
+    //     if (err) return console.error(err);
+    //     if (result.error) {
+    //       return console.error(result.error.message);
+    //     }
+    //     const recovered = sigUtil.recoverTypedSignature({
+    //       data: msgParams,
+    //       sig: result.result,
+    //     });
+    //     if (recovered === from) {
+    //       alert("Recovered signer: " + from);
+    //     } else {
+    //       alert("Failed to verify signer, got: " + result);
+    //     }
+    //   }
+    // );
+  }
 
   const fetchUserProfile = async (account) => {
     try {
