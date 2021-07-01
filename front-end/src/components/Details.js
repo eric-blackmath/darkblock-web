@@ -3,6 +3,7 @@ import * as RaribleApi from "../api/rarible-api";
 import { UserContext } from "../util/UserContext";
 import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
+import "../styles/detail.scss"
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const user = useContext(UserContext);
