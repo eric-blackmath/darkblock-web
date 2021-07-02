@@ -38,9 +38,9 @@ postTv = () => {
           className="pin-input"
           placeholder="Enter your PIN here"
         />
-        <a style={{cursor:"pointer"}} className="submit submit-wallet" onClick={this.postTv}>
+        <button style={{cursor:"pointer"}} className="submit submit-wallet" onClick={this.postTv}>
           Login
-        </a>
+        </button>
       </div>
     );
   }
