@@ -21,8 +21,6 @@ export default function Dashboard() {
   };
 
   const handleOnCodeChange = (e) => {
-    //file is picked
-    //TODO handle when user cancels the process
     setCode(e.target.value);
   };
 
