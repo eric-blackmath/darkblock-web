@@ -30,7 +30,7 @@ export default function Login({ setAddress, setUser }) {
   function signMsg(msgParams, from) {
     var msgHash = ethUtil.keccak256(msgParams);
 
-    window.ethereum.sign(from, msgHash, function (err, result) {
+    window.web3.eth.personal.sign(from, msgHash, function (err, result) {
       if (err) return console.error(err);
       console.log("SIGNED:" + result);
     });
