@@ -2,7 +2,9 @@ const axios = require("axios");
 const Arweave = require("arweave");
 const protocolUtil = require("../utils/protocol-util");
 const encrypt = require("../utils/encrypt");
+const artIdUtil = require("../utils/art-id");
 const mime = require("mime-types");
+const fs = require("fs");
 
 //uuidv4(); - will generate a v4 uuid
 
@@ -22,40 +24,68 @@ const arweave = Arweave.init({
  * api for the wallet(arweave)
  *
  */
-const makeTransaction = async (arweaveWallet, data, tags, file) => {
-  //here we take care of the encryption
-  const encryptionKeys = await protocolUtil.getEncryptionKeys(
-    tags.wallet,
-    "sign123"
-  );
+const makeTransaction = async (arweaveWallet, tags, file) => {
+  // Get the data from the file we have uploaded
+
+  var isEncryptionOn = tags.encryption === "true";
+
+  let data;
+  let encryptionKeys;
+  let artId;
+
+  console.log(`Encryption : ${isEncryptionOn}`);
+
+  if (isEncryptionOn === true) {
+    let fileContents = fs.readFileSync(file.path, { encoding: "base64" });
+    encryptionKeys = await protocolUtil.getEncryptionKeys(
+      tags.wallet,
+      "sign123"
+    );
+    //encrypt the data
+    data = await encrypt.encryptData(fileContents, encryptionKeys.aesKey);
+  } else {
+    artId = artIdUtil.generateArtId();
+    data = fs.readFileSync(file.path);
+  }
 
   //gives us mime type for ext
   const contentType = mime.lookup(file.originalname);
 
-  //encrypt the data
-  const encData = await encrypt.encryptData(data, encryptionKeys.aesKey);
-
   // Create a transaction
   let transaction = await arweave.createTransaction(
     {
-      data: encData + "",
+      data: isEncryptionOn === true ? data + "" : data,
     },
     arweaveWallet
   );
 
   //in params we have to receive:
   //nft-contract, eth-wallet-address, tokenId,
-  transaction.addTag("NFT-Contract", tags.contract + "debug");
-  transaction.addTag("NFT-Creator", tags.wallet + "debug");
-  transaction.addTag("Token-Id", tags.token + "debug");
-  transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}debug`);
+  transaction.addTag("NFT-Contract", tags.contract);
+  transaction.addTag("NFT-Creator", tags.wallet);
+  transaction.addTag("Token-Id", tags.token);
+  transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}`);
   transaction.addTag("Platform", "Ethereum ERC-721");
   transaction.addTag("Authorizing-Signature", "TBD");
-  transaction.addTag("ArtId", encryptionKeys.artid);
-  transaction.addTag("Encryption-Level", "AES-256");
+  transaction.addTag(
+    "ArtId",
+    isEncryptionOn === true ? encryptionKeys.artid : artId
+  );
+  transaction.addTag(
+    "Encryption-Level",
+    isEncryptionOn === true ? "AES-256" : "None"
+  );
   transaction.addTag("Creator-App", "Darkblock");
-  transaction.addTag("Content-Type", `encrypted(${contentType})`);
-  transaction.addTag("RSA-Public", encryptionKeys.rsaPublicKey);
+  transaction.addTag(
+    "Content-Type",
+    isEncryptionOn === true ? `encrypted(${contentType})` : contentType
+  );
+  transaction.addTag(
+    "RSA-Public",
+    isEncryptionOn === true ? encryptionKeys.rsaPublicKey : "None"
+  );
+  transaction.addTag("Transaction-Type", "Test-Debug");
+  if (isEncryptionOn === true) transaction.addTag("Encryption-Version", "0.1");
 
   // Wait for arweave to sign it and give us the ok
   await arweave.transactions.sign(transaction, arweaveWallet);

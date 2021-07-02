@@ -2,6 +2,7 @@ const uploadFile = require("../middleware/multer");
 const ArweaveApi = require("../api/arweave-api");
 const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
+
 const ParseUtil = require("../utils/parse");
 
 /**
@@ -25,18 +26,15 @@ const upload = async (req, res) => {
       });
     }
 
-    // Get the data from the file we have uploaded
-    let data = fs.readFileSync(req.file.path, { encoding: "base64" });
-
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
+      "C:/Users/livingRoom/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
     ); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
 
     //make the transaction
-    await ArweaveApi.makeTransaction(arweaveWallet, data, tags, req.file);
+    await ArweaveApi.makeTransaction(arweaveWallet, tags, req.file);
 
     // We did it!
     res.status(200).send({

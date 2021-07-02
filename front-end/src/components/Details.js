@@ -3,11 +3,12 @@ import * as RaribleApi from "../api/rarible-api";
 import { UserContext } from "../util/UserContext";
 import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
-import "../styles/detail.scss"
+import "../styles/detail.scss";
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const user = useContext(UserContext);
   const [nfts, setNfts] = useState([]);
+  const [isEncryptionOn, setIsEncryptionOn] = useState(false);
   const [nft, setNft] = useState({});
   const [nftMeta, setNftMeta] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
@@ -42,6 +43,12 @@ export default function DetailsView() {
     setFileName(e.target.files[0].name);
   };
 
+  const handleOnChangeEncryption = (e) => {
+    //file is picked
+    //TODO handle when user cancels the process
+    setIsEncryptionOn(!isEncryptionOn);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,6 +57,7 @@ export default function DetailsView() {
     data.append("contract", nft.contract);
     data.append("token", nft.tokenId);
     data.append("wallet", user.id);
+    data.append("encryption", isEncryptionOn);
 
     try {
       NodeApi.postTransaction(data).then((data) => {
@@ -187,8 +195,7 @@ export default function DetailsView() {
                         <li>All features of level 1</li>
                       </ul>
                     </div>
-                   <div>
-                   </div>
+                    <div></div>
                     <div className="custom-file mb-4">
                       <input
                         type="file"
@@ -211,6 +218,15 @@ export default function DetailsView() {
                   ></textarea>
                 </div>
                 <div className="button-container">
+                  <input
+                    type="checkbox"
+                    id="encryption-on"
+                    name="is-encryption-on"
+                    value="Encryption On"
+                    checked={isEncryptionOn}
+                    onChange={handleOnChangeEncryption}
+                  />
+                  Encryption On
                   <input
                     type="submit"
                     value="Create Darkblock"
