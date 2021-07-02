@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import Tv from "./components/tv";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DetailsView from "./components/Details";
 import Nav from "./components/Nav";
@@ -29,6 +30,9 @@ function App() {
 
               <Route path="/details/:id">
                 <DetailsView />
+              </Route>
+              <Route exact path="/tv">
+                <Tv />
               </Route>
             </UserContext.Provider>
           </Switch>

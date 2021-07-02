@@ -5,7 +5,9 @@ import logo from "../images/dark-logo.svg";
 import wallet from "../images/wallet.svg";
 
 class Nav extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    
+  }
 
   render() {
     return (
