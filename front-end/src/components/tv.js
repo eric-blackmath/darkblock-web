@@ -13,21 +13,6 @@ class Nav extends React.Component {
   }
 
   
-//   postTv = () => {
-//     const post = {
-//         method: 'POST',
-
-//     };
-//     fetch("https://dev1.darkblock.io/api/codeset", post)
-//     // .then(response => response.json())
-//      .then(function(response) {
-//         console.log("It worked, response is: ", response)
-//         .then(response => response.json())
-//      }).catch(function() {
-//         console.log("error");
-//      });
-// }
-  
 postTv = () => {
     console.log("tv login");
     axios({
@@ -44,26 +29,6 @@ postTv = () => {
       })
 }
 
-
-//    pushCode() {
-//     console.log("tv login");
-//     // let code = document.getElementById("code");
-//     // code = code.toUpperCase();
-//     // code = code.replace(/\W/g, "");
-//     $.post(
-//       "https://dev1.darkblock.io/api/codeset"
-//     );
-
-//   }
-//   handleClick() {
-//     console.log("tv login");
-//     // let code = document.getElementById("code");
-//     // code = code.toUpperCase();
-//     // code = code.replace(/\W/g, "");
-//     $.post(
-//       "https://dev1.darkblock.io/api/codeset"
-//     );
-//   }
   render() {
     return (
       <div className="tv-login">
