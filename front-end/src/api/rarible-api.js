@@ -5,7 +5,7 @@ const dummy_account = "0xbc355f371084200cd177131154ca8829fba0e623";
 //fetches nfts associated to accountAddress
 export const getNfts = (accountAddress) => {
   //switch the address var in production
-  const URL = `https://api.rarible.com/protocol/v0.1/ethereum/nft/items/byCreator?creator=${dummy_account}`;
+  const URL = `https://api.rarible.com/protocol/v0.1/ethereum/nft/items/byCreator?creator=${accountAddress}`;
   return axios(URL, {
     method: "GET",
     headers: {
@@ -38,7 +38,7 @@ export const getNftMetaById = (id) => {
 //fetches nfts associated to accountAddress
 export const getUserProfile = (accountAddress) => {
   //switch the address var in production
-  const URL = `https://api-mainnet.rarible.com/marketplace/api/v2/profiles/${dummy_account}`;
+  const URL = `https://api-mainnet.rarible.com/marketplace/api/v2/profiles/${accountAddress}`;
   return axios(URL, {
     method: "GET",
     headers: {

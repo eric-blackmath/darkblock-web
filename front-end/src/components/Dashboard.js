@@ -46,7 +46,7 @@ export default function Dashboard({ address }) {
     var ids = "";
 
     for (let i = 0; i < nfts.length; i++) {
-      ids += `"${nfts[i].contract}:${nfts[i].tokenId}debug",`;
+      ids += `"${nfts[i].contract}:${nfts[i].tokenId}",`;
     }
     return ids.substring(0, ids.length - 1);
   };
@@ -92,7 +92,7 @@ export default function Dashboard({ address }) {
   };
 
   const checkIfDarkblocked = (contract, token) => {
-    return darkblockedNfts.includes(`${contract}:${token}debug`);
+    return darkblockedNfts.includes(`${contract}:${token}`);
   };
 
   // Pagination setup

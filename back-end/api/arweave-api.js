@@ -27,16 +27,15 @@ const arweave = Arweave.init({
 const makeTransaction = async (arweaveWallet, tags, file) => {
   // Get the data from the file we have uploaded
 
-  console.log(`Encryption : ${tags.encryption}`);
-
-  const isEncryptionOn = Boolean(tags.encryption);
+  var isEncryptionOn = tags.encryption === "true";
 
   let data;
   let encryptionKeys;
   let artId;
 
+  console.log(`Encryption : ${isEncryptionOn}`);
+
   if (isEncryptionOn === true) {
-    console.log(`We received encryption true`);
     let fileContents = fs.readFileSync(file.path, { encoding: "base64" });
     encryptionKeys = await protocolUtil.getEncryptionKeys(
       tags.wallet,
@@ -45,15 +44,12 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
     //encrypt the data
     data = await encrypt.encryptData(fileContents, encryptionKeys.aesKey);
   } else {
-    console.log(`We received encryption false`);
     artId = artIdUtil.generateArtId();
     data = fs.readFileSync(file.path);
   }
 
   //gives us mime type for ext
   const contentType = mime.lookup(file.originalname);
-
-  console.log(`Content Type : ${contentType}`);
 
   // Create a transaction
   let transaction = await arweave.createTransaction(
@@ -65,10 +61,10 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
 
   //in params we have to receive:
   //nft-contract, eth-wallet-address, tokenId,
-  transaction.addTag("NFT-Contract", tags.contract + "debug");
-  transaction.addTag("NFT-Creator", tags.wallet + "debug");
-  transaction.addTag("Token-Id", tags.token + "debug");
-  transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}debug`);
+  transaction.addTag("NFT-Contract", tags.contract);
+  transaction.addTag("NFT-Creator", tags.wallet);
+  transaction.addTag("Token-Id", tags.token);
+  transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}`);
   transaction.addTag("Platform", "Ethereum ERC-721");
   transaction.addTag("Authorizing-Signature", "TBD");
   transaction.addTag(
@@ -88,6 +84,7 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
     "RSA-Public",
     isEncryptionOn === true ? encryptionKeys.rsaPublicKey : "None"
   );
+  transaction.addTag("Transaction-Type", "Test-Debug");
   if (isEncryptionOn === true) transaction.addTag("Encryption-Version", "0.1");
 
   // Wait for arweave to sign it and give us the ok

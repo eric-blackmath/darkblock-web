@@ -8,7 +8,7 @@ export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const user = useContext(UserContext);
   const [nfts, setNfts] = useState([]);
-  const [encryption, setEncryption] = useState(true);
+  const [isEncryptionOn, setIsEncryptionOn] = useState(false);
   const [nft, setNft] = useState({});
   const [nftMeta, setNftMeta] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
@@ -43,6 +43,12 @@ export default function DetailsView() {
     setFileName(e.target.files[0].name);
   };
 
+  const handleOnChangeEncryption = (e) => {
+    //file is picked
+    //TODO handle when user cancels the process
+    setIsEncryptionOn(!isEncryptionOn);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,13 +57,7 @@ export default function DetailsView() {
     data.append("contract", nft.contract);
     data.append("token", nft.tokenId);
     data.append("wallet", user.id);
-    data.append("encryption", encryption);
-
-    // if (encryption) {
-    //   data.append("encryption", true);
-    // } else {
-    //   data.append("encryption", false);
-    // }
+    data.append("encryption", isEncryptionOn);
 
     try {
       NodeApi.postTransaction(data).then((data) => {
@@ -218,6 +218,15 @@ export default function DetailsView() {
                   ></textarea>
                 </div>
                 <div className="button-container">
+                  <input
+                    type="checkbox"
+                    id="encryption-on"
+                    name="is-encryption-on"
+                    value="Encryption On"
+                    checked={isEncryptionOn}
+                    onChange={handleOnChangeEncryption}
+                  />
+                  Encryption On
                   <input
                     type="submit"
                     value="Create Darkblock"

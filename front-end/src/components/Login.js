@@ -13,18 +13,22 @@ export default function Login({ setAddress, setUser }) {
   const getAccount = async () => {
     //handle the case of when metamask is not installed
 
-    const accounts = await ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    const account = accounts[0];
+    try {
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const account = accounts[0];
 
-    const user = await fetchUserProfile(account);
+      const user = await fetchUserProfile(account);
 
-    // signMsg("this string", account);
+      // signMsg("this string", account);
 
-    console.log(`Login User : ${user.name}`);
-    setUser(user);
-    setAddress(account); //when address is set, user is redirected to dashboard
+      console.log(`Login User : ${user.name}`);
+      setUser(user);
+      setAddress(account); //when address is set, user is redirected to dashboard
+    } catch (e) {
+      alert("Please make sure you have Metamask installed");
+    }
   };
 
   function signMsg(msgParams, from) {
