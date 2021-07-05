@@ -115,6 +115,45 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
 };
 
 /**
+ * @param  {string} arweaveWallet
+ * @param  {file} data
+ * @param  {string[]} tags
+ * encrypts the data, attaches tags with data, and post the transaction to the arweave
+ * api for the wallet(arweave)
+ *
+ */
+ const makeProtocolTransaction = async (arweaveWallet, posted) => {
+  // Get the data from the file we have uploaded
+
+  let data;
+ 
+  // Create a transaction
+  let transaction = await arweave.createTransaction(
+    {
+      data: posted.data,
+    },
+    arweaveWallet
+  );
+  var tags = JSON.parse( posted.tags )
+  for( var tagName in tags ){
+    console.log( tagName + ' : ' + tags.tagName );
+    //transaction.addTag("NFT-Contract", tags.contract);
+  }
+  transaction.addTag("Content-Type", "application/json");
+
+
+  // Wait for arweave to sign it and give us the ok
+  await arweave.transactions.sign(transaction, arweaveWallet);
+
+  //we need to use chunk uploading here, to catch use cases like interruptions, resuming
+  const response = await arweave.transactions.post(transaction);
+
+  console.log(`Transaction id : ${transaction.id}`);
+
+  return transaction.id;
+};
+
+/**
  * @param  {string} queryArweave //full query containing ids
  * makes a get request to the arweave/graphql endopint with the query
  * and returns the transactions which matches
@@ -145,4 +184,5 @@ const verifyNFTsById = (queryArweave) => {
 module.exports = {
   verifyNFTsById,
   makeTransaction,
+  makeProtocolTransaction,
 };
