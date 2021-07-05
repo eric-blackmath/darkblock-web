@@ -1,6 +1,8 @@
 import React from "react";
 import "../App.scss";
 import * as RaribleApi from "../api/rarible-api";
+import * as OpenseaApi from "../api/opensea-api";
+
 import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
 import Pagination from "./Pagination";
@@ -9,7 +11,6 @@ import { useState, useEffect, useContext } from "react";
 
 export default function Dashboard({ address }) {
   const [nfts, setNfts] = useState([]);
-  const [nftsMeta, setNftsMeta] = useState([]);
   const [darkblockedNfts, setDarkblockedNfts] = useState([]);
   const [selectedNftIndex, setSelectedIndex] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -46,43 +47,27 @@ export default function Dashboard({ address }) {
     var ids = "";
 
     for (let i = 0; i < nfts.length; i++) {
-      ids += `"${nfts[i].contract}:${nfts[i].tokenId}",`;
+      ids += `"${nfts[i].asset.asset_contract.address}:${nfts[i].asset.token_id}",`;
     }
     return ids.substring(0, ids.length - 1);
   };
 
   const fetchData = async () => {
-    var nftsMetaTemp = [];
-
-    // await this.getUserProfile();
-
-    const nftRes = await RaribleApi.getNfts(address);
-    //handle the nfts | extract data for the nft verification
-    var data = nftRes.items;
+    var data = await OpenseaApi.getNfts("asdasd");
+    console.log(`Total Nfts : ${data.length}`);
 
     if (data.length > 0) {
-      //make sure we have nfts
+      //handle the nfts | extract data for the nft verification
       var idsString = getContractAndTokens(data);
-
       await verifyNFTs(idsString);
-
-      console.log(`After Verification Mark`);
-      //for pagination, if data is less than 10, we dont want pagination
-      if (data.length < 8) {
-        setPostsPerPage(data.length);
-      }
       setNfts(data);
-
-      for (var i = 0; i < data.length; i++) {
-        var nftMetaRes = await RaribleApi.getNftMetaById(data[i].id);
-        nftsMetaTemp.push(nftMetaRes);
-        // if (nftsMetaTemp.length === 10) {
-        //   setNftsMeta(nftsMetaTemp);
-        // }
-      }
-      setNftsMeta(nftsMetaTemp);
       setIsLoaded(true);
     }
+
+    //   //for pagination, if data is less than 10, we dont want pagination
+    //   if (data.length < 8) {
+    //     setPostsPerPage(data.length);
+    //   }
   };
 
   const selectionHandler = (nftIndex) => {
@@ -98,7 +83,7 @@ export default function Dashboard({ address }) {
   // Pagination setup
   const indexOfLastNft = currentPage * postsPerPage;
   const indexOfFirstNft = indexOfLastNft - postsPerPage;
-  const currentNftsMeta = nftsMeta.slice(indexOfFirstNft, indexOfLastNft);
+  const currentNftsMeta = nfts.slice(indexOfFirstNft, indexOfLastNft);
   // Change page
   var paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -110,14 +95,11 @@ export default function Dashboard({ address }) {
           {currentNftsMeta.map((listitem, index) => (
             <NFTItem
               key={index}
-              nft={nfts[nftsMeta.indexOf(listitem)]}
-              nftMeta={listitem}
-              user={user}
-              nftIndex={index} //for selection of nft
+              nft={nfts[nfts.indexOf(listitem)]}
               selectionHandler={selectionHandler}
               darkblocked={checkIfDarkblocked(
-                nfts[nftsMeta.indexOf(listitem)].contract,
-                nfts[nftsMeta.indexOf(listitem)].tokenId
+                nfts[nfts.indexOf(listitem)].asset.asset_contract.address,
+                nfts[nfts.indexOf(listitem)].asset.token_id
               )}
             />
           ))}
@@ -129,7 +111,7 @@ export default function Dashboard({ address }) {
       {nfts.length > 10 ? (
         <Pagination
           postsPerPage={postsPerPage}
-          totalPosts={nftsMeta.length}
+          totalPosts={nfts.length}
           paginate={paginate}
         />
       ) : null}

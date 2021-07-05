@@ -4,17 +4,20 @@ import { UserContext } from "../util/UserContext";
 import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
+import * as OpenseaApi from "../api/opensea-api";
+
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const user = useContext(UserContext);
   const [nfts, setNfts] = useState([]);
   const [isEncryptionOn, setIsEncryptionOn] = useState(false);
   const [nft, setNft] = useState({});
-  const [nftMeta, setNftMeta] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
   const { id } = useParams();
+
+  const dummy_account = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
 
   useEffect(() => {
     //!TODO Handle the id validation, then init requests
@@ -24,12 +27,16 @@ export default function DetailsView() {
 
   const fetchDataForNft = async () => {
     try {
-      const nftsRes = await RaribleApi.getNfts(user.id);
-      const nftRes = await RaribleApi.getNftById(id);
-      const nftMetaRes = await RaribleApi.getNftMetaById(id);
-      setNfts(nftsRes.items);
-      setNft(nftRes);
-      setNftMeta(nftMetaRes);
+      const contractIdSplit = id.split("&");
+      const contract = contractIdSplit[0];
+      const tokenId = contractIdSplit[1];
+      const nft = await OpenseaApi.getSingleNft(contract, tokenId).then(
+        (res) => res.assets[0]
+      );
+
+      console.log(`Nft Details : ${JSON.stringify(nft.token_id)}`);
+
+      setNft(nft);
       setIsLoaded(true); //load it in ui
     } catch (e) {
       console.log(e);
@@ -54,9 +61,9 @@ export default function DetailsView() {
 
     const data = new FormData(); //we put the file and tags inside formData and send it across
     data.append("file", file);
-    data.append("contract", nft.contract);
-    data.append("token", nft.tokenId);
-    data.append("wallet", user.id);
+    data.append("contract", nft.asset_contract.address);
+    data.append("token", nft.token_id);
+    data.append("wallet", dummy_account); // replace with wallet
     data.append("encryption", isEncryptionOn);
 
     try {
@@ -70,23 +77,48 @@ export default function DetailsView() {
     }
   };
 
+  const setName = () => {
+    if (!nft.name) {
+      return nft.collection.name;
+    }
+    return nft.name;
+  };
+
+  const setOwner = () => {
+    if (nft.owner.user.username == "NullAddress") {
+      return nft.creator.user.username;
+    }
+    return nft.owner.user.username;
+  };
+
+  const setCreator = () => {
+    if (!nft.creator.user.username) {
+      return nft.from_account.user.username;
+    }
+    return nft.creator.user.username;
+  };
+
+  const setEdition = () => {
+    if (!nft.asset_contract.nft_version) {
+      return "1/1";
+    }
+    return nft.asset_contract.nft_version;
+  };
+
   return (
     <div>
       {isLoaded ? (
         // column 1
         <div className="detail-page-container">
           <div className="detail-preview-image ">
-            <img
-              className="nft-detail-preview"
-              src={nftMeta.image.url.PREVIEW}
-            />
+            <img className="nft-detail-preview" src={nft.image_url} />
           </div>
           <div className="detail-name-container">
-            <h1 className="nft-detail-name">{nftMeta.name}</h1>
+            <h1 className="nft-detail-name">{setName()}</h1>
           </div>
           <div>
             <p className="nft-deatil-owner">
-              Owned by <span className="owner-color">{user.name}</span>
+              Owned by <span className="owner-color">{setOwner()}</span>
             </p>
           </div>
           <div className="detail-container">
@@ -96,19 +128,21 @@ export default function DetailsView() {
               <div className="about-the-nft">
                 <div className="flex-grid-thirds">
                   <div className="col">
-                    Creator <span className="about-span">{user.name}</span>
+                    Creator <span className="about-span">{setCreator()}</span>
                   </div>
                   <div className="col">
                     Date Created{" "}
-                    <span className="about-span date-created">{nft.date}</span>
+                    <span className="about-span date-created">
+                      {nft.asset_contract.created_date}
+                    </span>
                   </div>
                   <div className="col">
-                    Edition <span className="about-span">{nft.edition}</span>
+                    Edition <span className="about-span">{setEdition()}</span>
                   </div>
                 </div>
                 <div className="artist-statement">
                   Artist Statement
-                  <p className="about-description">{user.description}</p>
+                  <p className="about-description">{"TBD"}</p>
                 </div>
               </div>
               {/* <div>Username : {user.name}</div>
@@ -129,16 +163,18 @@ export default function DetailsView() {
                   <div className="chain-flex">
                     <p>Contact Address</p>
                     <span className="chain-span contract-address">
-                      {nft.contract}
+                      {nft.asset_contract.address}
                     </span>
                   </div>
                   <div className="chain-flex">
                     <p>Token Id</p>
-                    <span className="chain-span">{nft.tokenId}</span>
+                    <span className="chain-span">{nft.token_id}</span>
                   </div>
                   <div className="chain-flex blockchain">
                     <p>BlockChain</p>
-                    <span className="chain-span">Ethereum</span>
+                    <span className="chain-span">
+                      {nft.asset_contract.schema_name}
+                    </span>
                   </div>
                 </div>
               </div>

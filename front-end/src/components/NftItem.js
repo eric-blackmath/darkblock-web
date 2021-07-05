@@ -4,16 +4,23 @@ import { Link } from "react-router-dom";
 import "../App.scss";
 import Card from "react-bootstrap/Card";
 
-const NFTITem = ({
-  nft,
-  nftMeta,
-  user,
-  selectionHandler,
-  nftIndex,
-  darkblocked,
-}) => {
+const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
   var handleToUpdate = selectionHandler;
-  console.log(nftMeta);
+
+  const setName = () => {
+    if (!nft.name) {
+      return nft.asset.collection.name;
+    }
+    return nft.asset.name;
+  };
+
+  const setOwner = () => {
+    if (nft.asset.owner.user.username == "NullAddress") {
+      return nft.from_account.user.username;
+    }
+    return nft.asset.owner.user.username;
+  };
+
   return (
     <div className="nft-item">
       <Card>
@@ -21,16 +28,17 @@ const NFTITem = ({
           <Card.Img
             className="preview-image"
             variant="top"
-            src={nftMeta.image.url.PREVIEW}
+            src={nft.asset.image_preview_url}
           />
         </div>
         <Card.Body>
-          <Card.Title className="nft-title">{nftMeta.name}</Card.Title>
+          <Card.Title className="nft-title">{setName()}</Card.Title>
           <Card.Text className="meta-data">
-            Created By: <span className="meta-bold">{user.name}</span>
+            Created By:{" "}
+            <span className="meta-bold">{nft.from_account.user.username}</span>
           </Card.Text>
           <Card.Text className="meta-data">
-            Owned By: <span className="meta-bold">{user.name}</span>
+            Owned By: <span className="meta-bold">{setOwner()}</span>
           </Card.Text>
           <Card.Text className="meta-data">
             <span className="meta-bold">
@@ -40,7 +48,16 @@ const NFTITem = ({
         </Card.Body>
       </Card>
       {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
-      <Link to={"/details/" + nft.id}>Select</Link>
+      <Link
+        to={
+          "/details/" +
+          nft.asset.asset_contract.address +
+          "&" +
+          nft.asset.token_id
+        }
+      >
+        Select
+      </Link>
       <br></br>
     </div>
   );
