@@ -53,7 +53,7 @@ export default function Dashboard() {
   };
 
   const fetchData = async () => {
-    var data = await OpenseaApi.getNfts(address);
+    var data = await OpenseaApi.getNftsCreatedByUser(address);
     console.log(`Total Nfts : ${data.length}`);
 
     if (data.length > 0) {
