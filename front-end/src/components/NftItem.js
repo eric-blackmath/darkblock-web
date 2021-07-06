@@ -52,7 +52,7 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
         to={
           "/details/" +
           nft.asset.asset_contract.address +
-          "&" +
+          "/" +
           nft.asset.token_id
         }
       >

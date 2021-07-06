@@ -9,14 +9,14 @@ import Pagination from "./Pagination";
 import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
 
-export default function Dashboard({ address }) {
+export default function Dashboard() {
   const [nfts, setNfts] = useState([]);
   const [darkblockedNfts, setDarkblockedNfts] = useState([]);
   const [selectedNftIndex, setSelectedIndex] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
-  const user = useContext(UserContext);
+  const address = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
@@ -53,7 +53,7 @@ export default function Dashboard({ address }) {
   };
 
   const fetchData = async () => {
-    var data = await OpenseaApi.getNfts("asdasd");
+    var data = await OpenseaApi.getNfts(address);
     console.log(`Total Nfts : ${data.length}`);
 
     if (data.length > 0) {

@@ -14,7 +14,10 @@ function App() {
 
   //if no address, user cannot access dashboard
   if (!address) {
-    return <Login setAddress={setAddress} setUser={setUser} />;
+    if (!localStorage.getItem("accountAddress")) {
+      return <Login setAddress={setAddress} setUser={setUser} />;
+    }
+    setAddress(localStorage.getItem("accountAddress"));
   }
 
   return (
@@ -23,12 +26,12 @@ function App() {
         <Nav />
         <div className="content">
           <Switch>
-            <UserContext.Provider value={user}>
+            <UserContext.Provider value={address}>
               <Route exact path="/dashboard">
                 <Dashboard address={address} />
               </Route>
 
-              <Route path="/details/:id">
+              <Route path="/details/:contract/:token">
                 <DetailsView />
               </Route>
               <Route exact path="/tv">

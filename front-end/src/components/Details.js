@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import * as RaribleApi from "../api/rarible-api";
 import { UserContext } from "../util/UserContext";
+import * as Formatter from "../util/formatter";
 import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
@@ -8,34 +8,30 @@ import * as OpenseaApi from "../api/opensea-api";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
-  const user = useContext(UserContext);
-  const [nfts, setNfts] = useState([]);
-  const [isEncryptionOn, setIsEncryptionOn] = useState(false);
+  const address = useContext(UserContext);
+  const [level, setLevel] = useState("0"); //darkblock level
   const [nft, setNft] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
-  const { id } = useParams();
+  const [fileUploadProgress, setFileUploadProgress] = useState("");
+  const { contract, token } = useParams();
+  const [darkblockDescription, setDarkblockDescription] = useState("");
 
-  const dummy_account = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
+  const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
 
   useEffect(() => {
     //!TODO Handle the id validation, then init requests
     fetchDataForNft();
-    console.log(`Redirect Params : ${id}`);
+    console.log(`Address : ${address}`);
+    console.log(`Redirect Params : ${contract} : ${token}`);
   }, []);
 
   const fetchDataForNft = async () => {
     try {
-      const contractIdSplit = id.split("&");
-      const contract = contractIdSplit[0];
-      const tokenId = contractIdSplit[1];
-      const nft = await OpenseaApi.getSingleNft(contract, tokenId).then(
+      const nft = await OpenseaApi.getSingleNft(contract, token).then(
         (res) => res.assets[0]
       );
-
-      console.log(`Nft Details : ${JSON.stringify(nft.token_id)}`);
-
       setNft(nft);
       setIsLoaded(true); //load it in ui
     } catch (e) {
@@ -43,37 +39,84 @@ export default function DetailsView() {
     }
   };
 
-  const onChange = (e) => {
-    //file is picked
+  const onLevelOneFileChange = (e) => {
+    //level two file is picked
     //TODO handle when user cancels the process
+    console.log(`Level One Selected`);
+    setLevel("one");
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
 
-  const handleOnChangeEncryption = (e) => {
-    //file is picked
+  const onLevelTwoFileChange = (e) => {
+    //level one file is picked
     //TODO handle when user cancels the process
-    setIsEncryptionOn(!isEncryptionOn);
+    console.log(`Level Two Selected`);
+    setLevel("two");
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
   };
 
-  const onSubmit = async (e) => {
+  const isNftOwnedByUser = () => {
+    if (nft.creator.address == address || nft.owner.address == address) {
+      return true;
+    }
+    return false;
+  };
+
+  const onCreateDarkblockClick = async (e) => {
     e.preventDefault();
 
+    //check the owner of the nft
+    if (isNftOwnedByUser()) {
+      console.log(`Creating Darkblock`);
+      initDarkblockCreation();
+    } else {
+      alert("Please select an nft that you own");
+      console.log(`You are not the owner/creator of nft`);
+    }
+  };
+
+  const initDarkblockCreation = () => {
     const data = new FormData(); //we put the file and tags inside formData and send it across
     data.append("file", file);
     data.append("contract", nft.asset_contract.address);
     data.append("token", nft.token_id);
-    data.append("wallet", dummy_account); // replace with wallet
-    data.append("encryption", isEncryptionOn);
+    data.append("wallet", address); // replace with wallet
+    data.append("level", level);
+    data.append("token_schema", nft.asset_contract.schema_name);
+    data.append("darkblock_description", darkblockDescription);
 
     try {
-      NodeApi.postTransaction(data).then((data) => {
+      const options = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          console.log(
+            `${Formatter.formatBytes(loaded)} of ${Formatter.formatBytes(
+              total
+            )} | ${percent}%`
+          );
+
+          if (percent < 100) {
+            var progress = `${Formatter.formatBytes(
+              loaded
+            )} of ${Formatter.formatBytes(total)} | ${percent}%`;
+            setFileUploadProgress(progress);
+          }
+        },
+      };
+
+      NodeApi.postTransaction(data, options).then((data) => {
         //handle the response
         console.log(`Message : ${data.message}`);
       });
     } catch (err) {
       //catch some errors here
-      console.log(e);
+      console.log(err);
     }
   };
 
@@ -103,6 +146,11 @@ export default function DetailsView() {
       return "1/1";
     }
     return nft.asset_contract.nft_version;
+  };
+
+  const onDarkblockDescriptionChange = (e) => {
+    //additional info is being added for darkblock creation
+    setDarkblockDescription(e.target.value);
   };
 
   return (
@@ -181,7 +229,7 @@ export default function DetailsView() {
             </div>
             {/* Column 2 */}
             <div className="create-darkblock">
-              <form onSubmit={onSubmit}>
+              <form onSubmit={onCreateDarkblockClick}>
                 <div>
                   <div className="create-darkblock-container">
                     <h1 className="create-title">Create Darkblock</h1>
@@ -210,11 +258,14 @@ export default function DetailsView() {
                       <input
                         type="file"
                         className="custom-file-input"
-                        id="customFile"
-                        onChange={onChange}
+                        id="levelOneFile"
+                        onChange={onLevelOneFileChange}
                       />
-                      <label className="custom-file-label" htmlFor="customFile">
-                        {fileName}
+                      <label
+                        className="custom-file-label"
+                        htmlFor="levelOneFile"
+                      >
+                        {level == "one" ? fileName : null}
                       </label>
                     </div>
                   </div>
@@ -236,11 +287,14 @@ export default function DetailsView() {
                       <input
                         type="file"
                         className="custom-file-input"
-                        id="customFile"
-                        onChange={onChange}
+                        id="levelTwoFile"
+                        onChange={onLevelTwoFileChange}
                       />
-                      <label className="custom-file-label" htmlFor="customFile">
-                        {fileName}
+                      <label
+                        className="custom-file-label"
+                        htmlFor="levelTwoFile"
+                      >
+                        {level == "two" ? fileName : null}
                       </label>
                     </div>
                   </div>
@@ -251,23 +305,20 @@ export default function DetailsView() {
                   <textarea
                     className="textarea"
                     placeholder="Add a description of the Darkblock or leave empty..."
+                    value={darkblockDescription}
+                    onChange={onDarkblockDescriptionChange}
                   ></textarea>
                 </div>
                 <div className="button-container">
-                  <input
-                    type="checkbox"
-                    id="encryption-on"
-                    name="is-encryption-on"
-                    value="Encryption On"
-                    checked={isEncryptionOn}
-                    onChange={handleOnChangeEncryption}
-                  />
-                  Encryption On
                   <input
                     type="submit"
                     value="Create Darkblock"
                     className="create-darkblock-button"
                   />
+
+                  {fileUploadProgress > 0 ? (
+                    <label>{fileUploadProgress}</label>
+                  ) : null}
                 </div>
               </form>
             </div>

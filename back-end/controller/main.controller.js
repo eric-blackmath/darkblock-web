@@ -17,19 +17,17 @@ const protocolUpload = async (req, res) => {
   try {
     //await uploadFile(req, res);
 
+    const posted = JSON.parse(req.body.text);
 
-    const posted = JSON.parse( req.body.text );
+    console.log(posted);
 
-    console.log( posted );
-
-    if(posted.apiKey != '5e540544-4ef6-4cba-896a-322a56f50864'){
+    if (posted.apiKey != "5e540544-4ef6-4cba-896a-322a56f50864") {
       return res.status(401).send({
         message: "You are not authorized!",
       });
     }
 
-    
-    if(posted.tags == undefined || posted.tags.length == 0){
+    if (posted.tags == undefined || posted.tags.length == 0) {
       return res.status(401).send({
         message: "You need tags! In json form!",
       });
@@ -43,9 +41,7 @@ const protocolUpload = async (req, res) => {
     }
 
     // Get the wallet we have stored locally
-    let walletFile = fs.readFileSync(
-      "C:/darkblock/burn arweave wallet.json"
-    ); //to wallet file
+    let walletFile = fs.readFileSync("C:/darkblock/burn arweave wallet.json"); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
 
@@ -83,7 +79,7 @@ const upload = async (req, res) => {
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/darkblock/burn arweave wallet.json"
+      "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
     ); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);

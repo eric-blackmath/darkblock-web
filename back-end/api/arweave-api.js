@@ -27,15 +27,15 @@ const arweave = Arweave.init({
 const makeTransaction = async (arweaveWallet, tags, file) => {
   // Get the data from the file we have uploaded
 
-  var isEncryptionOn = tags.encryption === "true";
+  var isLevelTwo = tags.level === "two";
 
   let data;
   let encryptionKeys;
   let artId;
 
-  console.log(`Encryption : ${isEncryptionOn}`);
+  console.log(`Encryption : ${isLevelTwo}`);
 
-  if (isEncryptionOn === true) {
+  if (isLevelTwo === true) {
     let fileContents = fs.readFileSync(file.path, { encoding: "base64" });
     encryptionKeys = await protocolUtil.getEncryptionKeys(
       tags.wallet,
@@ -54,38 +54,39 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
   // Create a transaction
   let transaction = await arweave.createTransaction(
     {
-      data: isEncryptionOn === true ? data + "" : data,
+      data: isLevelTwo === true ? data + "" : data,
     },
     arweaveWallet
   );
 
   //in params we have to receive:
   //nft-contract, eth-wallet-address, tokenId,
+  transaction.addTag("Description", tags.darkblock_description);
   transaction.addTag("NFT-Contract", tags.contract);
   transaction.addTag("NFT-Creator", tags.wallet);
   transaction.addTag("Token-Id", tags.token);
   transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}`);
-  transaction.addTag("Platform", "Ethereum ERC-721");
+  transaction.addTag("Platform", `Ethereum ${tags.token_schema}`);
   transaction.addTag("Authorizing-Signature", "TBD");
   transaction.addTag(
     "ArtId",
-    isEncryptionOn === true ? encryptionKeys.artid : artId
+    isLevelTwo === true ? encryptionKeys.artid : artId
   );
   transaction.addTag(
     "Encryption-Level",
-    isEncryptionOn === true ? "AES-256" : "None"
+    isLevelTwo === true ? "AES-256" : "None"
   );
   transaction.addTag("Creator-App", "Darkblock");
   transaction.addTag(
     "Content-Type",
-    isEncryptionOn === true ? `encrypted(${contentType})` : contentType
+    isLevelTwo === true ? `encrypted(${contentType})` : contentType
   );
   transaction.addTag(
     "RSA-Public",
-    isEncryptionOn === true ? encryptionKeys.rsaPublicKey : "None"
+    isLevelTwo === true ? encryptionKeys.rsaPublicKey : "None"
   );
   transaction.addTag("Transaction-Type", "Test-Debug");
-  if (isEncryptionOn === true) transaction.addTag("Encryption-Version", "0.1");
+  if (isLevelTwo === true) transaction.addTag("Encryption-Version", "0.1");
 
   // Wait for arweave to sign it and give us the ok
   await arweave.transactions.sign(transaction, arweaveWallet);
@@ -122,11 +123,11 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
  * api for the wallet(arweave)
  *
  */
- const makeProtocolTransaction = async (arweaveWallet, posted) => {
+const makeProtocolTransaction = async (arweaveWallet, posted) => {
   // Get the data from the file we have uploaded
 
   let data;
- 
+
   // Create a transaction
   let transaction = await arweave.createTransaction(
     {
@@ -134,13 +135,12 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
     },
     arweaveWallet
   );
-  var tags = JSON.parse( posted.tags )
-  for( var tagName in tags ){
-    console.log( tagName + ' : ' + tags.tagName );
+  var tags = JSON.parse(posted.tags);
+  for (var tagName in tags) {
+    console.log(tagName + " : " + tags.tagName);
     //transaction.addTag("NFT-Contract", tags.contract);
   }
   transaction.addTag("Content-Type", "application/json");
-
 
   // Wait for arweave to sign it and give us the ok
   await arweave.transactions.sign(transaction, arweaveWallet);

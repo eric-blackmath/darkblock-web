@@ -7,7 +7,7 @@ export const getNfts = (accountAddress) => {
   //pagination query : &offset=0&limit=20
   var config = {
     method: "get",
-    url: `https://api.opensea.io/api/v1/events?account_address=${dummy_account}&event_type=created&only_opensea=false&limit=30`,
+    url: `https://api.opensea.io/api/v1/events?account_address=${accountAddress}&event_type=created&only_opensea=false&limit=30`,
     headers: {},
   };
 

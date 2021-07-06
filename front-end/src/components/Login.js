@@ -19,13 +19,14 @@ export default function Login({ setAddress, setUser }) {
       });
       const account = accounts[0];
 
-      const user = await fetchUserProfile(account);
+      // const user = await fetchUserProfile(account);
 
       // signMsg("this string", account);
 
-      console.log(`Login User : ${user.name}`);
-      setUser(user);
+      // console.log(`Login User : ${user.name}`);
+      // setUser(user);
       setAddress(account); //when address is set, user is redirected to dashboard
+      localStorage.setItem("accountAddress", account);
     } catch (e) {
       alert("Please make sure you have Metamask installed");
     }
