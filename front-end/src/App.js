@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import CreatedByMe from "./components/CreatedByMe";
+
 import Tv from "./components/TvLogin";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DetailsView from "./components/Details";
@@ -29,6 +31,10 @@ function App() {
             <UserContext.Provider value={address}>
               <Route exact path="/dashboard">
                 <Dashboard address={address} />
+              </Route>
+
+              <Route exact path="/createdbyme">
+                <CreatedByMe address={address} />
               </Route>
 
               <Route path="/details/:contract/:token">

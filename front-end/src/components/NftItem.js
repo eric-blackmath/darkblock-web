@@ -21,6 +21,16 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
     return nft.asset.owner.user.username;
   };
 
+  const setCreator = () => {
+    if (!nft.from_account) {
+      //creator is missing in all of em, (without event_type)
+      if (nft.event_type === "transfer") {
+        return nft.to_account.user.username;
+      }
+    }
+    return nft.from_account.user.username;
+  };
+
   return (
     <div className="nft-item">
       <Card>
@@ -34,8 +44,7 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
         <Card.Body>
           <Card.Title className="nft-title">{setName()}</Card.Title>
           <Card.Text className="meta-data">
-            Created By:{" "}
-            <span className="meta-bold">{nft.from_account.user.username}</span>
+            Created By: <span className="meta-bold">{setCreator()}</span>
           </Card.Text>
           <Card.Text className="meta-data">
             Owned By: <span className="meta-bold">{setOwner()}</span>

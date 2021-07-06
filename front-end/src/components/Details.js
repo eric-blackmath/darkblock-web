@@ -129,6 +129,9 @@ export default function DetailsView() {
 
   const setOwner = () => {
     if (nft.owner.user.username == "NullAddress") {
+      if (!nft.creator.user.username) {
+        return "No Username";
+      }
       return nft.creator.user.username;
     }
     return nft.owner.user.username;
@@ -136,7 +139,7 @@ export default function DetailsView() {
 
   const setCreator = () => {
     if (!nft.creator.user.username) {
-      return nft.from_account.user.username;
+      return "No Username";
     }
     return nft.creator.user.username;
   };

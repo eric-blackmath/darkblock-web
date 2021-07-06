@@ -5,9 +5,7 @@ import logo from "../images/dark-logo.svg";
 import wallet from "../images/wallet.svg";
 
 class Nav extends React.Component {
-  componentDidMount() {
-    
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -22,7 +20,7 @@ class Nav extends React.Component {
             {" "}
             <h2 className="nav-item">My NFT's</h2>
           </a>
-          <a className="nav-link" href="/dashboard">
+          <a className="nav-link" href="/createdbyme">
             <h2 className="nav-item">Created By Me</h2>
           </a>
           <img src={wallet} alt="wallet icon" />

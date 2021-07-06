@@ -10,7 +10,7 @@ export const confirmTvLogin = (code, wallet, sessionToken) => {
   });
   var config = {
     method: "post",
-    url: "https://dev1.darkblock.io/api/codeset",
+    url: "https://app.darkblock.io/api2/codeset",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Allow-Control-Allow-Origin": "*",
