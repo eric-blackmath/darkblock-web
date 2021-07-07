@@ -279,6 +279,10 @@ export default function DetailsView() {
                         <li>Stored forever on Arweave</li>
                       </ul>
                     </div>
+                    <div className="file-input-one">
+                      <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
+                      <p className="no-selected">No file selected </p>
+                    </div>
                     <div className="custom-file mb-4">
                       <input
                         type="file"
@@ -307,7 +311,10 @@ export default function DetailsView() {
                         <li>All features of level 1</li>
                       </ul>
                     </div>
-                    <div></div>
+                    <div className="file-input-two">
+                      <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
+                      <p className="no-selected">No file selected </p>
+                    </div>
                     <div className="custom-file mb-4">
                       <input
                         type="file"

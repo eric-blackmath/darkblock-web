@@ -38,7 +38,7 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
 
   return (
     <div className="nft-item">
-      <Card>
+      {/* <Card>
         <div className="image-container">
           <Card.Img
             className="preview-image"
@@ -60,7 +60,7 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
             </span>
           </Card.Text>
         </Card.Body>
-      </Card>
+      </Card> */}
       {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
       <Link
         to={

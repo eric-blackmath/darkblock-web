@@ -275,3 +275,49 @@
   display: flex;
   margin-top: 24px;
 }
+
+.file-input-one{
+    width: 220px;
+    height: 220px;
+    background-image: url(../images/levelone.png);
+    background-size: 220px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.file-input-two{
+    width: 220px;
+    height: 220px;
+    background-image: url(../images/leveltwo.png);
+    background-size: 220px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.file-input-text{
+    margin: 0;
+    font-size: 14px;
+}
+
+.no-selected{
+    font-weight: 700;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.file-span{
+    color: #FFC324;
+    display: flex;
+    justify-content: center;
+}
