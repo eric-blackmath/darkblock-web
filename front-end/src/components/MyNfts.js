@@ -27,12 +27,12 @@ export default function MyNfts() {
       }
       var data = await OpenseaApi.getNfts(accountAddress);
 
-      console.log(`Data : ${data.length}`);
-
       if (data.length > 0) {
+        console.log(`Data : ${data.length}`);
+
         //handle the nfts | extract data for the nft verification
         var idsString = getContractAndTokens(data);
-        await verifyNFTs(idsString);
+        // await verifyNFTs(idsString);
         setNfts(data);
         setIsLoaded(true);
       }
@@ -71,7 +71,7 @@ export default function MyNfts() {
     var ids = "";
 
     for (let i = 0; i < nfts.length; i++) {
-      ids += `"${nfts[i].asset.asset_contract.address}:${nfts[i].asset.token_id}",`;
+      ids += `"${nfts[i].asset_contract.address}:${nfts[i].token_id}",`;
     }
     return ids.substring(0, ids.length - 1);
   };
@@ -104,8 +104,8 @@ export default function MyNfts() {
               nft={nfts[nfts.indexOf(listitem)]}
               selectionHandler={selectionHandler}
               darkblocked={checkIfDarkblocked(
-                nfts[nfts.indexOf(listitem)].asset.asset_contract.address,
-                nfts[nfts.indexOf(listitem)].asset.token_id
+                nfts[nfts.indexOf(listitem)].asset_contract.address,
+                nfts[nfts.indexOf(listitem)].token_id
               )}
             />
           ))}

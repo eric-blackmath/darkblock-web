@@ -1,7 +1,6 @@
 const axios = require("axios");
 const Arweave = require("arweave");
 const protocolUtil = require("../utils/protocol-util");
-const encrypt = require("../utils/encrypt");
 const artIdUtil = require("../utils/art-id");
 const mime = require("mime-types");
 const fs = require("fs");
@@ -15,6 +14,8 @@ const arweave = Arweave.init({
   protocol: "https",
   logging: true,
 });
+
+const checkTime = 1000;
 
 /**
  * @param  {string} arweaveWallet
@@ -36,13 +37,28 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
   console.log(`Encryption : ${isLevelTwo}`);
 
   if (isLevelTwo === true) {
-    let fileContents = fs.readFileSync(file.path, { encoding: "base64" });
     encryptionKeys = await protocolUtil.getEncryptionKeys(
       tags.wallet,
       "sign123"
     );
-    //encrypt the data
-    data = await encrypt.encryptData(fileContents, encryptionKeys.aesKey);
+
+    let pack = {};
+    pack["aesKey"] = encryptionKeys.aesKey;
+    pack["filename"] = file.path;
+    console.log("writing file");
+    fs.writeFileSync(file.path + ".ready", JSON.stringify(pack));
+
+    //look for the exact same input .enc file in the directory and upload to arweave
+    var encFileFullPath = file.path + ".enc";
+    const isEncryptionDone = await checkForFile(encFileFullPath);
+    if (isEncryptionDone === true) {
+      console.log(`File Done : ${isEncryptionDone}`);
+      //readFileSync outputs buffer, we have to use encoding
+      data = fs.readFileSync(encFileFullPath);
+    } else {
+      console.log(`Problem with encryption, Encrypted File Not Found`);
+      return;
+    }
   } else {
     artId = artIdUtil.generateArtId();
     data = fs.readFileSync(file.path);
@@ -114,6 +130,22 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
 			Transaction verification failed.
 		*/
 };
+
+function checkForFile(path) {
+  return new Promise((resolve, reject) => {
+    const intervalObj = setInterval(function () {
+      const file = path;
+      const fileExists = fs.existsSync(file);
+
+      console.log("Checking for: ", file);
+
+      if (fileExists) {
+        clearInterval(intervalObj);
+        resolve(true);
+      }
+    }, 1000);
+  });
+}
 
 /**
  * @param  {string} arweaveWallet
