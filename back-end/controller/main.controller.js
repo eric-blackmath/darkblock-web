@@ -5,19 +5,16 @@ const baseUrl = "http://localhost:8080/files/";
 
 const ParseUtil = require("../utils/parse");
 
-/**
- * @param  {request} req //request with file+tags in the body
- * @param  {} res
- * Uploads the file, takes data from the request, encrypts the file,
- * attaches the tags and make the transaction to arweave
- */
+
 const protocolUpload = async (req, res) => {
   console.log(`Protocol endpoint reached `);
 
   try {
     //await uploadFile(req, res);
-
-    const posted = JSON.parse(req.body.text);
+    console.log( req.body );
+    //console.log( "------" );
+    //const posted = JSON.parse(req.body);
+    const posted = req.body;
 
     console.log(posted);
 
@@ -41,7 +38,7 @@ const protocolUpload = async (req, res) => {
     }
 
     // Get the wallet we have stored locally
-    let walletFile = fs.readFileSync("C:/darkblock/burn arweave wallet.json"); //to wallet file
+    let walletFile = fs.readFileSync("C:/darkblock/arweave-key-fmTpIBFrCbAyUjV-f3VOq7Szs5RaMovb1Pf9MlUnjVk.json"); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
 
@@ -62,6 +59,12 @@ const protocolUpload = async (req, res) => {
   }
 };
 
+/**
+ * @param  {request} req //request with file+tags in the body
+ * @param  {} res
+ * Uploads the file, takes data from the request, encrypts the file,
+ * attaches the tags and make the transaction to arweave
+ */
 const upload = async (req, res) => {
   console.log(`Upload endpoint reached : `);
 

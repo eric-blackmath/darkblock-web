@@ -135,10 +135,12 @@ const makeProtocolTransaction = async (arweaveWallet, posted) => {
     },
     arweaveWallet
   );
+  console.log( posted.tags );
   var tags = JSON.parse(posted.tags);
+  console.log( tags );
   for (var tagName in tags) {
-    console.log(tagName + " : " + tags.tagName);
-    //transaction.addTag("NFT-Contract", tags.contract);
+    console.log(tagName + " : " + tags[tagName]);
+    transaction.addTag(tagName, tags[tagName]);
   }
   transaction.addTag("Content-Type", "application/json");
 
