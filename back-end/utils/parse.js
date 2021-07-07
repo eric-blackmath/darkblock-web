@@ -32,7 +32,7 @@ const getIdOfMatches = (transactions, field) => {
     var tags = transactions[i].node.tags;
     let result = tags.find((o) => o.name === field);
     matches += result.value + ",";
-    console.log(`Transactions Arr Search:${result.value}`);
+    console.log(`Transaction Match:${result.value}`);
   }
   return matches.substring(0, matches.length - 1);
 };

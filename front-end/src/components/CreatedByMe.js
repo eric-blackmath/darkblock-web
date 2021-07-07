@@ -2,14 +2,13 @@ import React from "react";
 import "../App.scss";
 import * as RaribleApi from "../api/rarible-api";
 import * as OpenseaApi from "../api/opensea-api";
-
 import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
 import Pagination from "./Pagination";
 import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
 
-export default function Dashboard() {
+export default function CreatedByMe() {
   const [nfts, setNfts] = useState([]);
   const [darkblockedNfts, setDarkblockedNfts] = useState([]);
   const [selectedNftIndex, setSelectedIndex] = useState("");
@@ -72,15 +71,11 @@ export default function Dashboard() {
   };
 
   const filterNfts = (nfts) => {
-    // logic to see if a result should be included in "created by me"
-    // if the event_type is "created"
-    // OR
-    // if the event_type is "transfer" AND the form_account.address is 0x0000000000000000000000000000000000000000
+    // if the event_type="created" OR event_type="transfer"
+    //AND form_account.address is 0x0000000000000000000000000000000000000000
 
     var filteredNfts = [];
     for (let i = 0; i < nfts.length; i++) {
-      console.log(`EventType : ${nfts[i].event_type}`);
-
       if (
         nfts[i].event_type === "created" ||
         (nfts[i].event_type === "transfer" &&
@@ -91,7 +86,6 @@ export default function Dashboard() {
         console.log(`Nft Belongs in created by me`);
       }
     }
-
     return filteredNfts;
   };
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import "../App.scss";
 import Card from "react-bootstrap/Card";
 
@@ -8,27 +7,33 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
   var handleToUpdate = selectionHandler;
 
   const setName = () => {
-    if (!nft.name) {
+    if (!nft.asset.name) {
       return nft.asset.collection.name;
     }
-    return nft.asset.name;
+    return `${nft.asset.name}`;
   };
 
   const setOwner = () => {
-    if (nft.asset.owner.user.username == "NullAddress") {
+    var owner = "";
+    if (nft.asset.owner.user.username === "NullAddress") {
       return nft.from_account.user.username;
     }
     return nft.asset.owner.user.username;
   };
 
   const setCreator = () => {
+    var creator = "";
     if (!nft.from_account) {
       //creator is missing in all of em, (without event_type)
       if (nft.event_type === "transfer") {
-        return nft.to_account.user.username;
+        creator = nft.to_account.user.username;
       }
     }
-    return nft.from_account.user.username;
+    creator = nft.from_account.user.username;
+    if (creator === "NullAddress") {
+      creator = "No Username";
+    }
+    return creator;
   };
 
   return (
