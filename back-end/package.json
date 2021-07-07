@@ -20,6 +20,7 @@
     "fs": "0.0.1-security",
     "fs-web": "^1.0.1",
     "glob": "^7.1.7",
+    "hasha": "^5.2.2",
     "mime-types": "^2.1.31",
     "multer": "^1.4.2",
     "node-jsencrypt": "^1.0.0",

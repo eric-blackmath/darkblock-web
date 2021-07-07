@@ -1,9 +1,11 @@
 const axios = require("axios");
 const Arweave = require("arweave");
 const protocolUtil = require("../utils/protocol-util");
-const artIdUtil = require("../utils/art-id");
+const ArtIdUtil = require("../utils/art-id");
+const FileHandler = require("../utils/file-handler");
 const mime = require("mime-types");
 const fs = require("fs");
+const hasha = require("hasha");
 
 //uuidv4(); - will generate a v4 uuid
 
@@ -36,21 +38,28 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
 
   console.log(`Encryption : ${isLevelTwo}`);
 
+  const fileHash = await hasha.fromFile(file.path, { algorithm: "sha256" });
+
+  console.log(`Hash : ${fileHash}`);
+
   if (isLevelTwo === true) {
     encryptionKeys = await protocolUtil.getEncryptionKeys(
       tags.wallet,
       "sign123"
     );
 
-    let pack = {};
-    pack["aesKey"] = encryptionKeys.aesKey;
-    pack["filename"] = file.path;
-    console.log("writing file");
-    fs.writeFileSync(file.path + ".ready", JSON.stringify(pack));
+    // let pack = {};
+    // pack["aesKey"] = encryptionKeys.aesKey;
+    // pack["filename"] = file.path;
+    // console.log("writing file");
+    // fs.writeFileSync(file.path + ".ready", JSON.stringify(pack));
+    FileHandler.prepareFileForEncryption(encryptionKeys.aesKey, file);
 
     //look for the exact same input .enc file in the directory and upload to arweave
     var encFileFullPath = file.path + ".enc";
-    const isEncryptionDone = await checkForFile(encFileFullPath);
+    const isEncryptionDone = await FileHandler.checkForEncryptedFile(
+      encFileFullPath
+    );
     if (isEncryptionDone === true) {
       console.log(`File Done : ${isEncryptionDone}`);
       //readFileSync outputs buffer, we have to use encoding
@@ -60,7 +69,7 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
       return;
     }
   } else {
-    artId = artIdUtil.generateArtId();
+    artId = ArtIdUtil.generateArtId();
     data = fs.readFileSync(file.path);
   }
 
@@ -101,6 +110,7 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
     "RSA-Public",
     isLevelTwo === true ? encryptionKeys.rsaPublicKey : "None"
   );
+  transaction.addTag("Data-Hash", fileHash);
   transaction.addTag("Transaction-Type", "Test-Debug");
   if (isLevelTwo === true) transaction.addTag("Encryption-Version", "0.1");
 
@@ -131,22 +141,6 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
 		*/
 };
 
-function checkForFile(path) {
-  return new Promise((resolve, reject) => {
-    const intervalObj = setInterval(function () {
-      const file = path;
-      const fileExists = fs.existsSync(file);
-
-      console.log("Checking for: ", file);
-
-      if (fileExists) {
-        clearInterval(intervalObj);
-        resolve(true);
-      }
-    }, 1000);
-  });
-}
-
 /**
  * @param  {string} arweaveWallet
  * @param  {file} data
@@ -167,9 +161,9 @@ const makeProtocolTransaction = async (arweaveWallet, posted) => {
     },
     arweaveWallet
   );
-  console.log( posted.tags );
+  console.log(posted.tags);
   var tags = JSON.parse(posted.tags);
-  console.log( tags );
+  console.log(tags);
   for (var tagName in tags) {
     console.log(tagName + " : " + tags[tagName]);
     transaction.addTag(tagName, tags[tagName]);
