@@ -66,33 +66,19 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
         </Card.Body>
       </Card> */}
       {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
-<<<<<<< HEAD
       <Link to={"/details/" + nft.asset_contract.address + "/" + nft.token_id}>
-        Select
-=======
-      <Link
-        to={
-          "/details/" +
-          nft.asset.asset_contract.address +
-          "/" +
-          nft.asset.token_id
-        }
-      >
         <Card>
           <div className="image-container">
             <Card.Img
               className="preview-image"
               variant="top"
-              src={nft.asset.image_preview_url}
+              src={nft.image_preview_url}
             />
           </div>
           <Card.Body>
             <Card.Title className="nft-title">{setName()}</Card.Title>
             <Card.Text className="meta-data">
-              Created By:{" "}
-              <span className="meta-bold">
-                {nft.from_account.user.username}
-              </span>
+              Created By: <span className="meta-bold">{setCreator()}</span>
             </Card.Text>
             <Card.Text className="meta-data">
               Owned By: <span className="meta-bold">{setOwner()}</span>
@@ -105,7 +91,6 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
           </Card.Body>
         </Card>
         {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
->>>>>>> 9f1aeeb47ce8cd0d98f231c5c645e234d9306764
       </Link>
       <br></br>
     </div>
