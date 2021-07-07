@@ -82,7 +82,7 @@ const upload = async (req, res) => {
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
+      "C:/Users/livingRoom/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
     ); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);

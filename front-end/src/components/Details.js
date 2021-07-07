@@ -5,6 +5,8 @@ import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
+import $ from "jquery"
+import Preview from "../components/preview";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -19,8 +21,22 @@ export default function DetailsView() {
   const [darkblockDescription, setDarkblockDescription] = useState("");
 
   const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
+  
 
   useEffect(() => {
+    function previewFile(input){
+      var file = $("input[type=file]").get(0).files[0];
+
+      if(file){
+          var reader = new FileReader();
+
+          reader.onload = function(){
+              $("#previewImg").attr("src", reader.result);
+          }
+
+          reader.readAsDataURL(file);
+      }
+  }
     //!TODO Handle the id validation, then init requests
 
     const fetchDataForNft = async () => {
@@ -60,7 +76,10 @@ export default function DetailsView() {
   };
 
   const isNftOwnedByUser = () => {
-    if (nft.creator.address === address || nft.owner.address === address) {
+    if (
+      nft.creator.address === accountAddress ||
+      nft.owner.address === address
+    ) {
       return true;
     }
     return false;
@@ -157,6 +176,7 @@ export default function DetailsView() {
     //additional info is being added for darkblock creation
     setDarkblockDescription(e.target.value);
   };
+
 
   return (
     <div>
@@ -263,6 +283,11 @@ export default function DetailsView() {
                         <li>Stored forever on Arweave</li>
                       </ul>
                     </div>
+                    {/* <div className="file-input-one">
+                      <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
+                      <p className="no-selected">No file selected </p>
+                    </div> */}
+                    <Preview />
                     <div className="custom-file mb-4">
                       <input
                         type="file"
@@ -291,7 +316,10 @@ export default function DetailsView() {
                         <li>All features of level 1</li>
                       </ul>
                     </div>
-                    <div></div>
+                    <div className="file-input-two">
+                      <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
+                      <p className="no-selected">No file selected </p>
+                    </div>
                     <div className="custom-file mb-4">
                       <input
                         type="file"
