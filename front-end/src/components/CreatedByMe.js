@@ -3,7 +3,7 @@ import "../App.scss";
 import * as RaribleApi from "../api/rarible-api";
 import * as OpenseaApi from "../api/opensea-api";
 import * as NodeApi from "../api/node-api";
-import NFTItem from "./NftItem";
+import NFTItemCreator from "./NftItemCreator";
 import Pagination from "./Pagination";
 import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
@@ -53,13 +53,14 @@ export default function CreatedByMe() {
 
   const fetchData = async () => {
     var data = await OpenseaApi.getNftsCreatedByUser(address);
-    console.log(`Total Nfts : ${data.length}`);
 
     if (data.length > 0) {
+      console.log(`Total Nfts : ${data.length}`);
+
       //handle the nfts | extract data for the nft verification
       var idsString = getContractAndTokens(data);
 
-      await verifyNFTs(idsString);
+      // await verifyNFTs(idsString);
 
       //we do the filtering here
       console.log(`In Created By Me Page`);
@@ -112,7 +113,7 @@ export default function CreatedByMe() {
       {isLoaded ? (
         <ul className="list-group">
           {currentNftsMeta.map((listitem, index) => (
-            <NFTItem
+            <NFTItemCreator
               key={index}
               nft={nfts[nfts.indexOf(listitem)]}
               selectionHandler={selectionHandler}

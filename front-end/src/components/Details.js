@@ -60,7 +60,10 @@ export default function DetailsView() {
   };
 
   const isNftOwnedByUser = () => {
-    if (nft.creator.address === address || nft.owner.address === address) {
+    if (
+      nft.creator.address === accountAddress ||
+      nft.owner.address === address
+    ) {
       return true;
     }
     return false;
