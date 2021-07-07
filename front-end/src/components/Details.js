@@ -37,22 +37,24 @@ export default function DetailsView() {
       }
   }
     //!TODO Handle the id validation, then init requests
+
+    const fetchDataForNft = async () => {
+      try {
+        const nft = await OpenseaApi.getSingleNft(contract, token).then(
+          (res) => res.assets[0]
+        );
+        setNft(nft);
+        setIsLoaded(true); //load it in ui
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
     fetchDataForNft();
+
     console.log(`Address : ${address}`);
     console.log(`Redirect Params : ${contract} : ${token}`);
   }, []);
-
-  const fetchDataForNft = async () => {
-    try {
-      const nft = await OpenseaApi.getSingleNft(contract, token).then(
-        (res) => res.assets[0]
-      );
-      setNft(nft);
-      setIsLoaded(true); //load it in ui
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const onLevelOneFileChange = (e) => {
     //level two file is picked
@@ -73,7 +75,7 @@ export default function DetailsView() {
   };
 
   const isNftOwnedByUser = () => {
-    if (nft.creator.address == address || nft.owner.address == address) {
+    if (nft.creator.address === address || nft.owner.address === address) {
       return true;
     }
     return false;
@@ -143,7 +145,10 @@ export default function DetailsView() {
   };
 
   const setOwner = () => {
-    if (nft.owner.user.username == "NullAddress") {
+    if (nft.owner.user.username === "NullAddress") {
+      if (!nft.creator.user.username) {
+        return "No Username";
+      }
       return nft.creator.user.username;
     }
     return nft.owner.user.username;
@@ -151,7 +156,7 @@ export default function DetailsView() {
 
   const setCreator = () => {
     if (!nft.creator.user.username) {
-      return nft.from_account.user.username;
+      return "No Username";
     }
     return nft.creator.user.username;
   };
@@ -175,7 +180,11 @@ export default function DetailsView() {
         // column 1
         <div className="detail-page-container">
           <div className="detail-preview-image ">
-            <img className="nft-detail-preview" src={nft.image_url} />
+            <img
+              alt="nft-preview"
+              className="nft-detail-preview"
+              src={nft.image_url}
+            />
           </div>
           <div className="detail-name-container">
             <h1 className="nft-detail-name">{setName()}</h1>
@@ -281,7 +290,7 @@ export default function DetailsView() {
                         className="custom-file-label"
                         htmlFor="levelOneFile"
                       >
-                        {level == "one" ? fileName : null}
+                        {level === "one" ? fileName : null}
                       </label>
                     </div>
                   </div>
@@ -310,7 +319,7 @@ export default function DetailsView() {
                         className="custom-file-label"
                         htmlFor="levelTwoFile"
                       >
-                        {level == "two" ? fileName : null}
+                        {level === "two" ? fileName : null}
                       </label>
                     </div>
                   </div>

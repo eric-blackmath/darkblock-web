@@ -1,15 +1,14 @@
 import React from "react";
 import "../App.scss";
-import * as RaribleApi from "../api/rarible-api";
 import * as OpenseaApi from "../api/opensea-api";
-
 import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
 import Pagination from "./Pagination";
 import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 
-export default function Dashboard() {
+export default function MyNfts() {
   const [nfts, setNfts] = useState([]);
   const [darkblockedNfts, setDarkblockedNfts] = useState([]);
   const [selectedNftIndex, setSelectedIndex] = useState("");
@@ -17,8 +16,33 @@ export default function Dashboard() {
   const [postsPerPage, setPostsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const address = useContext(UserContext);
+  const { account } = useParams();
 
   useEffect(() => {
+    const fetchData = async () => {
+      console.log(`Passed Arg : ${account}`);
+      var accountAddress = address;
+      if (account) {
+        accountAddress = account;
+      }
+      var data = await OpenseaApi.getNfts(accountAddress);
+
+      console.log(`Data : ${data.length}`);
+
+      if (data.length > 0) {
+        //handle the nfts | extract data for the nft verification
+        var idsString = getContractAndTokens(data);
+        await verifyNFTs(idsString);
+        setNfts(data);
+        setIsLoaded(true);
+      }
+
+      //   //for pagination, if data is less than 10, we dont want pagination
+      //   if (data.length < 8) {
+      //     setPostsPerPage(data.length);
+      //   }
+    };
+
     fetchData();
   }, []);
 
@@ -50,24 +74,6 @@ export default function Dashboard() {
       ids += `"${nfts[i].asset.asset_contract.address}:${nfts[i].asset.token_id}",`;
     }
     return ids.substring(0, ids.length - 1);
-  };
-
-  const fetchData = async () => {
-    var data = await OpenseaApi.getNfts(address);
-    console.log(`Total Nfts : ${data.length}`);
-
-    if (data.length > 0) {
-      //handle the nfts | extract data for the nft verification
-      var idsString = getContractAndTokens(data);
-      await verifyNFTs(idsString);
-      setNfts(data);
-      setIsLoaded(true);
-    }
-
-    //   //for pagination, if data is less than 10, we dont want pagination
-    //   if (data.length < 8) {
-    //     setPostsPerPage(data.length);
-    //   }
   };
 
   const selectionHandler = (nftIndex) => {

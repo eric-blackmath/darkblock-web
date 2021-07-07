@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
+import MyNfts from "./components/MyNfts";
+import CreatedByMe from "./components/CreatedByMe";
 import Tv from "./components/TvLogin";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DetailsView from "./components/Details";
@@ -27,8 +28,16 @@ function App() {
         <div className="content">
           <Switch>
             <UserContext.Provider value={address}>
-              <Route exact path="/dashboard">
-                <Dashboard address={address} />
+              <Route exact path="/nfts/all">
+                <MyNfts />
+              </Route>
+
+              <Route exact path="/nfts/all/:account">
+                <MyNfts />
+              </Route>
+
+              <Route exact path="/nfts/createdbyme">
+                <CreatedByMe />
               </Route>
 
               <Route path="/details/:contract/:token">
