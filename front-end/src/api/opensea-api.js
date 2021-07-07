@@ -25,7 +25,7 @@ export const getNftsCreatedByUser = (accountAddress) => {
   //event_type=created&
   var config = {
     method: "get",
-    url: `https://api.opensea.io/api/v1/events?account_address=${dummy_account}&only_opensea=false&limit=300
+    url: `https://api.opensea.io/api/v1/events?account_address=${accountAddress}&only_opensea=false&limit=300
     `,
     headers: {},
   };
