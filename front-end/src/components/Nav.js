@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../App.scss";
-import logo from "../images/dark-logo.svg";
+import logo from "../images/logo.png";
 import wallet from "../images/wallet.svg";
 
 class Nav extends React.Component {
@@ -12,7 +12,7 @@ class Nav extends React.Component {
       <div className="nav">
         <div>
           <a href="/">
-            <img src={logo} alt="darkblock logo" />
+            <img className="nav-logo" src={logo} alt="darkblock logo" />
           </a>
         </div>
         <div className="nav-content">

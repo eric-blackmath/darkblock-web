@@ -19,6 +19,40 @@ export const getNfts = (accountAddress) => {
     });
 };
 
+<<<<<<< HEAD
+=======
+//fetches nfts associated to accountAddress
+export const getNfts2 = (accountAddress) => {
+  //pagination query : &offset=0&limit=20
+  //event_type=created&
+
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  return fetch(
+    `https://api.opensea.io/api/v1/events?account_address=${accountAddress}&event_type=created&only_opensea=false&limit=300`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => result.asset_events)
+    .catch((error) => console.log("error", error));
+
+  // var config = {
+  //   method: "get",
+  //   url: `https://api.opensea.io/api/v1/events?account_address=${dummy_account}&event_type=created&only_opensea=false&limit=300`,
+  //   headers: {},
+  // };
+
+  // return axios(config)
+  //   .then((response) => response.data.asset_events)
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+};
+
+>>>>>>> 9f1aeeb47ce8cd0d98f231c5c645e234d9306764
 //fetches nfts associated to accountAddress, created by user
 export const getNftsCreatedByUser = (accountAddress) => {
   //pagination query : &offset=0&limit=20
