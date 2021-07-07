@@ -16,6 +16,10 @@
 .nft-detail-preview {
   padding: 16px;
   border: 1px solid #c4c4c4;
+  max-width: 300px;
+  @media only screen and (max-width: 768px) {
+    max-width: 200px;
+  }
 }
 
 .nft-detail-name {

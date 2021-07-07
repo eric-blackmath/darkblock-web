@@ -23,31 +23,6 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
 
   return (
     <div className="nft-item">
-      <Card>
-        <div className="image-container">
-          <Card.Img
-            className="preview-image"
-            variant="top"
-            src={nft.asset.image_preview_url}
-          />
-        </div>
-        <Card.Body>
-          <Card.Title className="nft-title">{setName()}</Card.Title>
-          <Card.Text className="meta-data">
-            Created By:{" "}
-            <span className="meta-bold">{nft.from_account.user.username}</span>
-          </Card.Text>
-          <Card.Text className="meta-data">
-            Owned By: <span className="meta-bold">{setOwner()}</span>
-          </Card.Text>
-          <Card.Text className="meta-data">
-            <span className="meta-bold">
-              {darkblocked ? "Protected by Darkblock" : "No Darkblock found"}
-            </span>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
       <Link
         to={
           "/details/" +
@@ -56,7 +31,33 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
           nft.asset.token_id
         }
       >
-        Select
+        <Card>
+          <div className="image-container">
+            <Card.Img
+              className="preview-image"
+              variant="top"
+              src={nft.asset.image_preview_url}
+            />
+          </div>
+          <Card.Body>
+            <Card.Title className="nft-title">{setName()}</Card.Title>
+            <Card.Text className="meta-data">
+              Created By:{" "}
+              <span className="meta-bold">
+                {nft.from_account.user.username}
+              </span>
+            </Card.Text>
+            <Card.Text className="meta-data">
+              Owned By: <span className="meta-bold">{setOwner()}</span>
+            </Card.Text>
+            <Card.Text className="meta-data">
+              <span className="meta-bold">
+                {darkblocked ? "Protected by Darkblock" : "No Darkblock found"}
+              </span>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        {/* <button onClick={() => handleToUpdate(nftIndex)}>Select</button> */}
       </Link>
       <br></br>
     </div>

@@ -5,6 +5,7 @@ import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
+import $ from "jquery"
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -19,8 +20,22 @@ export default function DetailsView() {
   const [darkblockDescription, setDarkblockDescription] = useState("");
 
   const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
+  
 
   useEffect(() => {
+    function previewFile(input){
+      var file = $("input[type=file]").get(0).files[0];
+
+      if(file){
+          var reader = new FileReader();
+
+          reader.onload = function(){
+              $("#previewImg").attr("src", reader.result);
+          }
+
+          reader.readAsDataURL(file);
+      }
+  }
     //!TODO Handle the id validation, then init requests
     fetchDataForNft();
     console.log(`Address : ${address}`);
@@ -152,6 +167,7 @@ export default function DetailsView() {
     //additional info is being added for darkblock creation
     setDarkblockDescription(e.target.value);
   };
+
 
   return (
     <div>
