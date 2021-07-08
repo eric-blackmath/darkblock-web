@@ -7,6 +7,7 @@ import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
 import $ from "jquery"
 import Preview from "../components/preview";
+import PreviewTwo from "../components/previewtwo";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -316,10 +317,11 @@ export default function DetailsView() {
                         <li>All features of level 1</li>
                       </ul>
                     </div>
-                    <div className="file-input-two">
+                    <PreviewTwo />
+                    {/* <div className="file-input-two">
                       <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
                       <p className="no-selected">No file selected </p>
-                    </div>
+                    </div> */}
                     <div className="custom-file mb-4">
                       <input
                         type="file"
