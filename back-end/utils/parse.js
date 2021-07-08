@@ -18,7 +18,8 @@ const getFullQuery = async (req) => {
       resolve(fields);
     }); // form.parse
   });
-  return `query{transactions(tags:{name:"${field}",values:[${formfields.ids}]}){edges{node{id,tags{name,value}}}}}`;
+
+  return `query {\n transactions(\n tags: { name: "${field}", values: [${formfields.ids}] }\n ) {\n edges {\n node {\n id tags {name value}\n }\n }\n }\n}\n`;
 };
 
 /**

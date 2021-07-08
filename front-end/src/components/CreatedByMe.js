@@ -60,7 +60,7 @@ export default function CreatedByMe() {
       //handle the nfts | extract data for the nft verification
       var idsString = getContractAndTokens(data);
 
-      // await verifyNFTs(idsString);
+      await verifyNFTs(idsString);
 
       //we do the filtering here
       console.log(`In Created By Me Page`);

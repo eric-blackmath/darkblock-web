@@ -27,13 +27,17 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
   };
 
   const setCreator = () => {
+    //sometimes the creator.user + creator.user.username is null
     var creator = "";
-    if (!nft.creator.user.username) {
+    if (!nft.creator.user) {
       //creator is missing in all of em, (without event_type)
+      creator = nft.owner.user.username;
+    } else if (!nft.creator.user.username) {
       creator = nft.owner.user.username;
     } else {
       creator = nft.creator.user.username;
     }
+
     if (creator === "NullAddress") {
       creator = "No Username";
     }

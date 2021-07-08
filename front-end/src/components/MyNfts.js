@@ -32,7 +32,7 @@ export default function MyNfts() {
 
         //handle the nfts | extract data for the nft verification
         var idsString = getContractAndTokens(data);
-        // await verifyNFTs(idsString);
+        await verifyNFTs(idsString);
         setNfts(data);
         setIsLoaded(true);
       }

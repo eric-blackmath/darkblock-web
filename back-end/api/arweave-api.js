@@ -6,6 +6,7 @@ const FileHandler = require("../utils/file-handler");
 const mime = require("mime-types");
 const fs = require("fs");
 const hasha = require("hasha");
+const fetch = require("node-fetch");
 
 //uuidv4(); - will generate a v4 uuid
 
@@ -186,27 +187,28 @@ const makeProtocolTransaction = async (arweaveWallet, posted) => {
  * makes a get request to the arweave/graphql endopint with the query
  * and returns the transactions which matches
  */
-const verifyNFTsById = (queryArweave) => {
+const verifyNFTsById = async (queryArweave) => {
   const URL = `https://arweave.net/graphql`;
 
-  return axios(
-    URL,
-    {
-      params: {
-        query: queryArweave,
-      },
+  const verifyRes = await fetch("https://arweave.net/graphql", {
+    method: "POST",
+    headers: {
+      "Accept-Encoding": "gzip, deflate, br",
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Connection: "keep-alive",
+      DNT: "1",
+      Origin: "https://arweave.net",
     },
-    {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    }
-  )
-    .then((response) => response.data.data.transactions.edges)
-    .catch((error) => {
-      throw error;
-    });
+    body: JSON.stringify({
+      query: queryArweave,
+    }),
+  });
+
+  let data = await verifyRes.json();
+  console.log(`Transaction Matches : ${data.data.transactions.edges.length}`);
+
+  return data.data.transactions.edges;
 };
 
 module.exports = {
