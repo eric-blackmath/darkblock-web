@@ -8,6 +8,7 @@ import * as OpenseaApi from "../api/opensea-api";
 import $ from "jquery";
 import Preview from "../components/preview";
 import PreviewTwo from "../components/previewtwo";
+import * as HashUtil from "../util/hash-util";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -66,7 +67,7 @@ export default function DetailsView() {
     setFileName(e.target.files[0].name);
   };
 
-  const onLevelTwoFileChange = (e) => {
+  const onLevelTwoFileChange = async (e) => {
     //level one file is picked
     //TODO handle when user cancels the process
     console.log(`Level Two Selected`);
@@ -98,7 +99,12 @@ export default function DetailsView() {
     }
   };
 
-  const initDarkblockCreation = () => {
+  const initDarkblockCreation = async () => {
+    console.log(`Init Hashing the file`);
+    const fileHash = await HashUtil.hashInChunks(file);
+    console.log(`Hash of the file : ${fileHash}`);
+    //now sign this hash with eth wallet and attach it to tags
+
     const data = new FormData(); //we put the file and tags inside formData and send it across
     data.append("file", file);
     data.append("contract", nft.asset_contract.address);
@@ -107,6 +113,7 @@ export default function DetailsView() {
     data.append("level", level);
     data.append("token_schema", nft.asset_contract.schema_name);
     data.append("darkblock_description", darkblockDescription);
+    data.append("darkblock_hash", fileHash);
 
     try {
       const options = {
@@ -329,7 +336,9 @@ export default function DetailsView() {
                         <li>All features of level 1</li>
                       </ul>
                     </div>
-                    <PreviewTwo />
+                    <PreviewTwo
+                      fileSelectionHandler={levelTwoFileSelectionHandler}
+                    />
                     {/* <div className="file-input-two">
                       <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
                       <p className="no-selected">No file selected </p>

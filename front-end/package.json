@@ -11,6 +11,7 @@
     "arweave": "^1.10.13",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
     "eth-sig-util": "^3.0.1",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
