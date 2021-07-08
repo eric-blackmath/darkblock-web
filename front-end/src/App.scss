@@ -79,6 +79,7 @@ img{
   font-weight: 700;
   font-style: normal;
   color: #000000;
+  margin-bottom: 12px;
 }
 
 .nav {
@@ -186,4 +187,14 @@ img{
 
 .meta-bold{
   font-weight: 700;
+}
+
+.isdarkblock{
+  background-color: #f9f9f9;
+  padding: 4px 12px;
+  font-size: 9px;
+  margin-top: 12px;
+  color: #9a9a9a;
+  font-weight: 700;
+  border-radius: 4px;
 }

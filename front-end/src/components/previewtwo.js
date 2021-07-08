@@ -160,7 +160,7 @@ class PreviewTwo extends React.Component {
             type="file"
             name="fileUpload"
           />
-
+ 
           <label htmlFor="file-upload" id="file-drag">
             <img id="file-image" src="#" alt="Preview" className="hidden" />
             <div id="start">

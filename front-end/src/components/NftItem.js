@@ -83,7 +83,7 @@ const NFTITem = ({ nft, selectionHandler, darkblocked }) => {
             <Card.Text className="meta-data">
               Owned By: <span className="meta-bold">{setOwner()}</span>
             </Card.Text>
-            <Card.Text className="meta-data">
+            <Card.Text className="meta-data isdarkblock">
               <span className="meta-bold">
                 {darkblocked ? "Protected by Darkblock" : "No Darkblock found"}
               </span>
