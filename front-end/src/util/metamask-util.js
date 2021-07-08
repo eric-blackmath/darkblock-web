@@ -83,7 +83,6 @@ export function signData(data, address) {
       if (result.error) {
         return console.error(result.error.message);
       }
-      console.log(`Signature : ${result.result}`);
 
       return result.result;
 

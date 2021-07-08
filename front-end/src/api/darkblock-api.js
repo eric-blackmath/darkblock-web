@@ -13,12 +13,11 @@ export const confirmTvLogin = (code, wallet, sessionToken) => {
     url: "https://app.darkblock.io/api2/codeset",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "Allow-Control-Allow-Origin": "*",
     },
     data: data,
   };
 
-  axios(config)
+  return axios(config)
     .then((response) => response)
     .catch((error) => {
       throw error;

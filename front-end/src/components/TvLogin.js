@@ -3,21 +3,44 @@ import "../App.scss";
 import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
 import * as DarkblockApi from "../api/darkblock-api";
+import * as MetamaskUtil from "../util/metamask-util";
 
 export default function Dashboard() {
-  const user = useContext(UserContext);
+  const address = useContext(UserContext);
   const [code, setCode] = useState("");
 
   useEffect(() => {
-    console.log(`Tv login triggered`);
+    console.log(`Tv login triggered : ${address}`);
+    return;
   }, []);
-  const onSubmit = () => {
-    console.log(`Code : ${code}`);
-    const sessionToken = Date.now() + user.id; // Unix timestamp in milliseconds
-    //sessionToken : sign with Metamask. take the epoch, append _ and then the signature to create the session token.
-    console.log(`Session Token: ${sessionToken}`);
+  const onSubmit = async () => {
+    try {
+      console.log(`Code : ${code}`);
+      const epoch = Date.now();
+      console.log(`Epoch : ${epoch}`);
+      var sessionToken = epoch + address; // Unix timestamp in milliseconds
+      //sessionToken : sign with Metamask. take the epoch, append _ and then the signature to create the session token.
 
-    DarkblockApi.confirmTvLogin(code, user.id, sessionToken);
+      const signature = await MetamaskUtil.signData(sessionToken, address);
+
+      console.log(`Signature : ${signature}`);
+
+      sessionToken = epoch + "_" + signature;
+
+      console.log(
+        `code: ${code} \naddress: ${address}\nsession_token :${sessionToken}`
+      );
+
+      const confirmRes = await DarkblockApi.confirmTvLogin(
+        code,
+        address,
+        sessionToken
+      );
+
+      console.log(`Confirm Response : ${JSON.stringify(confirmRes.data)}`);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleOnCodeChange = (e) => {

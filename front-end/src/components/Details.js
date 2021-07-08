@@ -5,7 +5,7 @@ import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
-import $ from "jquery"
+import $ from "jquery";
 import Preview from "../components/preview";
 import PreviewTwo from "../components/previewtwo";
 
@@ -22,22 +22,21 @@ export default function DetailsView() {
   const [darkblockDescription, setDarkblockDescription] = useState("");
 
   const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
-  
 
   useEffect(() => {
-    function previewFile(input){
+    function previewFile(input) {
       var file = $("input[type=file]").get(0).files[0];
 
-      if(file){
-          var reader = new FileReader();
+      if (file) {
+        var reader = new FileReader();
 
-          reader.onload = function(){
-              $("#previewImg").attr("src", reader.result);
-          }
+        reader.onload = function () {
+          $("#previewImg").attr("src", reader.result);
+        };
 
-          reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
       }
-  }
+    }
     //!TODO Handle the id validation, then init requests
 
     const fetchDataForNft = async () => {
@@ -178,6 +177,14 @@ export default function DetailsView() {
     setDarkblockDescription(e.target.value);
   };
 
+  const levelOneFileSelectionHandler = (files) => {
+    console.log(`We have the files in Details : ${files.length}`);
+  };
+
+  const levelTwoFileSelectionHandler = (files) => {
+    //hook this up with previewtwo
+    console.log(`We have the files in Details : ${files.length}`);
+  };
 
   return (
     <div>
@@ -288,7 +295,12 @@ export default function DetailsView() {
                       <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
                       <p className="no-selected">No file selected </p>
                     </div> */}
-                    <Preview />
+                    <Preview
+                      fileSelectionHandler={levelOneFileSelectionHandler}
+                    />
+                    {/* <PreviewTwo
+                      fileSelectionHandler={levelTwoFileSelectionHandler}
+                    /> */}
                     <div className="custom-file mb-4">
                       <input
                         type="file"

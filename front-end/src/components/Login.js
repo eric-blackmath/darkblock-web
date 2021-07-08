@@ -28,15 +28,6 @@ export default function Login({ setAddress, setUser }) {
       // setUser(user);
       setAddress(account); //when address is set, user is redirected to dashboard
 
-      const respo = await MetamaskUtil.signData(
-        "Testing the signature, dont mind me",
-        account
-      );
-
-      console.log(`${respo}`);
-
-      return;
-
       // await signMsg("this string", account);
       localStorage.setItem("accountAddress", account);
     } catch (e) {
