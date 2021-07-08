@@ -50,10 +50,10 @@ export default function Preview({ fileSelectionHandler }) {
         handleFileUpdate(files); //send the files back to details
 
         // Process all File objects
-        for (var i = 0, f; (f = files[i]); i++) {
-          parseFile(f);
-          uploadFile(f);
-        }
+        // for (var i = 0, f; (f = files[i]); i++) {
+        //   parseFile(f);
+        //   uploadFile(f);
+        // }
       }
 
       // Output
@@ -88,65 +88,65 @@ export default function Preview({ fileSelectionHandler }) {
         }
       }
 
-      function setProgressMaxValue(e) {
-        var pBar = document.getElementById("file-progress");
+      // function setProgressMaxValue(e) {
+      //   var pBar = document.getElementById("file-progress");
 
-        if (e.lengthComputable) {
-          pBar.max = e.total;
-        }
-      }
+      //   if (e.lengthComputable) {
+      //     pBar.max = e.total;
+      //   }
+      // }
 
-      function updateFileProgress(e) {
-        var pBar = document.getElementById("file-progress");
+      // function updateFileProgress(e) {
+      //   var pBar = document.getElementById("file-progress");
 
-        if (e.lengthComputable) {
-          pBar.value = e.loaded;
-        }
-      }
+      //   if (e.lengthComputable) {
+      //     pBar.value = e.loaded;
+      //   }
+      // }
 
-      function uploadFile(file) {
-        var xhr = new XMLHttpRequest(),
-          fileInput = document.getElementById("class-roster-file"),
-          pBar = document.getElementById("file-progress"),
-          fileSizeLimit = 1024; // In MB
-        if (xhr.upload) {
-          // Check if file is less than x MB
-          if (file.size <= fileSizeLimit * 1024 * 1024) {
-            // Progress bar
-            pBar.style.display = "none";
-            xhr.upload.addEventListener(
-              "loadstart",
-              setProgressMaxValue,
-              false
-            );
-            xhr.upload.addEventListener("progress", updateFileProgress, false);
+      // function uploadFile(file) {
+      //   var xhr = new XMLHttpRequest(),
+      //     fileInput = document.getElementById("class-roster-file"),
+      //     pBar = document.getElementById("file-progress"),
+      //     fileSizeLimit = 1024; // In MB
+      //   if (xhr.upload) {
+      //     // Check if file is less than x MB
+      //     if (file.size <= fileSizeLimit * 1024 * 1024) {
+      //       // Progress bar
+      //       pBar.style.display = "none";
+      //       xhr.upload.addEventListener(
+      //         "loadstart",
+      //         setProgressMaxValue,
+      //         false
+      //       );
+      //       xhr.upload.addEventListener("progress", updateFileProgress, false);
 
-            // File received / failed
-            xhr.onreadystatechange = function (e) {
-              if (xhr.readyState == 4) {
-                // Everything is good!
-                // progress.className = (xhr.status == 200 ? "success" : "failure");
-                // document.location.reload(true);
-              }
-            };
+      //       // File received / failed
+      //       xhr.onreadystatechange = function (e) {
+      //         if (xhr.readyState == 4) {
+      //           // Everything is good!
+      //           // progress.className = (xhr.status == 200 ? "success" : "failure");
+      //           // document.location.reload(true);
+      //         }
+      //       };
 
-            // Start upload
-            xhr.open(
-              "POST",
-              document.getElementById("file-upload-form").action,
-              true
-            );
-            xhr.setRequestHeader("X-File-Name", file.name);
-            xhr.setRequestHeader("X-File-Size", file.size);
-            xhr.setRequestHeader("Content-Type", "multipart/form-data");
-            xhr.send(file);
-          } else {
-            output(
-              "Please upload a smaller file (< " + fileSizeLimit + " MB)."
-            );
-          }
-        }
-      }
+      //       // Start upload
+      //       xhr.open(
+      //         "POST",
+      //         document.getElementById("file-upload-form").action,
+      //         true
+      //       );
+      //       xhr.setRequestHeader("X-File-Name", file.name);
+      //       xhr.setRequestHeader("X-File-Size", file.size);
+      //       xhr.setRequestHeader("Content-Type", "multipart/form-data");
+      //       xhr.send(file);
+      //     } else {
+      //       output(
+      //         "Please upload a smaller file (< " + fileSizeLimit + " MB)."
+      //       );
+      //     }
+      //   }
+      // }
 
       // Check for the various File API support.
       if (window.File && window.FileList && window.FileReader) {
