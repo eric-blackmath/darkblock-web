@@ -5,6 +5,7 @@ import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
 import Pagination from "./Pagination";
 import { UserContext } from "../util/UserContext";
+import * as parser from "../util/parser";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
@@ -31,7 +32,7 @@ export default function MyNfts() {
         console.log(`Data : ${data.length}`);
 
         //handle the nfts | extract data for the nft verification
-        var idsString = getContractAndTokens(data);
+        var idsString = parser.getContractAndTokens(data);
         await verifyNFTs(idsString);
         setNfts(data);
         setIsLoaded(true);
@@ -65,15 +66,6 @@ export default function MyNfts() {
       //catch some errors here
       console.log(err);
     }
-  };
-
-  const getContractAndTokens = (nfts) => {
-    var ids = "";
-
-    for (let i = 0; i < nfts.length; i++) {
-      ids += `"${nfts[i].asset_contract.address}:${nfts[i].token_id}",`;
-    }
-    return ids.substring(0, ids.length - 1);
   };
 
   const selectionHandler = (nftIndex) => {

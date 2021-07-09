@@ -31,6 +31,8 @@ export default function Dashboard() {
         `code: ${code} \naddress: ${address}\nsession_token :${sessionToken}`
       );
 
+      return;
+
       const confirmRes = await DarkblockApi.confirmTvLogin(
         code,
         address,

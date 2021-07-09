@@ -4,7 +4,7 @@ import * as sigUtil from "eth-sig-util";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8080");
 
-export function signData(data, address) {
+export async function signData(data, address) {
   // var msgHash = ethUtil.keccak256(msgParams);
 
   // web3.eth.personal_sign(from, msgHash, function (err, result) {
@@ -72,30 +72,42 @@ export function signData(data, address) {
 
   //   console.log(`${JSON.stringify(res)}`);
 
-  return web3.currentProvider.send(
-    {
-      method: "eth_signTypedData",
-      params: [msgParamsLocal, address],
-      from: address,
-    },
+  // const signature = await web3.eth.sign(address, text = data);
+  console.log(`${address}`);
+  const signature = await web3.eth.sign(
+    web3.utils.sha3(data),
+    address,
     function (err, result) {
-      if (err) return console.error(err);
-      if (result.error) {
-        return console.error(result.error.message);
-      }
-
-      return result.result;
-
-      //   return JSON.stringify(result);
-      // const recovered = sigUtil.recoverTypedSignature({
-      //   data: msgParamsLocal,
-      //   sig: result.result,
-      // });
-      // if (recovered === address) {
-      //   alert("Recovered signer: " + address);
-      // } else {
-      //   alert("Failed to verify signer, got: " + result);
-      // }
+      console.log(err, result);
     }
   );
+  console.log(`eth.sign : ${signature}`);
+
+  return signature;
+
+  // return web3.currentProvider.send(
+  //   {
+  //     method: "eth_signTypedData",
+  //     params: [msgParamsLocal, address],
+  //   },
+  //   function (err, result) {
+  //     if (err) return console.error(err);
+  //     if (result.error) {
+  //       return console.error(result.error.message);
+  //     }
+
+  //     return result.result;
+
+  //     //   return JSON.stringify(result);
+  //     // const recovered = sigUtil.recoverTypedSignature({
+  //     //   data: msgParamsLocal,
+  //     //   sig: result.result,
+  //     // });
+  //     // if (recovered === address) {
+  //     //   alert("Recovered signer: " + address);
+  //     // } else {
+  //     //   alert("Failed to verify signer, got: " + result);
+  //     // }
+  //   }
+  // );
 }

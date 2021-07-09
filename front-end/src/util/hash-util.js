@@ -17,15 +17,16 @@ export function hashInChunks(file) {
       function (data) {
         console.log("100%");
         var encrypted = SHA256.finalize().toString();
+        data = null;
         resolve(encrypted);
-        console.log("encrypted: " + encrypted);
+        console.log(`${encrypted}`, "color: green; font-size: 20px;");
       }
     );
   });
 }
 
 function loading(file, callbackProgress, callbackFinal) {
-  var chunkSize = 1024 * 1024; // bytes - increasing chunkSize takes more memory, decreasing it takes more time
+  var chunkSize = 1024 * 1024; // bytes[2mb] - increasing chunkSize takes more memory, decreasing it takes more time
   var offset = 0;
   var size = chunkSize;
   var partial;
@@ -34,9 +35,10 @@ function loading(file, callbackProgress, callbackFinal) {
   if (file.size === 0) {
     callbackFinal();
   }
+
   while (offset < file.size) {
-    partial = file.slice(offset, offset + size);
     var reader = new FileReader();
+    partial = file.slice(offset, offset + size);
     reader.size = chunkSize;
     reader.offset = offset;
     reader.index = index;
@@ -46,6 +48,7 @@ function loading(file, callbackProgress, callbackFinal) {
     reader.readAsArrayBuffer(partial);
     offset += chunkSize;
     index += 1;
+    reader = null;
   }
 }
 
