@@ -13,6 +13,7 @@ import * as parser from "../util/parser";
 import "../styles/preview.scss";
 
 export default function DetailsView({ fileSelectionHandler }) {
+  
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const address = useContext(UserContext);
   const [level, setLevel] = useState("0"); //darkblock level
@@ -28,26 +29,29 @@ export default function DetailsView({ fileSelectionHandler }) {
   const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
   var handleFileUpdate = fileSelectionHandler;
 
+
+
   useEffect(() => {
+    
     // File Upload
     //
     function ekUpload() {
       function Init() {
         console.log("Upload Initialised");
 
-        // var fileSelect = document.getElementById("file-upload"),
-        //   fileDrag = document.getElementById("file-drag");
+        var fileSelect = document.getElementById("file-upload"),
+          fileDrag = document.getElementById("file-drag");
 
-        // fileSelect.addEventListener("change", fileSelectHandler, false);
+        fileSelect.addEventListener("change", fileSelectHandler, false);
 
-        // // Is XHR2 available?
-        // var xhr = new XMLHttpRequest();
-        // if (xhr.upload) {
-        //   // File Drop
-        //   fileDrag.addEventListener("dragover", fileDragHover, false);
-        //   fileDrag.addEventListener("dragleave", fileDragHover, false);
-        //   fileDrag.addEventListener("drop", fileSelectHandler, false);
-        // }
+        // Is XHR2 available?
+        var xhr = new XMLHttpRequest();
+        if (xhr.upload) {
+          // File Drop
+          fileDrag.addEventListener("dragover", fileDragHover, false);
+          fileDrag.addEventListener("dragleave", fileDragHover, false);
+          fileDrag.addEventListener("drop", fileSelectHandler, false);
+        }
       }
 
       function fileDragHover(e) {
@@ -115,19 +119,7 @@ export default function DetailsView({ fileSelectionHandler }) {
       }
     }
     ekUpload();
-    function previewFile(input) {
-      var file = $("input[type=file]").get(0).files[0];
-
-      if (file) {
-        var reader = new FileReader();
-
-        reader.onload = function () {
-          $("#previewImg").attr("src", reader.result);
-        };
-
-        reader.readAsDataURL(file);
-      }
-    }
+    
     //!TODO Handle the id validation, then init requests
 
     const fetchDataForNft = async () => {
@@ -304,6 +296,8 @@ export default function DetailsView({ fileSelectionHandler }) {
     console.log(`We have the files in Details : ${files.length}`);
   };
 
+  
+
   return (
     <div>
       {isLoaded ? (
@@ -475,6 +469,7 @@ export default function DetailsView({ fileSelectionHandler }) {
                     <div className="uploader custom-file mb-4">
                       <label
                         id="file-drag"
+                        htmlFor="file-upload"
                         className="custom-file-label"
                         htmlFor="levelTwoFile"
                       >

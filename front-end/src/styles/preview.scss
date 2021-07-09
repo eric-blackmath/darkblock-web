@@ -219,6 +219,7 @@
         margin-bottom: 0.5rem;
       }
     }
+
   
     #file-image {
       display: inline;
@@ -227,9 +228,9 @@
       // width: auto;
       // height: auto;
       // max-width: 180px;
-        &.hidden {
-          display: none;
-        }
+        // &.hidden {
+        //   display: none;
+        // }
     }
   
     #notimage {
