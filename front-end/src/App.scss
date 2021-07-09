@@ -46,8 +46,9 @@ img{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
-  grid-column-gap: 0px;
+  grid-column-gap: 24px;
   grid-row-gap: 24px;
+  padding: 40px;
 
   @media only screen and (max-width:1024px){
     grid-template-columns: repeat(3, 1fr);
@@ -152,7 +153,7 @@ img{
   background: #f9f9f9;
   border-radius: 4px;
   padding: 16px;
-  max-width: 282px;
+  // max-width: 282px;
   height: 430px;
   position: relative;
   border: 1px solid #c4c4c4;

@@ -43,7 +43,7 @@ export default function PreviewTwo({ fileSelectionHandler }) {
         // Cancel event and hover styling
         fileDragHover(e);
 
-        fileSelectionHandler(files); //send the files back to details
+        // fileSelectionHandler(files); //send the files back to details
 
         // Process all File objects
         for (var i = 0, f; (f = files[i]); i++) {
