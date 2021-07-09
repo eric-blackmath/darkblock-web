@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
 import $ from "jquery";
-import Preview from "../components/preview";
-import PreviewTwo from "../components/previewtwo";
+import Preview from "./LevelOneFileChooser";
+import PreviewTwo from "./LevelTwoFileChooser";
 import * as HashUtil from "../util/hash-util";
 import * as parser from "../util/parser";
 
@@ -326,7 +326,9 @@ export default function DetailsView() {
                       <p className="no-selected">No file selected </p>
                     </div> */}
                     <Preview
-                      fileSelectionHandler={levelOneFileSelectionHandler}
+                      levelOneFileSelectionHandler={
+                        levelOneFileSelectionHandler
+                      }
                     />
                     {/* <PreviewTwo
                       fileSelectionHandler={levelTwoFileSelectionHandler}
@@ -360,7 +362,9 @@ export default function DetailsView() {
                       </ul>
                     </div>
                     <PreviewTwo
-                      fileSelectionHandler={levelTwoFileSelectionHandler}
+                      levelTwoFileSelectionHandler={
+                        levelTwoFileSelectionHandler
+                      }
                     />
                     {/* <div className="file-input-two">
                       <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>

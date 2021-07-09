@@ -1,10 +1,13 @@
 import React from "react";
 import "../styles/preview.scss";
-import "../styles/detail.scss"
-import one from "../images/levelone.png"
+import "../styles/detail.scss";
+import one from "../images/levelone.png";
+import { useEffect, useState, useContext } from "react";
 
-class Preview extends React.Component {
-  componentDidMount() {
+export default function LevelOneFileChooser({ levelOneFileSelectionHandler }) {
+  var fileSelectionHandler = levelOneFileSelectionHandler;
+
+  useEffect(() => {
     // File Upload
     //
     function ekUpload() {
@@ -43,6 +46,7 @@ class Preview extends React.Component {
 
         // Cancel event and hover styling
         fileDragHover(e);
+        fileSelectionHandler(files);
 
         // Process all File objects
         for (var i = 0, f; (f = files[i]); i++) {
@@ -151,40 +155,34 @@ class Preview extends React.Component {
       }
     }
     ekUpload();
-  }
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <div id="file-upload-form" className="uploader">
-          <input
-            id="file-upload"
-            type="file"
-            name="fileUpload"
-          />
+  return (
+    <div>
+      <div id="file-upload-form" className="uploader">
+        <input id="file-upload" type="file" name="fileUpload" />
 
-          <label htmlFor="file-upload" id="file-drag">
-            <img id="file-image" src="#" alt="Preview" className="hidden" />
-            <div id="start">
-              {/* <div>Select a file or drag here</div> */}
-              <div id="notimage" className="hidden">
-                Please select an image
-              </div>
-              <span id="file-upload-btn" className="btn btn-primary">
-              <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
-              </span>
+        <label htmlFor="file-upload" id="file-drag">
+          <img id="file-image" src="#" alt="Preview" className="hidden" />
+          <div id="start">
+            {/* <div>Select a file or drag here</div> */}
+            <div id="notimage" className="hidden">
+              Please select an image
             </div>
-            <div id="response" className="hidden">
+            <span id="file-upload-btn" className="btn btn-primary">
+              <p className="file-input-text">
+                <span className="file-span">Upload file </span>or drop here
+              </p>
+            </span>
+          </div>
+          <div id="response" className="hidden">
             <div id="messages"></div>
-              <progress className="progress" id="file-progress" value="0">
-                <span>0</span>%
-              </progress>
-            </div>
-          </label>  
-        </div>
+            <progress className="progress" id="file-progress" value="0">
+              <span>0</span>%
+            </progress>
+          </div>
+        </label>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default Preview;
