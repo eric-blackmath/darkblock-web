@@ -21,7 +21,7 @@ export default function Dashboard() {
       var sessionToken = epoch + address; // Unix timestamp in milliseconds
       //sessionToken : sign with Metamask. take the epoch, append _ and then the signature to create the session token.
 
-      const signature = await MetamaskUtil.signData(sessionToken, address);
+      const signature = await MetamaskUtil.signTypedData(sessionToken, address);
 
       console.log(`Signature : ${signature}`);
 
@@ -30,9 +30,6 @@ export default function Dashboard() {
       console.log(
         `code: ${code} \naddress: ${address}\nsession_token :${sessionToken}`
       );
-
-      return;
-
       const confirmRes = await DarkblockApi.confirmTvLogin(
         code,
         address,

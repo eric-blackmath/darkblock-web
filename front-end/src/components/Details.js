@@ -10,10 +10,10 @@ import Preview from "../components/preview";
 import PreviewTwo from "../components/previewtwo";
 import * as HashUtil from "../util/hash-util";
 import * as parser from "../util/parser";
+import * as MetamaskUtil from "../util/metamask-util";
 import "../styles/preview.scss";
 
 export default function DetailsView({ fileSelectionHandler }) {
-  
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const address = useContext(UserContext);
   const [level, setLevel] = useState("0"); //darkblock level
@@ -29,10 +29,7 @@ export default function DetailsView({ fileSelectionHandler }) {
   const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
   var handleFileUpdate = fileSelectionHandler;
 
-
-
   useEffect(() => {
-    
     // File Upload
     //
     function ekUpload() {
@@ -119,7 +116,7 @@ export default function DetailsView({ fileSelectionHandler }) {
       }
     }
     ekUpload();
-    
+
     //!TODO Handle the id validation, then init requests
 
     const fetchDataForNft = async () => {
@@ -207,6 +204,8 @@ export default function DetailsView({ fileSelectionHandler }) {
     const fileHash = await HashUtil.hashInChunks(file);
     console.log(`Hash of the file : ${fileHash}`);
     //now sign this hash with eth wallet and attach it to tags
+    const dataSignature = await MetamaskUtil.signTypedData(fileHash, address);
+    console.log(`Hash Sign : ${dataSignature}`);
 
     const data = new FormData(); //we put the file and tags inside formData and send it across
     data.append("file", file);
@@ -216,7 +215,7 @@ export default function DetailsView({ fileSelectionHandler }) {
     data.append("level", level);
     data.append("token_schema", nft.asset_contract.schema_name);
     data.append("darkblock_description", darkblockDescription);
-    data.append("darkblock_hash", fileHash);
+    data.append("data_signature", dataSignature);
 
     try {
       const options = {
@@ -295,8 +294,6 @@ export default function DetailsView({ fileSelectionHandler }) {
     //hook this up with previewtwo
     console.log(`We have the files in Details : ${files.length}`);
   };
-
-  
 
   return (
     <div>
@@ -519,11 +516,11 @@ export default function DetailsView({ fileSelectionHandler }) {
                     {/* <PreviewTwo
                       fileSelectionHandler={levelTwoFileSelectionHandler}
                     /> */}
-                     {/* <div className="file-input-two">
+                    {/* <div className="file-input-two">
                       <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
                       <p className="no-selected">No file selected </p>
                     </div> */}
-                  {/* <div className="custom-file mb-4">
+                    {/* <div className="custom-file mb-4">
                       <input
                         type="file"
                         className="custom-file-input"
@@ -537,7 +534,7 @@ export default function DetailsView({ fileSelectionHandler }) {
                         {level === "two" ? fileName : null}
                       </label>
                     </div> */}
-                  </div> 
+                  </div>
                 </div>
 
                 <div>

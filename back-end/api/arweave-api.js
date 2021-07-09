@@ -18,8 +18,6 @@ const arweave = Arweave.init({
   logging: true,
 });
 
-const checkTime = 1000;
-
 /**
  * @param  {string} arweaveWallet
  * @param  {file} data
@@ -107,6 +105,7 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
     isLevelTwo === true ? encryptionKeys.rsaPublicKey : "None"
   );
   transaction.addTag("Data-Hash", fileHash);
+  transaction.addTag("Data-Signature", tags.data_signature);
   transaction.addTag("Transaction-Type", "Test-Debug");
   if (isLevelTwo === true) transaction.addTag("Encryption-Version", "0.1");
 

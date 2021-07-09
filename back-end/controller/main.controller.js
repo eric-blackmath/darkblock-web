@@ -4,6 +4,7 @@ const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
 
 const ParseUtil = require("../utils/parse");
+const sigUtil = require("eth-sig-util");
 
 const axios = require("axios");
 const ethereumJsUtil = require("ethereumjs-util");
@@ -86,7 +87,7 @@ const upload = async (req, res) => {
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
+      "C:/Users/livingRoom/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
     ); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
@@ -173,28 +174,42 @@ const download = (req, res) => {
   });
 };
 
+/**
+ * @param  {request} req //request with signature, data and address in the params
+ * @param  {} res
+ * downloads the file with provided name
+ */
+const verifySignature = async (req, res) => {
+  var params = await ParseUtil.getDataForSignatureVerification(req);
+
+  const signature = params.signature;
+  const data = params.data;
+  const address = params.address;
+
+  const msgParamsLocal = [
+    {
+      type: "string",
+      name: "Message",
+      value: data,
+    },
+  ];
+
+  const recovered = sigUtil.recoverTypedSignatureLegacy({
+    data: msgParamsLocal,
+    sig: signature,
+  });
+  if (recovered === address) {
+    res.status(200).send({ message: `Recovered signer: ${address}` });
+    console.log(``);
+  } else {
+    res
+      .status(200)
+      .send({ message: `Failed to verify signer for ${signature}` });
+  }
+};
+
 const protocolTest = async (req, res) => {
   console.log(`Protocol Initializing`);
-
-  const msg = "16258260890750xaeabae9c70afbf5ad6e223211dac498ab1603fb0";
-  const signature =
-    "0x38997d5f539cd858cd3de597b39c9936389553fb88688e23f8e3e3cb4a71dc3c4577f91f14580f8cd6c31f64b7dce3d3623f8728e32f6502261081d3c7b75ab91c";
-  const account = "0xaeabae9c70afbf5ad6e223211dac498ab1603fb0";
-
-  const msgHash = ethereumJsUtil.keccak256(Buffer.from(msg));
-  // The rest is the same as above
-  const signatureBuffer = signature;
-  const signatureParams = ethereumJsUtil.fromRpcSig(signatureBuffer);
-  const publicKey = ethereumJsUtil.ecrecover(
-    msgHash,
-    signatureParams.v,
-    signatureParams.r,
-    signatureParams.s
-  );
-  const addressBuffer = ethereumJsUtil.publicToAddress(publicKey);
-  const address = ethereumJsUtil.bufferToHex(addressBuffer);
-
-  console.log(address); // Prints my initial web3.eth.coinbase
 };
 
 // Export all ya need
@@ -205,4 +220,5 @@ module.exports = {
   verifyNFTs,
   protocolTest,
   protocolUpload,
+  verifySignature,
 };
