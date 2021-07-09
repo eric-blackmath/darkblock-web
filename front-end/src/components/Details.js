@@ -10,6 +10,7 @@ import Preview from "../components/preview";
 import PreviewTwo from "../components/previewtwo";
 import * as HashUtil from "../util/hash-util";
 import * as parser from "../util/parser";
+import * as MetamaskUtil from "../util/metamask-util";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -127,6 +128,8 @@ export default function DetailsView() {
     const fileHash = await HashUtil.hashInChunks(file);
     console.log(`Hash of the file : ${fileHash}`);
     //now sign this hash with eth wallet and attach it to tags
+    const dataSignature = await MetamaskUtil.signTypedData(fileHash, address);
+    console.log(`Hash Sign : ${dataSignature}`);
 
     const data = new FormData(); //we put the file and tags inside formData and send it across
     data.append("file", file);
@@ -136,7 +139,7 @@ export default function DetailsView() {
     data.append("level", level);
     data.append("token_schema", nft.asset_contract.schema_name);
     data.append("darkblock_description", darkblockDescription);
-    data.append("darkblock_hash", fileHash);
+    data.append("data_signature", dataSignature);
 
     try {
       const options = {

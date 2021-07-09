@@ -23,6 +23,26 @@ const getFullQuery = async (req) => {
 };
 
 /**
+ * @param  {request} req
+ * parses and returns the data (signature, data, address) from the request,
+ *
+ */
+const getDataForSignatureVerification = async (req) => {
+  var form = new formidable.IncomingForm();
+  var formfields = await new Promise(function (resolve, reject) {
+    form.parse(req, function (err, fields, files) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(fields);
+    }); // form.parse
+  });
+
+  return formfields;
+};
+
+/**
  * @param  {Transaction[]} transactions //nfts that are already darkblocked
  * @param  {string} field //field we wanna extract (NFT-Id)
  * TODO Maybe optimize it a little bit
@@ -41,4 +61,5 @@ const getIdOfMatches = (transactions, field) => {
 module.exports = {
   getFullQuery,
   getIdOfMatches,
+  getDataForSignatureVerification,
 };
