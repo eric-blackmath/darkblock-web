@@ -49,11 +49,6 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
       "sign123"
     );
 
-    // let pack = {};
-    // pack["aesKey"] = encryptionKeys.aesKey;
-    // pack["filename"] = file.path;
-    // console.log("writing file");
-    // fs.writeFileSync(file.path + ".ready", JSON.stringify(pack));
     FileHandler.prepareFileForEncryption(encryptionKeys.aesKey, file);
 
     //look for the exact same input .enc file in the directory and upload to arweave

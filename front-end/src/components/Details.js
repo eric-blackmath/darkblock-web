@@ -9,6 +9,7 @@ import $ from "jquery";
 import Preview from "../components/preview";
 import PreviewTwo from "../components/previewtwo";
 import * as HashUtil from "../util/hash-util";
+import * as parser from "../util/parser";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -16,6 +17,7 @@ export default function DetailsView() {
   const [level, setLevel] = useState("0"); //darkblock level
   const [nft, setNft] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isDarkblocked, setIsDarkblocked] = useState(false);
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileUploadProgress, setFileUploadProgress] = useState("");
@@ -45,6 +47,8 @@ export default function DetailsView() {
         const nft = await OpenseaApi.getSingleNft(contract, token).then(
           (res) => res.assets[0]
         );
+        var idsString = parser.getContractAndTokensDetails(nft);
+        await verifyNFT(idsString);
         setNft(nft);
         setIsLoaded(true); //load it in ui
       } catch (e) {
@@ -57,6 +61,25 @@ export default function DetailsView() {
     console.log(`Address : ${address}`);
     console.log(`Redirect Params : ${contract} : ${token}`);
   }, []);
+
+  const verifyNFT = async (ids) => {
+    const data = new FormData(); //we put the file and tags inside formData and send it across
+    data.append("ids", ids);
+
+    try {
+      const verifyRes = await NodeApi.verifyNFTs(data);
+      //handle the response
+      var matches = verifyRes.data;
+      if (matches) {
+        //nft already darkblocked
+        setIsDarkblocked(true);
+        console.log(`Verify Response : ${JSON.stringify(matches)}`);
+      }
+    } catch (err) {
+      //catch some errors here
+      console.log(err);
+    }
+  };
 
   const onLevelOneFileChange = (e) => {
     //level two file is picked

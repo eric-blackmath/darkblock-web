@@ -6,6 +6,7 @@ const baseUrl = "http://localhost:8080/files/";
 const ParseUtil = require("../utils/parse");
 
 const axios = require("axios");
+const ethereumJsUtil = require("ethereumjs-util");
 
 const protocolUpload = async (req, res) => {
   console.log(`Protocol endpoint reached `);
@@ -85,7 +86,7 @@ const upload = async (req, res) => {
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/Users/livingRoom/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
+      "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
     ); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
@@ -174,6 +175,26 @@ const download = (req, res) => {
 
 const protocolTest = async (req, res) => {
   console.log(`Protocol Initializing`);
+
+  const msg = "16258260890750xaeabae9c70afbf5ad6e223211dac498ab1603fb0";
+  const signature =
+    "0x38997d5f539cd858cd3de597b39c9936389553fb88688e23f8e3e3cb4a71dc3c4577f91f14580f8cd6c31f64b7dce3d3623f8728e32f6502261081d3c7b75ab91c";
+  const account = "0xaeabae9c70afbf5ad6e223211dac498ab1603fb0";
+
+  const msgHash = ethereumJsUtil.keccak256(Buffer.from(msg));
+  // The rest is the same as above
+  const signatureBuffer = signature;
+  const signatureParams = ethereumJsUtil.fromRpcSig(signatureBuffer);
+  const publicKey = ethereumJsUtil.ecrecover(
+    msgHash,
+    signatureParams.v,
+    signatureParams.r,
+    signatureParams.s
+  );
+  const addressBuffer = ethereumJsUtil.publicToAddress(publicKey);
+  const address = ethereumJsUtil.bufferToHex(addressBuffer);
+
+  console.log(address); // Prints my initial web3.eth.coinbase
 };
 
 // Export all ya need
