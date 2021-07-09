@@ -1,13 +1,10 @@
 import React from "react";
 import "../styles/preview.scss";
-import "../styles/detail.scss";
-import one from "../images/levelone.png";
-import { useEffect } from "react";
+import "../styles/detail.scss"
+import one from "../images/levelone.png"
 
-export default function Preview({ fileSelectionHandler }) {
-  var handleFileUpdate = fileSelectionHandler;
-
-  useEffect(() => {
+class Preview extends React.Component {
+  componentDidMount() {
     // File Upload
     //
     function ekUpload() {
@@ -47,13 +44,11 @@ export default function Preview({ fileSelectionHandler }) {
         // Cancel event and hover styling
         fileDragHover(e);
 
-        handleFileUpdate(files); //send the files back to details
-
         // Process all File objects
-        // for (var i = 0, f; (f = files[i]); i++) {
-        //   parseFile(f);
-        //   uploadFile(f);
-        // }
+        for (var i = 0, f; (f = files[i]); i++) {
+          parseFile(f);
+          uploadFile(f);
+        }
       }
 
       // Output
@@ -88,65 +83,65 @@ export default function Preview({ fileSelectionHandler }) {
         }
       }
 
-      // function setProgressMaxValue(e) {
-      //   var pBar = document.getElementById("file-progress");
+      function setProgressMaxValue(e) {
+        var pBar = document.getElementById("file-progress");
 
-      //   if (e.lengthComputable) {
-      //     pBar.max = e.total;
-      //   }
-      // }
+        if (e.lengthComputable) {
+          pBar.max = e.total;
+        }
+      }
 
-      // function updateFileProgress(e) {
-      //   var pBar = document.getElementById("file-progress");
+      function updateFileProgress(e) {
+        var pBar = document.getElementById("file-progress");
 
-      //   if (e.lengthComputable) {
-      //     pBar.value = e.loaded;
-      //   }
-      // }
+        if (e.lengthComputable) {
+          pBar.value = e.loaded;
+        }
+      }
 
-      // function uploadFile(file) {
-      //   var xhr = new XMLHttpRequest(),
-      //     fileInput = document.getElementById("class-roster-file"),
-      //     pBar = document.getElementById("file-progress"),
-      //     fileSizeLimit = 1024; // In MB
-      //   if (xhr.upload) {
-      //     // Check if file is less than x MB
-      //     if (file.size <= fileSizeLimit * 1024 * 1024) {
-      //       // Progress bar
-      //       pBar.style.display = "none";
-      //       xhr.upload.addEventListener(
-      //         "loadstart",
-      //         setProgressMaxValue,
-      //         false
-      //       );
-      //       xhr.upload.addEventListener("progress", updateFileProgress, false);
+      function uploadFile(file) {
+        var xhr = new XMLHttpRequest(),
+          fileInput = document.getElementById("class-roster-file"),
+          pBar = document.getElementById("file-progress"),
+          fileSizeLimit = 1024; // In MB
+        if (xhr.upload) {
+          // Check if file is less than x MB
+          if (file.size <= fileSizeLimit * 1024 * 1024) {
+            // Progress bar
+            pBar.style.display = "none";
+            xhr.upload.addEventListener(
+              "loadstart",
+              setProgressMaxValue,
+              false
+            );
+            xhr.upload.addEventListener("progress", updateFileProgress, false);
 
-      //       // File received / failed
-      //       xhr.onreadystatechange = function (e) {
-      //         if (xhr.readyState == 4) {
-      //           // Everything is good!
-      //           // progress.className = (xhr.status == 200 ? "success" : "failure");
-      //           // document.location.reload(true);
-      //         }
-      //       };
+            // File received / failed
+            xhr.onreadystatechange = function (e) {
+              if (xhr.readyState == 4) {
+                // Everything is good!
+                // progress.className = (xhr.status == 200 ? "success" : "failure");
+                // document.location.reload(true);
+              }
+            };
 
-      //       // Start upload
-      //       xhr.open(
-      //         "POST",
-      //         document.getElementById("file-upload-form").action,
-      //         true
-      //       );
-      //       xhr.setRequestHeader("X-File-Name", file.name);
-      //       xhr.setRequestHeader("X-File-Size", file.size);
-      //       xhr.setRequestHeader("Content-Type", "multipart/form-data");
-      //       xhr.send(file);
-      //     } else {
-      //       output(
-      //         "Please upload a smaller file (< " + fileSizeLimit + " MB)."
-      //       );
-      //     }
-      //   }
-      // }
+            // Start upload
+            xhr.open(
+              "POST",
+              document.getElementById("file-upload-form").action,
+              true
+            );
+            xhr.setRequestHeader("X-File-Name", file.name);
+            xhr.setRequestHeader("X-File-Size", file.size);
+            xhr.setRequestHeader("Content-Type", "multipart/form-data");
+            xhr.send(file);
+          } else {
+            output(
+              "Please upload a smaller file (< " + fileSizeLimit + " MB)."
+            );
+          }
+        }
+      }
 
       // Check for the various File API support.
       if (window.File && window.FileList && window.FileReader) {
@@ -156,34 +151,40 @@ export default function Preview({ fileSelectionHandler }) {
       }
     }
     ekUpload();
-  }, []);
+  }
 
-  return (
-    <div>
-      <div id="file-upload-form" className="uploader">
-        <input id="file-upload" type="file" name="fileUpload" />
+  render() {
+    return (
+      <div>
+        <div id="file-upload-form" className="uploader">
+          <input
+            id="file-upload"
+            type="file"
+            name="fileUpload"
+          />
 
-        <label htmlFor="file-upload" id="file-drag">
-          <img id="file-image" src="#" alt="Preview" className="hidden" />
-          <div id="start">
-            {/* <div>Select a file or drag here</div> */}
-            <div id="notimage" className="hidden">
-              Please select an image
+          <label htmlFor="file-upload" id="file-drag">
+            <img id="file-image" src="#" alt="Preview" className="hidden" />
+            <div id="start">
+              {/* <div>Select a file or drag here</div> */}
+              <div id="notimage" className="hidden">
+                Please select an image
+              </div>
+              <span id="file-upload-btn" className="btn btn-primary">
+              <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
+              </span>
             </div>
-            <span id="file-upload-btn" className="btn btn-primary">
-              <p className="file-input-text">
-                <span className="file-span">Upload file </span>or drop here
-              </p>
-            </span>
-          </div>
-          <div id="response" className="hidden">
+            <div id="response" className="hidden">
             <div id="messages"></div>
-            <progress className="progress" id="file-progress" value="0">
-              <span>0</span>%
-            </progress>
-          </div>
-        </label>
+              <progress className="progress" id="file-progress" value="0">
+                <span>0</span>%
+              </progress>
+            </div>
+          </label>  
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+export default Preview;
