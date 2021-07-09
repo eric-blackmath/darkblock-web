@@ -4,7 +4,7 @@ import * as RaribleApi from "../api/rarible-api";
 import * as OpenseaApi from "../api/opensea-api";
 import * as NodeApi from "../api/node-api";
 import NFTItemCreator from "./NftItemCreator";
-import Pagination from "./Pagination";
+import Pagination from "./PaginationWrapper";
 import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
 

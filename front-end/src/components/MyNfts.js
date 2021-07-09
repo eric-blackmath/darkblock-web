@@ -3,7 +3,7 @@ import "../App.scss";
 import * as OpenseaApi from "../api/opensea-api";
 import * as NodeApi from "../api/node-api";
 import NFTItem from "./NftItem";
-import Pagination from "./Pagination";
+import Pagination from "./PaginationWrapper";
 import { UserContext } from "../util/UserContext";
 import * as parser from "../util/parser";
 import { useState, useEffect, useContext } from "react";
