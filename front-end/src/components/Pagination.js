@@ -15,7 +15,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
             <button onClick={() => paginate(number)}>{number}</button>
           </li>
         ))}
-      </ul> 
+      </ul>
     </nav>
   );
 };
@@ -37,11 +37,10 @@ export default Pagination;
 // export default function PaginationRounded() {
 //   const classes = useStyles();
 
-//   return ( 
+//   return (
 //     <div className={classes.root}>
 //       <Pagination count={10} variant="outlined" shape="rounded" />
 //     </div>
 //   );
 // }
-
 

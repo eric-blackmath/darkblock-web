@@ -412,7 +412,7 @@ export default function DetailsView({ fileSelectionHandler }) {
                         <input
                           type="file"
                           className="custom-file-input"
-                          id="levelOneFile"
+                          id="levelOneFile file-upload"
                           onChange={onLevelOneFileChange}
                         />
 
@@ -476,7 +476,7 @@ export default function DetailsView({ fileSelectionHandler }) {
                         <input
                           type="file"
                           className="custom-file-input"
-                          id="levelTwoFile"
+                          id="levelTwoFile file-upload"
                           onChange={onLevelTwoFileChange}
                         />
 
