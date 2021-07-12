@@ -2,9 +2,12 @@ import axios from "axios";
 
 // Takes care of all the calls to our Node Api
 
+const baseUrlDev = "http://localhost:5000";
+const baseUrlProduction = "/api";
+
 //uploads the file+tags to back-end to trigger transaction
 export const postTransaction = (data, options) => {
-  const URL = `/api/upload`;
+  const URL = `${baseUrlDev}/upload`;
   return axios
     .post(URL, data, options)
     .then((response) => response.data)
@@ -18,7 +21,7 @@ export const verifyNFTs = (data) => {
   // params: {
   //   ids: "Here are some ids to verify",
   // },
-  const URL = `/api/verify`;
+  const URL = `${baseUrlDev}/verify`;
   return axios
     .post(URL, data, {
       headers: {
