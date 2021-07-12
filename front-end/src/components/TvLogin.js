@@ -9,6 +9,7 @@ import * as MetamaskUtil from "../util/metamask-util";
 export default function TvLogin({ address }) {
   // const address = useContext(UserContext);
   const [code, setCode] = useState("");
+  const [isConnectSuccess, setIsConnectSuccess] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   useEffect(() => {
@@ -38,8 +39,10 @@ export default function TvLogin({ address }) {
         alert("Please make sure you are logged in first");
       } else {
         submitResponse = await submitCode(address);
+
         if (submitResponse.status === 200) {
           //code submitted succesfully
+          setIsConnectSuccess(true);
           console.log(`Code Submitted, Redirecting you somewhere`);
         }
       }
@@ -69,24 +72,31 @@ export default function TvLogin({ address }) {
 
   return (
     <div className="tv-login">
-      <h1 className="tv-title">Enter TV code and connect</h1>
-      <div className="tv-code">
-        <input
-          id="code"
-          autoComplete="off"
-          className="pin-input"
-          placeholder="Please enter code here"
-          value={code}
-          maxLength="6"
-          pattern="[0-9]*"
-          onChange={handleOnCodeChange}
-        />
-      </div>
-      <div className="tv-button">
-        <button type="button" onClick={onSubmit} className="btn">
-          Connect
-        </button>
-      </div>
+      {isConnectSuccess ? (
+        <div>You have successfully been connected</div>
+      ) : (
+        <div>
+          {" "}
+          <h1 className="tv-title">Enter TV code and connect</h1>
+          <div className="tv-code">
+            <input
+              id="code"
+              autoComplete="off"
+              className="pin-input"
+              placeholder="Please enter code here"
+              value={code}
+              maxLength="6"
+              pattern="[0-9]*"
+              onChange={handleOnCodeChange}
+            />
+          </div>
+          <div className="tv-button">
+            <button type="button" onClick={onSubmit} className="btn">
+              Connect
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
