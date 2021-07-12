@@ -4,7 +4,6 @@ const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
 const ParseUtil = require("../utils/parse");
 const sigUtil = require("eth-sig-util");
-const ethereumJsUtil = require("ethereumjs-util");
 
 const protocolUpload = async (req, res) => {
   console.log(`Protocol endpoint reached `);
@@ -191,16 +190,19 @@ const verifySignature = async (req, res) => {
     },
   ];
 
-  console.log(signature, data, address);
-
   const recovered = sigUtil.recoverTypedSignatureLegacy({
     data: typedData,
     sig: signature,
   });
   if (recovered === address) {
-    res.status(200).send({ message: `${address}` });
+    res.status(200).send({
+      message: `Signer Recovered Successfully`,
+      address: `${address}`,
+    });
   } else {
-    res.status(401).send({ error: `Failed to verify signer for ${signature}` });
+    res
+      .status(401)
+      .send({ error: `Failed to verify signer for the signature` });
   }
 };
 
