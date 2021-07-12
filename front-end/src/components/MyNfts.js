@@ -90,6 +90,7 @@ export default function MyNfts() {
 
   return (
     <React.Fragment>
+      
       {/* <button>Go to detailsView</button> */}
       {isLoaded ? (
         <ul className="list-group">
