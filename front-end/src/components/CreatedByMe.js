@@ -16,6 +16,7 @@ export default function CreatedByMe() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
+  const [noNftsFound, setNoNftsFound] = useState(false);
   const address = useContext(UserContext);
   const { account } = useParams();
 
@@ -75,6 +76,10 @@ export default function CreatedByMe() {
       var idsString = getContractAndTokens(filteredData);
       await verifyNFTs(idsString);
       setNfts(filteredData);
+      setIsLoaded(true);
+    } else {
+      console.log(`No Nfts Found`);
+      setNoNftsFound(true);
       setIsLoaded(true);
     }
   };
@@ -162,6 +167,16 @@ export default function CreatedByMe() {
       ) : (
         <label>Loading</label>
       )}
+
+      {isLoaded && noNftsFound ? (
+        <div className="none-found">
+          <h1>You have no NFTs in your wallet.</h1>
+          <p className="none-found-p">
+            Start by creating an NFT on any NFT minting site and then come back
+            here to create a darkblock for that NFT
+          </p>
+        </div>
+      ) : null}
 
       {nfts.length > 10 ? (
         <Pagination
