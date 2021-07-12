@@ -8,6 +8,27 @@
   font-size: 36px;
 }
 
+.tv-success-text{
+    font-family: abril-display, serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 36px;
+    text-align: center;
+    width: 75%;
+    line-height: 44px;
+    display: block;
+    margin: auto;
+}
+
+.tv-success{
+    // display: flex;
+    padding-top: 85px;
+    justify-content: center;
+    width: fit-content;
+    display: block;
+    margin: auto;
+}
+
 .tv-code {
   display: flex;
   justify-content: center;
