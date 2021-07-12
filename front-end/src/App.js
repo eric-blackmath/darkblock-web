@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="App">
-      {address ? <Nav setAddress={setAddress} /> : null}
+      <Nav setAddress={setAddress} address={address} />
 
       <div className="content">
         <Switch>

@@ -48,14 +48,17 @@ export default function TvLogin() {
   };
 
   const submitCode = async (address) => {
-    const sessionToken = await getSignedSession(address);
-    return DarkblockApi.confirmTvLogin(code, address, sessionToken);
+    const signedSessionToken = await getSignedSession(address);
+    console.log(`Address : ${address}`);
+    return DarkblockApi.confirmTvLogin(code, address, signedSessionToken);
   };
 
   const getSignedSession = async (address) => {
     const epoch = Date.now(); // Unix timestamp in milliseconds
     var sessionToken = epoch + address;
+    console.log(`Session  : ${sessionToken}`);
     const signature = await MetamaskUtil.signTypedData(sessionToken, address);
+    console.log(`Signature : ${signature}`);
     return epoch + "_" + signature;
   };
 

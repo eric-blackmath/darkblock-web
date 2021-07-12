@@ -2,11 +2,8 @@ const uploadFile = require("../middleware/multer");
 const ArweaveApi = require("../api/arweave-api");
 const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
-
 const ParseUtil = require("../utils/parse");
 const sigUtil = require("eth-sig-util");
-
-const axios = require("axios");
 const ethereumJsUtil = require("ethereumjs-util");
 
 const protocolUpload = async (req, res) => {
@@ -193,6 +190,8 @@ const verifySignature = async (req, res) => {
       value: data,
     },
   ];
+
+  console.log(signature, data, address);
 
   const recovered = sigUtil.recoverTypedSignatureLegacy({
     data: typedData,

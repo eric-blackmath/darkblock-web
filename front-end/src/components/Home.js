@@ -18,6 +18,10 @@ export default function Home({ setAddress }) {
     redirectToNFts();
   };
 
+  const redirectToNFts = () => {
+    history.push("/nfts/all");
+  };
+
   const fetchUserProfile = async (account) => {
     try {
       const user = await RaribleApi.getUserProfile(account);
@@ -27,21 +31,5 @@ export default function Home({ setAddress }) {
     }
   };
 
-  const redirectToNFts = () => {
-    history.push("/nfts/all");
-  };
-
-  return (
-    <div className="nav">
-      <div>
-        <img src={logo} alt="darkblock logo" />
-      </div>
-      <div className="nav-content">
-        <button onClick={getAccount} className="login-button">
-          <img className="wallet-icon" src={wallet} alt="wallet icon" />
-          Connect Wallet
-        </button>
-      </div>
-    </div>
-  );
+  return <div>Home Page</div>;
 }
