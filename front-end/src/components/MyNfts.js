@@ -110,7 +110,10 @@ export default function MyNfts() {
         <label>Loading</label>
       )}
 
-      {isLoaded && noNftsFound ? <div>No NFTS Found</div> : null}
+      {isLoaded && noNftsFound ? <div className="none-found">
+        <h1>You have no NFTs in your wallet.</h1>
+        <p className="none-found-p">Start by creating an NFT on any NFT minting site and then come back here to create a darkblock for that NFT</p>
+      </div> : null}
 
       {nfts.length > 10 ? (
         <Pagination
