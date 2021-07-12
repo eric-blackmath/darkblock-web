@@ -50,8 +50,8 @@ export default function Nav({ setAddress, address }) {
   return (
     <div className="nav">
       {address ? (
-        <div>
-          <div>
+        <div className="nav">
+          <div className="nav-logo">
             <a href="/">
               <img className="nav-logo" src={logo} alt="darkblock logo" />
             </a>
@@ -64,20 +64,29 @@ export default function Nav({ setAddress, address }) {
             <a className="nav-link" href="/nfts/createdbyme">
               <h2 className="nav-item">Created By Me</h2>
             </a>
-            <button onClick={handleLogOut}>LogOut</button>
-            <img src={wallet} alt="wallet icon" />
+            {/* <button onClick={handleLogOut}>LogOut</button> */}
+           
+            <div class="dropdown">
+              <button class="dropbtn"> <img src={wallet} alt="wallet icon" /></button>
+              <div class="dropdown-content">
+                <p onClick={handleLogOut}>Log out</p>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
         <div className="nav">
           <div>
-            <img src={logo} alt="darkblock logo" />
+            <img className="nav-logo-loggedout" src={logo} alt="darkblock logo" />
           </div>
           <div className="nav-content">
+            <div className="login-container">
             <button onClick={getAccount} className="login-button">
               <img className="wallet-icon" src={wallet} alt="wallet icon" />
               Connect Wallet
             </button>
+            </div>
+
           </div>
         </div>
       )}

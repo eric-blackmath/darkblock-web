@@ -94,7 +94,7 @@ img{
   font-family: 'abril-display';
   display: flex;
   align-items: center;
-  padding: 0 48px;
+  // padding: 0 48px;
   // position: fixed;
   width: -webkit-fill-available;
   background-color: white;
@@ -106,13 +106,70 @@ img{
 }
 
 .nav-logo{
-  width: 50%;
+  width: 35%;
+  padding-left: 48px;
+  // padding-top: 16px;
+  // padding-bottom: 16px;
+}
+
+.nav-logo-loggedout{
+  width: 45%;
+  padding-left: 48px;
+  // padding-top: 16px;
+  // padding-bottom: 16px;
+}
+
+.login-container{
+  padding: 16px 0px;
 }
 
 .nav-content {
   display: flex;
   margin-left: auto;
+  padding-right: 48px;
+  align-items: center;
+  // padding-top: 16px;
+  // padding-bottom: 16px;
 }
+
+.dropbtn {
+  background-color: transparent;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 75px;
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content p {
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: none;}
 
 .nav-link{
   color: inherit;
