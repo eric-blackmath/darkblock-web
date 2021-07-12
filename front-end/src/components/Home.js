@@ -3,36 +3,19 @@ import wallet from "../images/wallet.svg";
 import logo from "../images/dark-logo.svg";
 import * as RaribleApi from "../api/rarible-api";
 import * as MetamaskUtil from "../util/metamask-util";
-
-import Web3 from "web3";
-import sigUtil from "eth-sig-util";
-var ethUtil = require("ethereumjs-util");
+import * as LoginUtil from "../util/login-util";
+import { useHistory } from "react-router-dom";
 
 //Logs user into metamask and fetches their account address
-export default function Login({ setAddress, setUser }) {
-  const ethereum = window.ethereum;
-  const web3 = new Web3(Web3.givenProvider || "http://localhost:8080");
+export default function Home({ setAddress }) {
+  let history = useHistory();
 
   const getAccount = async () => {
     //handle the case of when metamask is not installed
-
-    try {
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const account = accounts[0];
-
-      // const user = await fetchUserProfile(account);
-
-      // console.log(`Login User : ${user.name}`);
-      // setUser(user);
-      setAddress(account); //when address is set, user is redirected to dashboard
-
-      // await signMsg("this string", account);
-      localStorage.setItem("accountAddress", account);
-    } catch (e) {
-      alert(`Please make sure you have Metamask installed : ${e.message}`);
-    }
+    const address = await MetamaskUtil.signInAndGetAccount();
+    setAddress(address); //when address is set, user is redirected to dashboard
+    LoginUtil.keepUserLoggedIn(address);
+    redirectToNFts();
   };
 
   const fetchUserProfile = async (account) => {
@@ -42,6 +25,10 @@ export default function Login({ setAddress, setUser }) {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const redirectToNFts = () => {
+    history.push("/nfts/all");
   };
 
   return (

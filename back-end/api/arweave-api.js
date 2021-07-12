@@ -95,7 +95,7 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
     "Encryption-Level",
     isLevelTwo === true ? "AES-256" : "None"
   );
-  transaction.addTag("Creator-App", "Darkblock");
+  transaction.addTag("Uploading-App", "Darkblock");
   transaction.addTag(
     "Content-Type",
     isLevelTwo === true ? `encrypted(${contentType})` : contentType
@@ -107,6 +107,7 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
   transaction.addTag("Data-Hash", fileHash);
   transaction.addTag("Data-Signature", tags.data_signature);
   transaction.addTag("Transaction-Type", "Test-Debug");
+  transaction.addTag("Type", "Darkblock");
   if (isLevelTwo === true) transaction.addTag("Encryption-Version", "0.1");
 
   // Wait for arweave to sign it and give us the ok

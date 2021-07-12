@@ -4,7 +4,7 @@ import axios from "axios";
 
 //uploads the file+tags to back-end to trigger transaction
 export const postTransaction = (data, options) => {
-  const URL = `http://localhost:5000/upload`;
+  const URL = `/api/upload`;
   return axios
     .post(URL, data, options)
     .then((response) => response.data)
@@ -18,7 +18,7 @@ export const verifyNFTs = (data) => {
   // params: {
   //   ids: "Here are some ids to verify",
   // },
-  const URL = `http://localhost:5000/verify`;
+  const URL = `/api/verify`;
   return axios
     .post(URL, data, {
       headers: {

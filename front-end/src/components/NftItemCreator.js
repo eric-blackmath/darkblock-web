@@ -15,11 +15,14 @@ const NFTITemCreator = ({ nft, selectionHandler, darkblocked }) => {
 
   const setOwner = () => {
     var owner = "";
-    if (nft.asset.owner.user.username === "NullAddress") {
-      owner = nft.from_account.user.username;
-    } else {
-      owner = nft.asset.owner.user.username;
+    if (nft.asset.owner.user) {
+      if (nft.asset.owner.user.username === "NullAddress") {
+        owner = nft.from_account.user.username;
+      } else {
+        owner = nft.asset.owner.user.username;
+      }
     }
+
     if (owner === "NullAddress") {
       owner = "No Username";
     }

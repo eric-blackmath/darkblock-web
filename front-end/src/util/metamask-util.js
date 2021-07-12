@@ -38,3 +38,16 @@ export async function signData(data, address) {
   });
   return signature;
 }
+
+const ethereum = window.ethereum;
+
+export async function signInAndGetAccount() {
+  try {
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    return accounts[0];
+  } catch (e) {
+    alert(`Please make sure you have Metamask installed : ${e.message}`);
+  }
+}
