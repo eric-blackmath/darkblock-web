@@ -73,7 +73,9 @@ export default function TvLogin({ address }) {
   return (
     <div className="tv-login">
       {isConnectSuccess ? (
-        <div className="tv-success"><h1 className="tv-success-text">Sweet!<br></br> You have successfully been connected.</h1></div>
+        <div className="tv-success"><h1 className="tv-success-text">Sweet!<br></br> You have successfully been connected.</h1>
+        <p className="tv-app-text">You can now continue on your TV app.</p>
+        </div>
       ) : (
         <div>
           {" "}
