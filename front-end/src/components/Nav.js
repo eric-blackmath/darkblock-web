@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../App.scss";
-import logo from "../images/logo.png";
+import logo from "../images/beta-logo.svg";
 import wallet from "../images/wallet.svg";
 import $ from "jquery";
 import { useEffect } from "react";
@@ -58,11 +58,10 @@ export default function Nav({ setAddress, address }) {
     <div className="nav">
       {address ? (
         <div className="nav">
-          <div className="nav-logo">
-            <a href="/">
+          
+            <a href="/home">
               <img className="nav-logo" src={logo} alt="darkblock logo" />
             </a>
-          </div>
           {location.pathname === "/tv" ? null : (
             <div className="nav-content">
               <a className="nav-link" href="/nfts/all">
