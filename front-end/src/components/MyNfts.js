@@ -14,6 +14,7 @@ export default function MyNfts() {
   const [darkblockedNfts, setDarkblockedNfts] = useState([]);
   const [selectedNftIndex, setSelectedIndex] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [noNftsFound, setNoNftsFound] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const address = useContext(UserContext);
@@ -30,18 +31,20 @@ export default function MyNfts() {
 
       if (data.length > 0) {
         console.log(`Data : ${data.length}`);
-
+        //for pagination, if data is less than 10, we dont want pagination
+        if (data.length < 8) {
+          setPostsPerPage(data.length);
+        }
         //handle the nfts | extract data for the nft verification
         var idsString = parser.getContractAndTokens(data);
         await verifyNFTs(idsString);
         setNfts(data);
         setIsLoaded(true);
+      } else {
+        console.log(`No Nfts Found`);
+        setNoNftsFound(true);
+        setIsLoaded(true);
       }
-
-      //   //for pagination, if data is less than 10, we dont want pagination
-      //   if (data.length < 8) {
-      //     setPostsPerPage(data.length);
-      //   }
     };
 
     fetchData();
@@ -105,6 +108,8 @@ export default function MyNfts() {
       ) : (
         <label>Loading</label>
       )}
+
+      {isLoaded && noNftsFound ? <div>No NFTS Found</div> : null}
 
       {nfts.length > 10 ? (
         <Pagination

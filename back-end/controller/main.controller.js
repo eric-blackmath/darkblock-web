@@ -186,7 +186,7 @@ const verifySignature = async (req, res) => {
   const data = params.data;
   const address = params.address;
 
-  const msgParamsLocal = [
+  const typedData = [
     {
       type: "string",
       name: "Message",
@@ -195,16 +195,13 @@ const verifySignature = async (req, res) => {
   ];
 
   const recovered = sigUtil.recoverTypedSignatureLegacy({
-    data: msgParamsLocal,
+    data: typedData,
     sig: signature,
   });
   if (recovered === address) {
-    res.status(200).send({ message: `Recovered signer: ${address}` });
-    console.log(``);
+    res.status(200).send({ message: `${address}` });
   } else {
-    res
-      .status(200)
-      .send({ message: `Failed to verify signer for ${signature}` });
+    res.status(401).send({ error: `Failed to verify signer for ${signature}` });
   }
 };
 

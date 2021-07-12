@@ -18,6 +18,7 @@ export default function DetailsView() {
   const [nft, setNft] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [isDarkblocked, setIsDarkblocked] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileUploadProgress, setFileUploadProgress] = useState("");
@@ -123,6 +124,7 @@ export default function DetailsView() {
   };
 
   const initDarkblockCreation = async () => {
+    setIsUploading(true);
     console.log(`Init Hashing the file`);
     const fileHash = await HashUtil.hashInChunks(file);
     console.log(`Hash of the file : ${fileHash}`);
@@ -189,10 +191,22 @@ export default function DetailsView() {
   };
 
   const setCreator = () => {
-    if (!nft.creator.user.username) {
+    if (nft.creator.user && nft.creator.user.username) {
+      //got creator username
+      if (nft.creator.user.username === "NullAddress") {
+        return "No Username";
+      }
+      return nft.creator.user.username;
+    } else if (nft.owner.user && nft.owner.user.username) {
+      //got owner username
+      if (nft.owner.user.username === "NullAddress") {
+        return "No Username";
+      }
+      return nft.owner.user.username;
+    } else {
+      //no owner, no creator
       return "No Username";
     }
-    return nft.creator.user.username;
   };
 
   const setEdition = () => {
@@ -397,11 +411,13 @@ export default function DetailsView() {
                   ></textarea>
                 </div>
                 <div className="button-container">
-                  <input
-                    type="submit"
-                    value="Create Darkblock"
-                    className="create-darkblock-button"
-                  />
+                  {isDarkblocked || isUploading ? null : ( //hide the button
+                    <input
+                      type="submit"
+                      value="Create Darkblock"
+                      className="create-darkblock-button"
+                    />
+                  )}
 
                   {fileUploadProgress > 0 ? (
                     <label>{fileUploadProgress}</label>

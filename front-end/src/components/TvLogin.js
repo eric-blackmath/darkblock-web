@@ -5,38 +5,39 @@ import { useState, useEffect, useContext } from "react";
 import * as DarkblockApi from "../api/darkblock-api";
 import * as MetamaskUtil from "../util/metamask-util";
 
-export default function Dashboard() {
+export default function TvLogin() {
   const address = useContext(UserContext);
   const [code, setCode] = useState("");
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   useEffect(() => {
     console.log(`Tv login triggered : ${address}`);
+    checkIfUserLoggedIn();
     return;
   }, []);
+
+  const checkIfUserLoggedIn = () => {
+    if (!address) {
+      setIsUserLoggedIn(false);
+    }
+  };
   const onSubmit = async () => {
     try {
-      console.log(`Code : ${code}`);
-      const epoch = Date.now();
-      console.log(`Epoch : ${epoch}`);
-      var sessionToken = epoch + address; // Unix timestamp in milliseconds
-      //sessionToken : sign with Metamask. take the epoch, append _ and then the signature to create the session token.
+      if (!isUserLoggedIn) {
+        //make him login, then send the code
+        var submitResponse;
+        const address = await MetamaskUtil.signInAndGetAccount();
+        if (address) {
+          submitResponse = await submitCode(address);
+        }
+      } else {
+        submitResponse = await submitCode(address);
+      }
 
-      const signature = await MetamaskUtil.signTypedData(sessionToken, address);
-
-      console.log(`Signature : ${signature}`);
-
-      sessionToken = epoch + "_" + signature;
-
-      console.log(
-        `code: ${code} \naddress: ${address}\nsession_token :${sessionToken}`
-      );
-      const confirmRes = await DarkblockApi.confirmTvLogin(
-        code,
-        address,
-        sessionToken
-      );
-
-      console.log(`Confirm Response : ${JSON.stringify(confirmRes.data)}`);
+      if (submitResponse.status === 200) {
+        //code submitted succesfully
+        console.log(`Code Submitted, Redirecting you somewhere`);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -44,6 +45,18 @@ export default function Dashboard() {
 
   const handleOnCodeChange = (e) => {
     setCode(e.target.value);
+  };
+
+  const submitCode = async (address) => {
+    const sessionToken = await getSignedSession(address);
+    return DarkblockApi.confirmTvLogin(code, address, sessionToken);
+  };
+
+  const getSignedSession = async (address) => {
+    const epoch = Date.now(); // Unix timestamp in milliseconds
+    var sessionToken = epoch + address;
+    const signature = await MetamaskUtil.signTypedData(sessionToken, address);
+    return epoch + "_" + signature;
   };
 
   return (
@@ -59,9 +72,15 @@ export default function Dashboard() {
         onChange={handleOnCodeChange}
       />
 
-      <button type="button" onClick={onSubmit} className="btn">
-        Submit
-      </button>
+      {!isUserLoggedIn ? (
+        <button type="button" onClick={onSubmit} className="btn">
+          Confirm and Connect Wallet
+        </button>
+      ) : (
+        <button type="button" onClick={onSubmit} className="btn">
+          Confirm
+        </button>
+      )}
     </div>
   );
 }
