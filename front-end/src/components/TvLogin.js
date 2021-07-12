@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.scss";
+import "../styles/tv.scss";
 import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
 import * as DarkblockApi from "../api/darkblock-api";
@@ -64,18 +65,23 @@ export default function TvLogin() {
 
   return (
     <div className="tv-login">
+      <h1 className="tv-title">Enter TV code and connect</h1>
+      <div className="tv-code">
       <input
         id="code"
         autoComplete="off"
         className="pin-input"
-        placeholder="Enter your PIN here"
+        placeholder="Please enter code here"
         value={code}
         maxLength="6"
         pattern="[0-9]*"
         onChange={handleOnCodeChange}
       />
 
-      {!isUserLoggedIn ? (
+
+      </div>
+      <div className="tv-button">
+{!isUserLoggedIn ? (
         <button type="button" onClick={onSubmit} className="btn">
           Confirm and Connect Wallet
         </button>
@@ -84,6 +90,7 @@ export default function TvLogin() {
           Confirm
         </button>
       )}
+</div>
     </div>
   );
 }
