@@ -6,38 +6,42 @@ import { useState, useEffect, useContext } from "react";
 import * as DarkblockApi from "../api/darkblock-api";
 import * as MetamaskUtil from "../util/metamask-util";
 
-export default function TvLogin() {
-  const address = useContext(UserContext);
+export default function TvLogin({ address }) {
+  // const address = useContext(UserContext);
   const [code, setCode] = useState("");
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   useEffect(() => {
     console.log(`Tv login triggered : ${address}`);
     checkIfUserLoggedIn();
-    return;
-  }, []);
+  }, [address]);
 
   const checkIfUserLoggedIn = () => {
     if (!address) {
+      console.log(`User set to logged Out`);
       setIsUserLoggedIn(false);
+    } else {
+      console.log(`User set to logged In`);
+      setIsUserLoggedIn(true);
     }
   };
   const onSubmit = async () => {
     try {
-      if (!isUserLoggedIn) {
+      checkIfUserLoggedIn();
+
+      console.log(`Address : ${address} : ${isUserLoggedIn}`);
+
+      var submitResponse;
+
+      if (isUserLoggedIn === false) {
         //make him login, then send the code
-        var submitResponse;
-        const address = await MetamaskUtil.signInAndGetAccount();
-        if (address) {
-          submitResponse = await submitCode(address);
-        }
+        alert("Please make sure you are logged in first");
       } else {
         submitResponse = await submitCode(address);
-      }
-
-      if (submitResponse.status === 200) {
-        //code submitted succesfully
-        console.log(`Code Submitted, Redirecting you somewhere`);
+        if (submitResponse.status === 200) {
+          //code submitted succesfully
+          console.log(`Code Submitted, Redirecting you somewhere`);
+        }
       }
     } catch (e) {
       console.log(e);
@@ -67,30 +71,22 @@ export default function TvLogin() {
     <div className="tv-login">
       <h1 className="tv-title">Enter TV code and connect</h1>
       <div className="tv-code">
-      <input
-        id="code"
-        autoComplete="off"
-        className="pin-input"
-        placeholder="Please enter code here"
-        value={code}
-        maxLength="6"
-        pattern="[0-9]*"
-        onChange={handleOnCodeChange}
-      />
-
-
+        <input
+          id="code"
+          autoComplete="off"
+          className="pin-input"
+          placeholder="Please enter code here"
+          value={code}
+          maxLength="6"
+          pattern="[0-9]*"
+          onChange={handleOnCodeChange}
+        />
       </div>
       <div className="tv-button">
-{!isUserLoggedIn ? (
         <button type="button" onClick={onSubmit} className="btn">
-          Confirm and Connect Wallet
+          Connect
         </button>
-      ) : (
-        <button type="button" onClick={onSubmit} className="btn">
-          Confirm
-        </button>
-      )}
-</div>
+      </div>
     </div>
   );
 }

@@ -68,7 +68,7 @@ function App() {
             ></Route>
 
             <Route exact path="/tv">
-              <Tv />
+              <Tv address={address} />
             </Route>
           </UserContext.Provider>
         </Switch>

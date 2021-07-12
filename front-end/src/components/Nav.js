@@ -8,12 +8,15 @@ import { useEffect } from "react";
 import * as LoginUtil from "../util/login-util";
 import { useHistory } from "react-router-dom";
 import * as MetamaskUtil from "../util/metamask-util";
+import { useLocation } from "react-router-dom";
 
 export default function Nav({ setAddress, address }) {
   let history = useHistory();
+  let location = useLocation();
 
   useEffect(() => {
     setNavigation();
+    console.log(`Path Nav : ${location.pathname}`);
   }, []);
 
   function setNavigation() {
@@ -40,7 +43,11 @@ export default function Nav({ setAddress, address }) {
     const address = await MetamaskUtil.signInAndGetAccount();
     setAddress(address); //when address is set, user is redirected to dashboard
     LoginUtil.keepUserLoggedIn(address);
-    redirectToNFts();
+    if (location.pathname === "/tv") {
+      //dont redirect
+    } else {
+      redirectToNFts();
+    }
   };
 
   const redirectToNFts = () => {
@@ -56,37 +63,45 @@ export default function Nav({ setAddress, address }) {
               <img className="nav-logo" src={logo} alt="darkblock logo" />
             </a>
           </div>
-          <div className="nav-content">
-            <a className="nav-link" href="/nfts/all">
-              {" "}
-              <h2 className="nav-item">My NFT's</h2>
-            </a>
-            <a className="nav-link" href="/nfts/createdbyme">
-              <h2 className="nav-item">Created By Me</h2>
-            </a>
-            {/* <button onClick={handleLogOut}>LogOut</button> */}
-           
-            <div className="dropdown">
-              <button className="dropbtn"> <img src={wallet} alt="wallet icon" /></button>
-              <div className="dropdown-content">
-                <p onClick={handleLogOut}>Log out</p>
+          {location.pathname === "/tv" ? null : (
+            <div className="nav-content">
+              <a className="nav-link" href="/nfts/all">
+                {" "}
+                <h2 className="nav-item">My NFT's</h2>
+              </a>
+              <a className="nav-link" href="/nfts/createdbyme">
+                <h2 className="nav-item">Created By Me</h2>
+              </a>
+              {/* <button onClick={handleLogOut}>LogOut</button> */}
+
+              <div className="dropdown">
+                <button className="dropbtn">
+                  {" "}
+                  <img src={wallet} alt="wallet icon" />
+                </button>
+                <div className="dropdown-content">
+                  <p onClick={handleLogOut}>Log out</p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       ) : (
         <div className="nav">
           <div>
-            <img className="nav-logo-loggedout" src={logo} alt="darkblock logo" />
+            <img
+              className="nav-logo-loggedout"
+              src={logo}
+              alt="darkblock logo"
+            />
           </div>
           <div className="nav-content">
             <div className="login-container">
-            <button onClick={getAccount} className="login-button">
-              <img className="wallet-icon" src={wallet} alt="wallet icon" />
-              Connect Wallet
-            </button>
+              <button onClick={getAccount} className="login-button">
+                <img className="wallet-icon" src={wallet} alt="wallet icon" />
+                Connect Wallet
+              </button>
             </div>
-
           </div>
         </div>
       )}
