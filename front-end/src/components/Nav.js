@@ -66,9 +66,9 @@ export default function Nav({ setAddress, address }) {
             </a>
             {/* <button onClick={handleLogOut}>LogOut</button> */}
            
-            <div class="dropdown">
-              <button class="dropbtn"> <img src={wallet} alt="wallet icon" /></button>
-              <div class="dropdown-content">
+            <div className="dropdown">
+              <button className="dropbtn"> <img src={wallet} alt="wallet icon" /></button>
+              <div className="dropdown-content">
                 <p onClick={handleLogOut}>Log out</p>
               </div>
             </div>
