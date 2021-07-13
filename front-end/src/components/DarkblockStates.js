@@ -1,13 +1,29 @@
 import React from "react";
+import "../styles/preview.scss";
 import "../styles/detail.scss";
-import { useEffect } from "react";
+import { UserContext } from "../util/UserContext";
+import { useEffect, useState, useContext } from "react";
+import FileChooserOne from "./FileChooser";
 
-export default function LevelTwoFileChooser({ levelTwoFileSelectionHandler }) {
-  var fileSelectionHandler = levelTwoFileSelectionHandler;
+export default function DarkblockStates({
+  levelOneFileSelectionHandler,
+  levelTwoFileSelectionHandler,
+  isDarkblocked,
+  isOwnedByUser,
+  createDarkblockHandle,
+}) {
+  var levelFileSelectionHandler = levelOneFileSelectionHandler;
+  var levelTwoFileSelectionHandler = levelTwoFileSelectionHandler;
+
+  var createDarkblockClickHandle = createDarkblockHandle;
+
+  const address = useContext(UserContext);
+
   useEffect(() => {
     // File Upload
     //
     function ekUpload() {
+      console.log(`IsOwnedByUser : ${isOwnedByUser}`);
       function Init() {
         console.log("Upload Initialised");
 
@@ -43,8 +59,7 @@ export default function LevelTwoFileChooser({ levelTwoFileSelectionHandler }) {
 
         // Cancel event and hover styling
         fileDragHover(e);
-
-        fileSelectionHandler(files); //send the files back to details
+        levelFileSelectionHandler(files);
 
         // Process all File objects
         for (var i = 0, f; (f = files[i]); i++) {
@@ -146,41 +161,108 @@ export default function LevelTwoFileChooser({ levelTwoFileSelectionHandler }) {
       }
 
       // Check for the various File API support.
-      if (window.File && window.FileList && window.FileReader) {
-        Init();
-      } else {
-        document.getElementById("file-drag").style.display = "none";
-      }
+      // if (window.File && window.FileList && window.FileReader) {
+      //   Init();
+      // } else {
+      //   document.getElementById("file-drag").style.display = "none";
+      // }
     }
-    ekUpload();
   }, []);
 
+  // ui states for the block
+  // darkblocked true - already darkblocked (state 0)
+  // darkblocked false, own false - ask the owner      (state 1)
+  // darkblocked false, own true - create darkblock    (state 2)
   return (
     <div>
-      <div id="file-upload-form" className="uploadertwo">
-        <input id="file-upload" type="file" name="fileUpload" />
-
-        <label htmlFor="file-upload" id="file-drag">
-          <img id="file-image" src="#" alt="Preview" className="hidden" />
-          <div id="start">
-            {/* <div>Select a file or drag here</div> */}
-            <div id="notimage" className="hidden">
-              Please select an image
+      {/* state 0 */}
+      {isDarkblocked ? <div>Show Already Darkblocked UI</div> : null}
+      {/* state 1 */}
+      {!isDarkblocked && !isOwnedByUser ? <div></div> : null}
+      {/* state 2 */}
+      {!isDarkblocked && isOwnedByUser ? (
+        <div className="create-darkblock">
+          <form onSubmit={createDarkblockClickHandle}>
+            <div>
+              <div className="create-darkblock-container">
+                <h1 className="create-title">Create Darkblock</h1>
+                <p className="create-subtitle">
+                  Upload your file and select your Darkblock level.{" "}
+                </p>
+                <p className="create-subtitle">
+                  Note: You need the Darkblock Android TV app to view a
+                  Darkblock upgrade.
+                </p>
+              </div>
             </div>
-            <span id="file-upload-btn" className="btn btn-primary">
-              <p className="file-input-text">
-                <span className="file-span">Upload file </span>or drop here
-              </p>
-            </span>
-          </div>
-          <div id="response" className="hidden">
-            <div id="messages"></div>
-            <progress className="progress" id="file-progress" value="0">
-              <span>0</span>%
-            </progress>
-          </div>
-        </label>
-      </div>
+            <div className="upgrade-grid">
+              <div>
+                <div className="upgrade-level">
+                  <p className="upgrade-number">LEVEL 1</p>
+                </div>
+                <div className="upgrade-title">
+                  <span className="upgrade-type">SUPERCHARGED</span>
+                  <ul className="upgrade-detail-list">
+                    <li>Massive filesize support</li>
+                    <li>Stored forever on Arweave</li>
+                  </ul>
+                </div>
+
+                <FileChooserOne
+                  fileSelectionHandler={levelOneFileSelectionHandler}
+                />
+
+                <div className="custom-file mb-4">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    id="levelOneFile"
+                    onChange={levelFileSelectionHandler}
+                  />
+                  {/* <label className="custom-file-label" htmlFor="levelOneFile">
+                      {level === "one" ? fileName : null}
+                    </label> */}
+                </div>
+              </div>
+              <div>
+                <div className="upgrade-level">
+                  <p className="upgrade-number">LEVEL 2</p>
+                </div>
+                <div className="upgrade-title">
+                  <span className="upgrade-type">Protected by Darkblock</span>
+                  <ul className="upgrade-detail-list">
+                    <li>Software encryption</li>
+                    <li>All features of level 1</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <p className="about-darkblock">About the Darkblock</p>
+              <textarea
+                className="textarea"
+                placeholder="Add a description of the Darkblock or leave empty..."
+                // value={darkblockDescription}
+                // onChange={onDarkblockDescriptionChange}
+              ></textarea>
+            </div>
+            <div className="button-container">
+              {/* {isDarkblocked || isUploading ? null : (
+                  <input
+                    type="submit"
+                    value="Create Darkblock"
+                    className="create-darkblock-button"
+                  />
+                )} */}
+
+              {/* {fileUploadProgress > 0 ? (
+                  <label>{fileUploadProgress}</label>
+                ) : null} */}
+            </div>
+          </form>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -6,11 +6,11 @@ import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
 import $ from "jquery";
-import Preview from "./Darkblock";
-import PreviewTwo from "./LevelTwoFileChooser";
+import Preview from "./DarkblockStates";
+import PreviewTwo from "./FileChooser";
 import * as HashUtil from "../util/hash-util";
 import * as parser from "../util/parser";
-import Darkblock from "../components/Darkblock";
+import Darkblock from "./DarkblockStates";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -38,7 +38,7 @@ export default function DetailsView() {
           (res) => res.assets[0]
         );
         var id = parser.getContractAndTokensDetails(nft);
-        await checkIfAlreadyDarkblocked(id);
+        // await checkIfAlreadyDarkblocked(id);
         checkIfNftOwnedByUser(nft);
         setNft(nft);
         setIsLoaded(true); //load it in ui
@@ -95,7 +95,7 @@ export default function DetailsView() {
     console.log(`Owner Address : ${nft.owner.address}`);
     console.log(`Creator Address : ${nft.creator.address}`);
 
-    if (nft.owner.address === address) {
+    if (nft.owner.address === accountAddress) {
       setIsOwnedByUser(true);
     } else {
       setIsOwnedByUser(false);
@@ -249,9 +249,7 @@ export default function DetailsView() {
 
   return (
     <div>
-      <Darkblock />
       {isLoaded ? (
-        {/* // column 1
         <div className="detail-page-container">
           <div className="detail-preview-image ">
             <img
@@ -314,8 +312,14 @@ export default function DetailsView() {
                 </div>
               </div>
             </div>
-            Column 2
-            <div className="create-darkblock">
+            <Darkblock
+              levelOneFileSelectionHandler={levelOneFileSelectionHandler}
+              isDarkblocked={isDarkblocked}
+              isOwnedByUser={isOwnedByUser}
+              createDarkblockHandle={onCreateDarkblockClick}
+              levelTwoFileSelectionHandler={levelTwoFileSelectionHandler}
+            />
+            {/* <div className="create-darkblock">
               <form onSubmit={onCreateDarkblockClick}>
                 <div>
                   <div className="create-darkblock-container">
@@ -422,10 +426,10 @@ export default function DetailsView() {
                   ) : null}
                 </div>
               </form>
-            </div>
+            </div> */}
           </div>
-        </div>*/}
-      ) : null} 
+        </div>
+      ) : null}
     </div>
   );
 }
