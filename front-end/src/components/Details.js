@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
 import $ from "jquery";
-import Preview from "./LevelOneFileChooser";
+import Preview from "./Darkblock";
 import PreviewTwo from "./LevelTwoFileChooser";
 import * as HashUtil from "../util/hash-util";
 import * as parser from "../util/parser";
