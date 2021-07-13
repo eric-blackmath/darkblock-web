@@ -6,31 +6,38 @@ import wallet from "../images/wallet.svg";
 import $ from "jquery";
 import { useEffect } from "react";
 import * as LoginUtil from "../util/login-util";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import * as MetamaskUtil from "../util/metamask-util";
+import {Navh2nk} from 'react-router-dom'
 import { useLocation } from "react-router-dom";
+
 
 export default function Nav({ setAddress, address }) {
   let history = useHistory();
   let location = useLocation();
 
+
+
+
   useEffect(() => {
-    setNavigation();
-    console.log(`Path Nav : ${location.pathname}`);
+    // setNavigation();
+    // console.log(`Path Nav : ${location.pathname}`);
   }, []);
 
-  function setNavigation() {
-    var path = window.location.pathname;
-    path = path.replace(/\/$/, "");
-    path = decodeURIComponent(path);
+  // function setNavigation() {
+  //   var path = window.location.pathname;
+  //   path = path.replace(/\/$/, "");
+  //   path = decodeURIComponent(path);
 
-    $(".nav a").each(function () {
-      var href = $(this).attr("href");
-      if (path.substring(0, href.length) === href) {
-        $(this).closest(".nav-link").addClass("active");
-      }
-    });
-  }
+  //   $(".nav a").each(function () {
+  //     var href = $(this).attr("href");
+  //     if (path.substring(0, href.length) === href) {
+  //       $(this).closest(".nav-h2nk").addClass("active");
+  //     }
+  //   });
+  // }
+
+
 
   const handleLogOut = () => {
     LoginUtil.logOutUser();
@@ -64,14 +71,18 @@ export default function Nav({ setAddress, address }) {
             </a>
           {location.pathname === "/tv" ? null : (
             <div className="nav-content">
-              <a className="nav-link" href="/nfts/all">
+              
+                <h2 className="nav-link nav-item"><NavLink className="nav-link" exact activeClassName="active" to='/nfts/all' >My NFT's</NavLink></h2>
+                <h2 className="nav-link nav-item"><NavLink className="nav-link" activeClassName="active" to='/nfts/createdbyme'>Created By Me</NavLink></h2>
+            
+              {/* <a className="nav-h2nk" href="/nfts/all">
                 {" "}
                 <h2 className="nav-item">My NFT's</h2>
-              </a>
-              <a className="nav-link" href="/nfts/createdbyme">
+              </a> */}
+              {/* <a className="nav-h2nk" href="/nfts/createdbyme">
                 <h2 className="nav-item">Created By Me</h2>
-              </a>
-              {/* <button onClick={handleLogOut}>LogOut</button> */}
+              </a> */}
+              {/* <button onCh2ck={handleLogOut}>LogOut</button> */}
 
               <div className="dropdown">
                 <button className="dropbtn">
