@@ -10,6 +10,7 @@ import Preview from "./Darkblock";
 import PreviewTwo from "./LevelTwoFileChooser";
 import * as HashUtil from "../util/hash-util";
 import * as parser from "../util/parser";
+import Darkblock from "../components/Darkblock";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -248,8 +249,9 @@ export default function DetailsView() {
 
   return (
     <div>
-      {/* {isLoaded ? (
-        // column 1
+      <Darkblock />
+      {isLoaded ? (
+        {/* // column 1
         <div className="detail-page-container">
           <div className="detail-preview-image ">
             <img
@@ -422,8 +424,8 @@ export default function DetailsView() {
               </form>
             </div>
           </div>
-        </div>
-      ) : null} */}
+        </div>*/}
+      ) : null} 
     </div>
   );
 }
