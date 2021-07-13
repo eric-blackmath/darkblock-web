@@ -378,7 +378,7 @@ export default function LevelOneFileChooser({
       {!isDarkblocked && !isOwnedByUser ? (
         <div>
           hello
-
+          
         <div className="detail-page-container">
           <div className="detail-preview-image ">
             <img
