@@ -4,6 +4,7 @@ import "../styles/detail.scss";
 import { UserContext } from "../util/UserContext";
 import { useEffect, useState, useContext } from "react";
 import FileChooserOne from "./FileChooser";
+import goldblock from "../images/goldblock.png";
 
 export default function DarkblockStates({
   levelOneFileSelectionHandler,
@@ -176,79 +177,122 @@ export default function DarkblockStates({
   return (
     <div>
       {/* state 0 */}
-      {isDarkblocked ? <div>Show Already Darkblocked UI</div> : null}
-      {/* state 1 */}
-      {!isDarkblocked && !isOwnedByUser ? <div></div> : null}
-      {/* state 2 */}
-      {!isDarkblocked && isOwnedByUser ? (
-        <div className="create-darkblock">
-          <form onSubmit={createDarkblockClickHandle}>
-            <div>
-              <div className="create-darkblock-container">
-                <h1 className="create-title">Create Darkblock</h1>
-                <p className="create-subtitle">
-                  Upload your file and select your Darkblock level.{" "}
-                </p>
-                <p className="create-subtitle">
-                  Note: You need the Darkblock Android TV app to view a
-                  Darkblock upgrade.
-                </p>
+      {/* there is a darkblock */}
+      {isDarkblocked ? (
+        <div>
+          <div className="create-darkblock darkblock-found">
+            <h1 className="dbfound-title">Protected by Darkblock</h1>
+            <div className="dbfound">
+              <div className="dbfound-content">
+                <img className="gold-block" src={goldblock} alt="gold block" />
               </div>
+              <div className="dbfound-content">
+                <h5 className="dbfound-subtitle">Description</h5>
+                <p className="dbfound-text">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Semper feugiat nibh sed pulvinar proin gravida hendrerit
+                  lectus. Nulla facilisi etiam dignissim diam quis enim lobortis
+                  scelerisque fermentum.
+                </p>
+              
+                <h5 className="dbfound-subtitle">Date Created</h5>
+                <p className="dbfound-text">date created here</p>
+                <p className="dbfound-text">
+                  {" "}
+                  To view this Darkblock you need the Darkblock Android TV app.
+                </p>
+                </div>
             </div>
-            <div className="upgrade-grid">
+          </div>
+        </div>
+      ) : null}
+      {/* state 1 */}
+      {/* no darkblock found */}
+      {!isDarkblocked && !isOwnedByUser ? (
+        <div>
+          <div className="create-darkblock no-darkblock">
+            <h1>No Darkblock Found</h1>
+            <p>
+              No Darkblock has been detected for this NFT. Only the creator of
+              the NFT can create Darkblocks. Please contact the creator of the
+              NFT to request a Darkblock for this NFT.
+            </p>
+          </div>
+        </div>
+      ) : null}
+      {/* state 2 */}
+      {/* create darkblock */}
+      {!isDarkblocked && isOwnedByUser ? (
+        <div>
+          <div className="create-darkblock">
+            <form onSubmit={createDarkblockClickHandle}>
               <div>
-                <div className="upgrade-level">
-                  <p className="upgrade-number">LEVEL 1</p>
+                <div className="create-darkblock-container">
+                  <h1 className="create-title">Create Darkblock</h1>
+                  <p className="create-subtitle">
+                    Upload your file and select your Darkblock level.{" "}
+                  </p>
+                  <p className="create-subtitle">
+                    Note: You need the Darkblock Android TV app to view a
+                    Darkblock upgrade.
+                  </p>
                 </div>
-                <div className="upgrade-title">
-                  <span className="upgrade-type">SUPERCHARGED</span>
-                  <ul className="upgrade-detail-list">
-                    <li>Massive filesize support</li>
-                    <li>Stored forever on Arweave</li>
-                  </ul>
-                </div>
+              </div>
+              <div className="upgrade-grid">
+                <div>
+                  <div className="upgrade-level">
+                    <p className="upgrade-number">LEVEL 1</p>
+                  </div>
+                  <div className="upgrade-title">
+                    <span className="upgrade-type">SUPERCHARGED</span>
+                    <ul className="upgrade-detail-list">
+                      <li>Massive filesize support</li>
+                      <li>Stored forever on Arweave</li>
+                    </ul>
+                  </div>
 
-                <FileChooserOne
-                  fileSelectionHandler={levelOneFileSelectionHandler}
-                />
-
-                <div className="custom-file mb-4">
-                  <input
-                    type="file"
-                    className="custom-file-input"
-                    id="levelOneFile"
-                    onChange={levelFileSelectionHandler}
+                  <FileChooserOne
+                    fileSelectionHandler={levelOneFileSelectionHandler}
                   />
-                  {/* <label className="custom-file-label" htmlFor="levelOneFile">
+
+                  <div className="custom-file mb-4">
+                    <input
+                      type="file"
+                      className="custom-file-input"
+                      id="levelOneFile"
+                      onChange={levelFileSelectionHandler}
+                    />
+                    {/* <label className="custom-file-label" htmlFor="levelOneFile">
                       {level === "one" ? fileName : null}
                     </label> */}
+                  </div>
+                </div>
+                <div>
+                  <div className="upgrade-level">
+                    <p className="upgrade-number">LEVEL 2</p>
+                  </div>
+                  <div className="upgrade-title">
+                    <span className="upgrade-type">Protected by Darkblock</span>
+                    <ul className="upgrade-detail-list">
+                      <li>Software encryption</li>
+                      <li>All features of level 1</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div className="upgrade-level">
-                  <p className="upgrade-number">LEVEL 2</p>
-                </div>
-                <div className="upgrade-title">
-                  <span className="upgrade-type">Protected by Darkblock</span>
-                  <ul className="upgrade-detail-list">
-                    <li>Software encryption</li>
-                    <li>All features of level 1</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            <div>
-              <p className="about-darkblock">About the Darkblock</p>
-              <textarea
-                className="textarea"
-                placeholder="Add a description of the Darkblock or leave empty..."
-                // value={darkblockDescription}
-                // onChange={onDarkblockDescriptionChange}
-              ></textarea>
-            </div>
-            <div className="button-container">
-              {/* {isDarkblocked || isUploading ? null : (
+              <div>
+                <p className="about-darkblock">About the Darkblock</p>
+                <textarea
+                  className="textarea"
+                  placeholder="Add a description of the Darkblock or leave empty..."
+                  // value={darkblockDescription}
+                  // onChange={onDarkblockDescriptionChange}
+                ></textarea>
+              </div>
+              <div className="button-container">
+                {/* {isDarkblocked || isUploading ? null : (
                   <input
                     type="submit"
                     value="Create Darkblock"
@@ -256,11 +300,12 @@ export default function DarkblockStates({
                   />
                 )} */}
 
-              {/* {fileUploadProgress > 0 ? (
+                {/* {fileUploadProgress > 0 ? (
                   <label>{fileUploadProgress}</label>
                 ) : null} */}
-            </div>
-          </form>
+              </div>
+            </form>
+          </div>
         </div>
       ) : null}
     </div>
