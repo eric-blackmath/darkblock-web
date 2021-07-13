@@ -4,13 +4,18 @@ import "../styles/detail.scss";
 import one from "../images/levelone.png";
 import { useEffect, useState, useContext } from "react";
 
-export default function LevelOneFileChooser({ levelOneFileSelectionHandler }) {
+export default function LevelOneFileChooser({
+  levelOneFileSelectionHandler,
+  isDarkblocked,
+  isOwnedByUser,
+}) {
   var fileSelectionHandler = levelOneFileSelectionHandler;
 
   useEffect(() => {
     // File Upload
     //
     function ekUpload() {
+      console.log(`IsOwnedByUser : ${isOwnedByUser}`);
       function Init() {
         console.log("Upload Initialised");
 
@@ -157,8 +162,22 @@ export default function LevelOneFileChooser({ levelOneFileSelectionHandler }) {
     ekUpload();
   }, []);
 
+  // ui states for the block
+  // darkblocked true - already darkblocked (state 0)
+  // darkblocked false, own false - ask the owner      (state 1)
+  // darkblocked false, own true - create darkblock    (state 2)
   return (
     <div>
+      {/* state 0 */}
+      {isDarkblocked ? <div>Show Already Darkblocked UI</div> : null}
+      {/* state 1 */}
+      {!isDarkblocked && !isOwnedByUser ? (
+        <div>Show Ask the owner UI</div>
+      ) : null}
+      {/* state 2 */}
+      {!isDarkblocked && isOwnedByUser ? (
+        <div>Show Create Darkblock UI</div>
+      ) : null}
       <div id="file-upload-form" className="uploader">
         <input id="file-upload" type="file" name="fileUpload" />
 

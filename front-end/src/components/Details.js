@@ -18,6 +18,7 @@ export default function DetailsView() {
   const [nft, setNft] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [isDarkblocked, setIsDarkblocked] = useState(false);
+  const [isOwnedByUser, setIsOwnedByUser] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
@@ -25,22 +26,9 @@ export default function DetailsView() {
   const { contract, token } = useParams();
   const [darkblockDescription, setDarkblockDescription] = useState("");
 
-  const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
+  const accountAddress = "0x54196238400305778bff5fa200ee1896f6a9d5c2";
 
   useEffect(() => {
-    function previewFile(input) {
-      var file = $("input[type=file]").get(0).files[0];
-
-      if (file) {
-        var reader = new FileReader();
-
-        reader.onload = function () {
-          $("#previewImg").attr("src", reader.result);
-        };
-
-        reader.readAsDataURL(file);
-      }
-    }
     //!TODO Handle the id validation, then init requests
 
     const fetchDataForNft = async () => {
@@ -48,8 +36,9 @@ export default function DetailsView() {
         const nft = await OpenseaApi.getSingleNft(contract, token).then(
           (res) => res.assets[0]
         );
-        var idsString = parser.getContractAndTokensDetails(nft);
-        await verifyNFT(idsString);
+        var id = parser.getContractAndTokensDetails(nft);
+        await checkIfAlreadyDarkblocked(id);
+        checkIfNftOwnedByUser(nft);
         setNft(nft);
         setIsLoaded(true); //load it in ui
       } catch (e) {
@@ -63,7 +52,7 @@ export default function DetailsView() {
     console.log(`Redirect Params : ${contract} : ${token}`);
   }, []);
 
-  const verifyNFT = async (ids) => {
+  const checkIfAlreadyDarkblocked = async (ids) => {
     const data = new FormData(); //we put the file and tags inside formData and send it across
     data.append("ids", ids);
 
@@ -83,7 +72,7 @@ export default function DetailsView() {
   };
 
   const onLevelOneFileChange = (e) => {
-    //level two file is picked
+    //level one file is picked
     //TODO handle when user cancels the process
     console.log(`Level One Selected`);
     setLevel("one");
@@ -92,7 +81,7 @@ export default function DetailsView() {
   };
 
   const onLevelTwoFileChange = async (e) => {
-    //level one file is picked
+    //level two file is picked
     //TODO handle when user cancels the process
     console.log(`Level Two Selected`);
     setLevel("two");
@@ -100,21 +89,23 @@ export default function DetailsView() {
     setFileName(e.target.files[0].name);
   };
 
-  const isNftOwnedByUser = () => {
-    if (
-      nft.creator.address === accountAddress ||
-      nft.owner.address === address
-    ) {
-      return true;
+  const checkIfNftOwnedByUser = (nft) => {
+    console.log(`Account Address : ${accountAddress}`);
+    console.log(`Owner Address : ${nft.owner.address}`);
+    console.log(`Creator Address : ${nft.creator.address}`);
+
+    if (nft.owner.address === address) {
+      setIsOwnedByUser(true);
+    } else {
+      setIsOwnedByUser(false);
     }
-    return false;
   };
 
   const onCreateDarkblockClick = async (e) => {
     e.preventDefault();
 
     //check the owner of the nft
-    if (isNftOwnedByUser()) {
+    if (checkIfNftOwnedByUser()) {
       console.log(`Creating Darkblock`);
       initDarkblockCreation();
     } else {
@@ -181,25 +172,50 @@ export default function DetailsView() {
   };
 
   const setOwner = () => {
-    if (nft.owner.user.username === "NullAddress") {
-      if (!nft.creator.user.username) {
+    if (nft.owner.user) {
+      //got owner
+      if (
+        !nft.owner.user.username ||
+        nft.owner.user.username === "NullAddress"
+      ) {
+        //the username of owner is not set
+        return "No Username";
+      }
+      return nft.owner.user.username;
+    } else if (nft.creator.user) {
+      //got creator
+      if (
+        !nft.creator.user.username ||
+        nft.creator.user.username === "NullAddress"
+      ) {
+        //creator username not set
         return "No Username";
       }
       return nft.creator.user.username;
+    } else {
+      //no owner, no creator
+      return "No Username";
     }
-    return nft.owner.user.username;
   };
 
   const setCreator = () => {
-    if (nft.creator.user && nft.creator.user.username) {
-      //got creator username
-      if (nft.creator.user.username === "NullAddress") {
+    if (nft.creator.user) {
+      //got creator
+      if (
+        !nft.creator.user.username ||
+        nft.creator.user.username === "NullAddress"
+      ) {
+        //the username of owner is not set
         return "No Username";
       }
       return nft.creator.user.username;
-    } else if (nft.owner.user && nft.owner.user.username) {
-      //got owner username
-      if (nft.owner.user.username === "NullAddress") {
+    } else if (nft.owner.user) {
+      //got owner
+      if (
+        !nft.owner.user.username ||
+        nft.owner.user.username === "NullAddress"
+      ) {
+        //owner username not set
         return "No Username";
       }
       return nft.owner.user.username;
@@ -343,6 +359,8 @@ export default function DetailsView() {
                       levelOneFileSelectionHandler={
                         levelOneFileSelectionHandler
                       }
+                      isDarkblocked={isDarkblocked}
+                      isOwnedByUser={isOwnedByUser}
                     />
                     {/* <PreviewTwo
                       fileSelectionHandler={levelTwoFileSelectionHandler}
