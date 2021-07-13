@@ -248,7 +248,7 @@ export default function DetailsView() {
 
   return (
     <div>
-      {isLoaded ? (
+      {/* {isLoaded ? (
         // column 1
         <div className="detail-page-container">
           <div className="detail-preview-image ">
@@ -290,18 +290,6 @@ export default function DetailsView() {
                   <p className="about-description">{"TBD"}</p>
                 </div>
               </div>
-              {/* <div>Username : {user.name}</div>
-              <div>User Description : {user.description}</div>
-              <div>User Image : {user.cover}</div>
-              <div>Nfts Created : {nfts.length}</div>
-              <div>First Nft Created : {nfts[nfts.length - 1].date}</div>
-              <div>Contract Address : {nft.contract}</div>
-              <div>Token Id : {nft.tokenId}</div>
-              <div>BlockChain : Ethereum</div>
-              <div>Created By : {user.name}</div>
-              <div>Owned By : {user.name}</div>
-              {/* <img src={nftMeta.image.url.PREVIEW} /> */}
-              {/* <div>Date Created : {nft.date}</div>{" "} */}
               <div className="chain-info">
                 <h1 className="detail-about-nft">Chain Info</h1>
                 <div className="chain-content">
@@ -324,7 +312,7 @@ export default function DetailsView() {
                 </div>
               </div>
             </div>
-            {/* Column 2 */}
+            Column 2
             <div className="create-darkblock">
               <form onSubmit={onCreateDarkblockClick}>
                 <div>
@@ -351,10 +339,7 @@ export default function DetailsView() {
                         <li>Stored forever on Arweave</li>
                       </ul>
                     </div>
-                    {/* <div className="file-input-one">
-                      <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
-                      <p className="no-selected">No file selected </p>
-                    </div> */}
+
                     <Preview
                       levelOneFileSelectionHandler={
                         levelOneFileSelectionHandler
@@ -362,9 +347,6 @@ export default function DetailsView() {
                       isDarkblocked={isDarkblocked}
                       isOwnedByUser={isOwnedByUser}
                     />
-                    {/* <PreviewTwo
-                      fileSelectionHandler={levelTwoFileSelectionHandler}
-                    /> */}
                     <div className="custom-file mb-4">
                       <input
                         type="file"
@@ -398,10 +380,6 @@ export default function DetailsView() {
                         levelTwoFileSelectionHandler
                       }
                     />
-                    {/* <div className="file-input-two">
-                      <p className="file-input-text"><span className="file-span">Upload file </span>or drop here</p>
-                      <p className="no-selected">No file selected </p>
-                    </div> */}
                     <div className="custom-file mb-4">
                       <input
                         type="file"
@@ -429,7 +407,7 @@ export default function DetailsView() {
                   ></textarea>
                 </div>
                 <div className="button-container">
-                  {isDarkblocked || isUploading ? null : ( //hide the button
+                  {isDarkblocked || isUploading ? null : ( 
                     <input
                       type="submit"
                       value="Create Darkblock"
@@ -445,7 +423,7 @@ export default function DetailsView() {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }

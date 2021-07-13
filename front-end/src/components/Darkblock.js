@@ -3,6 +3,8 @@ import "../styles/preview.scss";
 import "../styles/detail.scss";
 import one from "../images/levelone.png";
 import { useEffect, useState, useContext } from "react";
+import Preview from "./Darkblock";
+import PreviewTwo from "./LevelTwoFileChooser";
 
 export default function LevelOneFileChooser({
   levelOneFileSelectionHandler,
@@ -10,6 +12,7 @@ export default function LevelOneFileChooser({
   isOwnedByUser,
 }) {
   var fileSelectionHandler = levelOneFileSelectionHandler;
+
 
   useEffect(() => {
     // File Upload
@@ -176,32 +179,117 @@ export default function LevelOneFileChooser({
       ) : null}
       {/* state 2 */}
       {!isDarkblocked && isOwnedByUser ? (
-        <div>Show Create Darkblock UI</div>
-      ) : null}
-      <div id="file-upload-form" className="uploader">
-        <input id="file-upload" type="file" name="fileUpload" />
+        <div className="create-darkblock">
+            <h1>hello</h1>
+           {/* <form onSubmit={onCreateDarkblockClick}>
+                <div>
+                  <div className="create-darkblock-container">
+                    <h1 className="create-title">Create Darkblock</h1>
+                    <p className="create-subtitle">
+                      Upload your file and select your Darkblock level.{" "}
+                    </p>
+                    <p className="create-subtitle">
+                      Note: You need the Darkblock Android TV app to view a
+                      Darkblock upgrade.
+                    </p>
+                  </div>
+                </div>
+                <div className="upgrade-grid">
+                  <div>
+                    <div className="upgrade-level">
+                      <p className="upgrade-number">LEVEL 1</p>
+                    </div>
+                    <div className="upgrade-title">
+                      <span className="upgrade-type">SUPERCHARGED</span>
+                      <ul className="upgrade-detail-list">
+                        <li>Massive filesize support</li>
+                        <li>Stored forever on Arweave</li>
+                      </ul>
+                    </div>
 
-        <label htmlFor="file-upload" id="file-drag">
-          <img id="file-image" src="#" alt="Preview" className="hidden" />
-          <div id="start">
-            {/* <div>Select a file or drag here</div> */}
-            <div id="notimage" className="hidden">
-              Please select an image
-            </div>
-            <span id="file-upload-btn" className="btn btn-primary">
-              <p className="file-input-text">
-                <span className="file-span">Upload file </span>or drop here
-              </p>
-            </span>
-          </div>
-          <div id="response" className="hidden">
-            <div id="messages"></div>
-            <progress className="progress" id="file-progress" value="0">
-              <span>0</span>%
-            </progress>
-          </div>
-        </label>
+                    <Preview
+                      levelOneFileSelectionHandler={
+                        levelOneFileSelectionHandler
+                      }
+                      isDarkblocked={isDarkblocked}
+                      isOwnedByUser={isOwnedByUser}
+                    />
+                    <div className="custom-file mb-4">
+                      <input
+                        type="file"
+                        className="custom-file-input"
+                        id="levelOneFile"
+                        onChange={onLevelOneFileChange}
+                      />
+                      <label
+                        className="custom-file-label"
+                        htmlFor="levelOneFile"
+                      >
+                        {level === "one" ? fileName : null}
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="upgrade-level">
+                      <p className="upgrade-number">LEVEL 2</p>
+                    </div>
+                    <div className="upgrade-title">
+                      <span className="upgrade-type">
+                        Protected by Darkblock
+                      </span>
+                      <ul className="upgrade-detail-list">
+                        <li>Software encryption</li>
+                        <li>All features of level 1</li>
+                      </ul>
+                    </div>
+                    <PreviewTwo
+                      levelTwoFileSelectionHandler={
+                        levelTwoFileSelectionHandler
+                      }
+                    />
+                    <div className="custom-file mb-4">
+                      <input
+                        type="file"
+                        className="custom-file-input"
+                        id="levelTwoFile"
+                        onChange={onLevelTwoFileChange}
+                      />
+                      <label
+                        className="custom-file-label"
+                        htmlFor="levelTwoFile"
+                      >
+                        {level === "two" ? fileName : null}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="about-darkblock">About the Darkblock</p>
+                  <textarea
+                    className="textarea"
+                    placeholder="Add a description of the Darkblock or leave empty..."
+                    value={darkblockDescription}
+                    onChange={onDarkblockDescriptionChange}
+                  ></textarea>
+                </div>
+                <div className="button-container">
+                  {isDarkblocked || isUploading ? null : ( 
+                    <input
+                      type="submit"
+                      value="Create Darkblock"
+                      className="create-darkblock-button"
+                    />
+                  )}
+
+                  {fileUploadProgress > 0 ? (
+                    <label>{fileUploadProgress}</label>
+                  ) : null}
+                </div>
+              </form> */}
       </div>
+      ) : null}
+      
     </div>
   );
 }
