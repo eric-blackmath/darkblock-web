@@ -70,7 +70,7 @@ const checkIfNftOwnedByUser = (nft) => {
   // console.log(`Creator Address : ${nft.creator.address}`);
 
   //localStorage.getItem("accountAddress")
-  if (nft.owner.address === loggedInAccount) {
+  if (nft.creator.address === loggedInAccount) {
     return true;
   } else {
     return false;
