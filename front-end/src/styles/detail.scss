@@ -356,3 +356,51 @@
   margin: 0;
   text-align: center;
 }
+
+.loading-animation{
+  display: flex;
+  justify-content: center;
+}
+
+.loading-title{
+  font-size: 36px;
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
+}
+
+.loading-content{
+  text-align: center;
+  width: 75%;
+  margin: auto;
+  display: block;
+}
+
+.loading-text{
+  font-size: 16px;
+  color: #c4c4c4;
+}
+
+.loading-container{
+  padding: 48px;
+}
+
+.upload-success{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.success-yellow{
+  color: #ffc324;
+}
+
+.success-image{
+  width: 50%;
+  display: block;
+  margin: auto;
+}

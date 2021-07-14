@@ -42,6 +42,12 @@ export default function Home({ setAddress }) {
           <p className="for-free">
             (for free)<span>*</span>
           </p>
+          <div className="login-container">
+              <button onClick={getAccount} className="login-button">
+                <img className="wallet-icon" src={wallet} alt="wallet icon" />
+                Connect Wallet
+              </button>
+            </div>
           </div>
           <div>
             <img className="hands-image" src={hands} alt="hands" />
