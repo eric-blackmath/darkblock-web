@@ -1,10 +1,13 @@
 import React from "react";
 import "../styles/detail.scss";
 import { useEffect } from "react";
+import "../styles/preview.scss";
+import silverblock from "../images/silverblock.png";
 
 export default function FileChooser({ fileSelectionHandler }) {
   var fileSelectionHandler = fileSelectionHandler;
   useEffect(() => {
+
     // File Upload
     //
     function ekUpload() {
@@ -153,34 +156,29 @@ export default function FileChooser({ fileSelectionHandler }) {
       }
     }
     ekUpload();
+    
   }, []);
 
   return (
     <div>
-      <div id="file-upload-form" className="uploadertwo">
-        <input id="file-upload" type="file" name="fileUpload" />
-
-        <label htmlFor="file-upload" id="file-drag">
-          <img id="file-image" src="#" alt="Preview" className="hidden" />
-          <div id="start">
-            {/* <div>Select a file or drag here</div> */}
-            <div id="notimage" className="hidden">
-              Please select an image
-            </div>
-            <span id="file-upload-btn" className="btn btn-primary">
-              <p className="file-input-text">
-                <span className="file-span">Upload file </span>or drop here
-              </p>
-            </span>
-          </div>
-          <div id="response" className="hidden">
-            <div id="messages"></div>
-            <progress className="progress" id="file-progress" value="0">
-              <span>0</span>%
-            </progress>
-          </div>
-        </label>
-      </div>
+<div id="file-upload-form" className="uploader">
+  <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+    <img className="silverblock" src={silverblock} alt="silverblock" />
+  <label htmlFor="file-upload" id="file-drag">
+  <div className="select-file"><span className="yellow-text">Upload file</span> or drop here</div>
+    <img id="file-image" src="#" alt="Preview" className="hidden" />
+    <div id="start">
+      <div id="notimage" className="hidden">Please select an image</div>
+      {/* <span id="file-upload-btn" className="btn btn-primary">Select a file</span> */}
+    </div>
+    <div id="response" className="hidden">
+      <div id="messages"></div>
+      <progress className="progress" id="file-progress" value="0">
+        <span>0</span>%
+      </progress>
+    </div>
+  </label>
+</div>
     </div>
   );
 }

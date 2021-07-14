@@ -7,6 +7,7 @@ import { useEffect, useState, useContext } from "react";
 import FileChooserOne from "./FileChooser";
 import goldblock from "../images/goldblock.png";
 
+
 export default function DarkblockStates({
   levelTwoFileSelectionHandler,
   nft,
@@ -218,7 +219,7 @@ export default function DarkblockStates({
       ) : null}
       {/* state 1 */}
       {/* no darkblock found */}
-      {!nft.is_darkblocked && !nft.is_owned_by_user ? (
+      {!nft.is_darkblocked && nft.is_owned_by_user ? (
         <div>
           <div className="create-darkblock no-darkblock">
             <h1>No Darkblock Found</h1>
@@ -232,7 +233,8 @@ export default function DarkblockStates({
       ) : null}
       {/* state 2 */}
       {/* create darkblock */}
-      {!nft.is_darkblocked && nft.is_owned_by_user ? (
+      {/* put exclamation back on one above */}
+      {!nft.is_darkblocked && !nft.is_owned_by_user ? (
         <div>
           <div className="create-darkblock">
             <form onSubmit={createDarkblockClickHandle}>
@@ -265,7 +267,7 @@ export default function DarkblockStates({
                     fileSelectionHandler={levelTwoFileSelectionHandler}
                   />
 
-                  <div className="custom-file mb-4">
+                  {/* <div className="custom-file mb-4">
                     <input
                       type="file"
                       className="custom-file-input"
@@ -275,7 +277,7 @@ export default function DarkblockStates({
                     <label className="custom-file-label" htmlFor="levelOneFile">
                       {selectedLevel === "one" ? fileName : null}
                     </label>
-                  </div>
+                  </div> */}
                 </div>
                 <div>
                   <div className="upgrade-level">
@@ -288,6 +290,9 @@ export default function DarkblockStates({
                       <li>All features of level 1</li>
                     </ul>
                   </div>
+                     {/* <FileChooserOne
+                    fileSelectionHandler={levelTwoFileSelectionHandler}
+                  /> */}
                 </div>
               </div>
 
