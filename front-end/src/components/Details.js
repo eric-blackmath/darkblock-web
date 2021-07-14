@@ -5,17 +5,16 @@ import * as NodeApi from "../api/node-api";
 import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
-import $ from "jquery";
-import Preview from "./DarkblockStates";
-import PreviewTwo from "./FileChooser";
 import * as HashUtil from "../util/hash-util";
 import * as parser from "../util/parser";
+import * as MetamaskUtil from "../util/metamask-util";
 import Darkblock from "./DarkblockStates";
+import * as DetailsMeMapper from "../util/details-mapper";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
   const address = useContext(UserContext);
-  const [level, setLevel] = useState("0"); //darkblock level
+  const [selectedLevel, setSelectedLevel] = useState("0"); //darkblock level
   const [nft, setNft] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [isDarkblocked, setIsDarkblocked] = useState(false);
@@ -27,7 +26,7 @@ export default function DetailsView() {
   const { contract, token } = useParams();
   const [darkblockDescription, setDarkblockDescription] = useState("");
 
-  const accountAddress = "0x54196238400305778bff5fa200ee1896f6a9d5c2";
+  const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
 
   useEffect(() => {
     //!TODO Handle the id validation, then init requests
@@ -37,10 +36,8 @@ export default function DetailsView() {
         const nft = await OpenseaApi.getSingleNft(contract, token).then(
           (res) => res.assets[0]
         );
-        var id = parser.getContractAndTokensDetails(nft);
-        // await checkIfAlreadyDarkblocked(id);
-        checkIfNftOwnedByUser(nft);
-        setNft(nft);
+        const mappedNft = await DetailsMeMapper.getMappedNft(nft);
+        setNft(mappedNft);
         setIsLoaded(true); //load it in ui
       } catch (e) {
         console.log(e);
@@ -53,60 +50,11 @@ export default function DetailsView() {
     console.log(`Redirect Params : ${contract} : ${token}`);
   }, []);
 
-  const checkIfAlreadyDarkblocked = async (ids) => {
-    const data = new FormData(); //we put the file and tags inside formData and send it across
-    data.append("ids", ids);
-
-    try {
-      const verifyRes = await NodeApi.verifyNFTs(data);
-      //handle the response
-      var matches = verifyRes.data;
-      if (matches) {
-        //nft already darkblocked
-        setIsDarkblocked(true);
-        console.log(`Verify Response : ${JSON.stringify(matches)}`);
-      }
-    } catch (err) {
-      //catch some errors here
-      console.log(err);
-    }
-  };
-
-  const onLevelOneFileChange = (e) => {
-    //level one file is picked
-    //TODO handle when user cancels the process
-    console.log(`Level One Selected`);
-    setLevel("one");
-    setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
-  };
-
-  const onLevelTwoFileChange = async (e) => {
-    //level two file is picked
-    //TODO handle when user cancels the process
-    console.log(`Level Two Selected`);
-    setLevel("two");
-    setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
-  };
-
-  const checkIfNftOwnedByUser = (nft) => {
-    console.log(`Account Address : ${accountAddress}`);
-    console.log(`Owner Address : ${nft.owner.address}`);
-    console.log(`Creator Address : ${nft.creator.address}`);
-
-    if (nft.owner.address === accountAddress) {
-      setIsOwnedByUser(true);
-    } else {
-      setIsOwnedByUser(false);
-    }
-  };
-
   const onCreateDarkblockClick = async (e) => {
     e.preventDefault();
 
     //check the owner of the nft
-    if (checkIfNftOwnedByUser()) {
+    if (nft.is_owned_by_user === true) {
       console.log(`Creating Darkblock`);
       initDarkblockCreation();
     } else {
@@ -117,20 +65,23 @@ export default function DetailsView() {
 
   const initDarkblockCreation = async () => {
     setIsUploading(true);
+
     console.log(`Init Hashing the file`);
     const fileHash = await HashUtil.hashInChunks(file);
     console.log(`Hash of the file : ${fileHash}`);
     //now sign this hash with eth wallet and attach it to tags
 
+    const signedHash = await MetamaskUtil.signTypedData(fileHash);
+
     const data = new FormData(); //we put the file and tags inside formData and send it across
     data.append("file", file);
-    data.append("contract", nft.asset_contract.address);
-    data.append("token", nft.token_id);
+    data.append("contract", nft.contract);
+    data.append("token", nft.token);
     data.append("wallet", address); // replace with wallet
-    data.append("level", level);
-    data.append("token_schema", nft.asset_contract.schema_name);
+    data.append("level", selectedLevel);
+    data.append("token_schema", nft.blockchain);
     data.append("darkblock_description", darkblockDescription);
-    data.append("darkblock_hash", fileHash);
+    data.append("darkblock_hash", signedHash);
 
     try {
       const options = {
@@ -165,86 +116,27 @@ export default function DetailsView() {
     }
   };
 
-  const setName = () => {
-    if (!nft.name) {
-      return nft.collection.name;
-    }
-    return nft.name;
-  };
-
-  const setOwner = () => {
-    if (nft.owner.user) {
-      //got owner
-      if (
-        !nft.owner.user.username ||
-        nft.owner.user.username === "NullAddress"
-      ) {
-        //the username of owner is not set
-        return "No Username";
-      }
-      return nft.owner.user.username;
-    } else if (nft.creator.user) {
-      //got creator
-      if (
-        !nft.creator.user.username ||
-        nft.creator.user.username === "NullAddress"
-      ) {
-        //creator username not set
-        return "No Username";
-      }
-      return nft.creator.user.username;
-    } else {
-      //no owner, no creator
-      return "No Username";
-    }
-  };
-
-  const setCreator = () => {
-    if (nft.creator.user) {
-      //got creator
-      if (
-        !nft.creator.user.username ||
-        nft.creator.user.username === "NullAddress"
-      ) {
-        //the username of owner is not set
-        return "No Username";
-      }
-      return nft.creator.user.username;
-    } else if (nft.owner.user) {
-      //got owner
-      if (
-        !nft.owner.user.username ||
-        nft.owner.user.username === "NullAddress"
-      ) {
-        //owner username not set
-        return "No Username";
-      }
-      return nft.owner.user.username;
-    } else {
-      //no owner, no creator
-      return "No Username";
-    }
-  };
-
-  const setEdition = () => {
-    if (!nft.asset_contract.nft_version) {
-      return "1/1";
-    }
-    return nft.asset_contract.nft_version;
-  };
-
   const onDarkblockDescriptionChange = (e) => {
     //additional info is being added for darkblock creation
     setDarkblockDescription(e.target.value);
   };
 
   const levelOneFileSelectionHandler = (files) => {
-    console.log(`We have the files in Details : ${files.length}`);
+    //level one file is picked
+    //TODO handle when user cancels the process
+    console.log(`Level One Selected`);
+    setSelectedLevel("one");
+    setFile(files[0]);
+    setFileName(files[0].name);
   };
 
-  const levelTwoFileSelectionHandler = (files) => {
-    //hook this up with previewtwo
-    console.log(`We have the files in Details : ${files.length}`);
+  const levelTwoFileSelectionHandler = async (files) => {
+    //level two file is picked
+    //TODO handle when user cancels the process
+    console.log(`Level Two Selected`);
+    setSelectedLevel("two");
+    setFile(files[0]);
+    setFileName(files[0].name);
   };
 
   return (
@@ -255,15 +147,15 @@ export default function DetailsView() {
             <img
               alt="nft-preview"
               className="nft-detail-preview"
-              src={nft.image_url}
+              src={nft.image}
             />
           </div>
           <div className="detail-name-container">
-            <h1 className="nft-detail-name">{setName()}</h1>
+            <h1 className="nft-detail-name">{nft.name}</h1>
           </div>
           <div>
             <p className="nft-deatil-owner">
-              Owned by <span className="owner-color">{setOwner()}</span>
+              Owned by <span className="owner-color">{nft.owner}</span>
             </p>
           </div>
           <div className="detail-container">
@@ -273,21 +165,21 @@ export default function DetailsView() {
               <div className="about-the-nft">
                 <div className="flex-grid-thirds">
                   <div className="col">
-                    Creator <span className="about-span">{setCreator()}</span>
+                    Creator <span className="about-span">{nft.creator}</span>
                   </div>
                   <div className="col">
                     Date Created{" "}
                     <span className="about-span date-created">
-                      {nft.asset_contract.created_date}
+                      {nft.nft_date_created}
                     </span>
                   </div>
                   <div className="col">
-                    Edition <span className="about-span">{setEdition()}</span>
+                    Edition <span className="about-span">{nft.edition}</span>
                   </div>
                 </div>
                 <div className="artist-statement">
                   Artist Statement
-                  <p className="about-description">{"TBD"}</p>
+                  <p className="about-description">{nft.nft_description}</p>
                 </div>
               </div>
               <div className="chain-info">
@@ -296,28 +188,29 @@ export default function DetailsView() {
                   <div className="chain-flex">
                     <p>Contact Address</p>
                     <span className="chain-span contract-address">
-                      {nft.asset_contract.address}
+                      {nft.contract}
                     </span>
                   </div>
                   <div className="chain-flex">
                     <p>Token Id</p>
-                    <span className="chain-span">{nft.token_id}</span>
+                    <span className="chain-span">{nft.token}</span>
                   </div>
                   <div className="chain-flex blockchain">
                     <p>BlockChain</p>
-                    <span className="chain-span">
-                      {nft.asset_contract.schema_name}
-                    </span>
+                    <span className="chain-span">{nft.blockchain}</span>
                   </div>
                 </div>
               </div>
             </div>
             <Darkblock
-              levelOneFileSelectionHandler={levelOneFileSelectionHandler}
-              isDarkblocked={isDarkblocked}
-              isOwnedByUser={isOwnedByUser}
-              createDarkblockHandle={onCreateDarkblockClick}
               levelTwoFileSelectionHandler={levelTwoFileSelectionHandler}
+              nft={nft}
+              createDarkblockHandle={onCreateDarkblockClick}
+              isUploading={isUploading}
+              fileName={fileName}
+              selectedLevel={selectedLevel}
+              darkblockDescription={darkblockDescription}
+              onDarkblockDescriptionChange={onDarkblockDescriptionChange}
             />
             {/* <div className="create-darkblock">
               <form onSubmit={onCreateDarkblockClick}>

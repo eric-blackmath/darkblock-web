@@ -8,6 +8,7 @@ let routes = (app) => {
   router.get("/files", controller.getListFiles);
   router.get("/files/:name", controller.download);
   router.post("/verify", controller.verifyNFTs);
+  router.post("/verify-id", controller.verifyNFT);
   router.post("/verify-sig", controller.verifySignature);
   router.get("/protocol", controller.protocolTest);
 

@@ -8,16 +8,12 @@ import { useEffect } from "react";
 import * as LoginUtil from "../util/login-util";
 import { NavLink, useHistory } from "react-router-dom";
 import * as MetamaskUtil from "../util/metamask-util";
-import {Navh2nk} from 'react-router-dom'
+import { Navh2nk } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
 
 export default function Nav({ setAddress, address }) {
   let history = useHistory();
   let location = useLocation();
-
-
-
 
   useEffect(() => {
     // setNavigation();
@@ -36,8 +32,6 @@ export default function Nav({ setAddress, address }) {
   //     }
   //   });
   // }
-
-
 
   const handleLogOut = () => {
     LoginUtil.logOutUser();
@@ -65,16 +59,31 @@ export default function Nav({ setAddress, address }) {
     <div className="nav">
       {address ? (
         <div className="nav">
-          
-            <a href="/home">
-              <img className="nav-logo" src={logo} alt="darkblock logo" />
-            </a>
+          <a href="/nfts/createdbyme">
+            <img className="nav-logo" src={logo} alt="darkblock logo" />
+          </a>
           {location.pathname === "/tv" ? null : (
             <div className="nav-content">
-              
-                <h2 className="nav-link nav-item"><NavLink className="nav-link" exact activeClassName="active" to='/nfts/all' >My NFT's</NavLink></h2>
-                <h2 className="nav-link nav-item"><NavLink className="nav-link" activeClassName="active" to='/nfts/createdbyme'>Created By Me</NavLink></h2>
-            
+              <h2 className="nav-link nav-item">
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to="/nfts/createdbyme"
+                >
+                  Created By Me
+                </NavLink>
+              </h2>
+              <h2 className="nav-link nav-item">
+                <NavLink
+                  className="nav-link"
+                  exact
+                  activeClassName="active"
+                  to="/nfts/all"
+                >
+                  My NFT's
+                </NavLink>
+              </h2>
+
               {/* <a className="nav-h2nk" href="/nfts/all">
                 {" "}
                 <h2 className="nav-item">My NFT's</h2>

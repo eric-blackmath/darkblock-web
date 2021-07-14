@@ -4,7 +4,9 @@ import * as sigUtil from "eth-sig-util";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8080");
 
-export async function signTypedData(data, address) {
+export async function signTypedData(data) {
+  const address = await signInAndGetAccount();
+
   const typedData = [
     {
       type: "string",

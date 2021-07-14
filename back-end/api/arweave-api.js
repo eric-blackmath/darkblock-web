@@ -105,10 +105,11 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
     isLevelTwo === true ? encryptionKeys.rsaPublicKey : "None"
   );
   transaction.addTag("Data-Hash", fileHash);
-  transaction.addTag("Data-Signature", tags.data_signature);
+  transaction.addTag("Data-Signature", tags.darkblock_hash);
   transaction.addTag("Transaction-Type", "Test-Debug");
   transaction.addTag("Type", "Darkblock");
   if (isLevelTwo === true) transaction.addTag("Encryption-Version", "0.1");
+  transaction.addTag("Date-Created", Date.now());
 
   // Wait for arweave to sign it and give us the ok
   await arweave.transactions.sign(transaction, arweaveWallet);
@@ -201,7 +202,8 @@ const verifyNFTsById = async (queryArweave) => {
   });
 
   let data = await verifyRes.json();
-  console.log(`Transaction Matches : ${data.data.transactions.edges.length}`);
+  console.log(`Transaction Matches : ${JSON.stringify(data)}`);
+  // console.log(`Transaction Matches : ${data.data.transactions.edges.length}`);
 
   return data.data.transactions.edges;
 };

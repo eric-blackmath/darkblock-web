@@ -34,6 +34,24 @@ export const verifyNFTs = (data) => {
     });
 };
 
+//get meta data of the match
+export const verifyNFT = (data) => {
+  // params: {
+  //   ids: "Here are some ids to verify",
+  // },
+  const URL = `${baseUrlDev}/verify-id`;
+  return axios
+    .post(URL, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => response)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 //gets an arr of id's matched
 export const getDarkblockedNftsFrom = async (ids) => {
   const data = new FormData(); //we put the file and tags inside formData and send it across
@@ -49,6 +67,26 @@ export const getDarkblockedNftsFrom = async (ids) => {
       var matchesArr = matches.split(",");
       return matchesArr;
     }
+  } catch (err) {
+    //catch some errors here
+    console.log(err);
+  }
+};
+
+export const getDarkblockedNftFrom = async (id) => {
+  const data = new FormData(); //we put the file and tags inside formData and send it across
+  data.append("ids", id);
+
+  try {
+    const verifyRes = await verifyNFT(data);
+    //handle the response
+    return verifyRes;
+    // var matches = verifyRes.data;
+    // if (matches) {
+    //   //nft already darkblocked
+    //   setIsDarkblocked(true);
+    //   console.log(`Verify Response : ${JSON.stringify(matches)}`);
+    // }
   } catch (err) {
     //catch some errors here
     console.log(err);
