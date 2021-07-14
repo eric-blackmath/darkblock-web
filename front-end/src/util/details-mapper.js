@@ -57,19 +57,20 @@ export const getMappedNft = async (nft) => {
     encryptionLevel: encryptionLevel === "AES-256" ? "two" : "one",
   };
 
-  console.log(JSON.stringify(mappedNft));
+  // console.log(JSON.stringify(mappedNft));
 
   return mappedNft;
 };
 
 const checkIfNftOwnedByUser = (nft) => {
-  const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
-  console.log(`Account Address : ${accountAddress}`);
-  console.log(`Owner Address : ${nft.owner.address}`);
-  console.log(`Creator Address : ${nft.creator.address}`);
+  // const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
+  const loggedInAccount = localStorage.getItem("accountAddress");
+  // console.log(`Account Address : ${loggedInAccount}`);
+  // console.log(`Owner Address : ${nft.owner.address}`);
+  // console.log(`Creator Address : ${nft.creator.address}`);
 
   //localStorage.getItem("accountAddress")
-  if (nft.owner.address === accountAddress) {
+  if (nft.owner.address === loggedInAccount) {
     return true;
   } else {
     return false;

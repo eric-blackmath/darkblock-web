@@ -17,8 +17,6 @@ export default function DetailsView() {
   const [selectedLevel, setSelectedLevel] = useState("0"); //darkblock level
   const [nft, setNft] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isDarkblocked, setIsDarkblocked] = useState(false);
-  const [isOwnedByUser, setIsOwnedByUser] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
@@ -44,10 +42,13 @@ export default function DetailsView() {
       }
     };
 
-    fetchDataForNft();
+    try {
+      fetchDataForNft();
+    } catch (e) {
+      console.log(e);
+    }
 
-    console.log(`Address : ${address}`);
-    console.log(`Redirect Params : ${contract} : ${token}`);
+    console.log(`Logged In User : ${address}`);
   }, []);
 
   const onCreateDarkblockClick = async (e) => {
