@@ -8,6 +8,8 @@
   display: flex;
   align-items: center;
   flex-direction: row;
+  position: relative;
+  height: 100vh;
   @media only screen and (max-width:768px){
       flex-direction: column;
   }
@@ -29,4 +31,11 @@
   font-style: normal;
   font-size: 48px;
   margin: 0;
+}
+
+.arweave-warning{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #9a9a9a;
 }

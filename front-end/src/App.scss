@@ -96,9 +96,13 @@ img{
   align-items: center;
   // padding: 0 48px;
   // position: fixed;
-  width: -webkit-fill-available;
+  // width: -webkit-fill-available;
   background-color: white;
   box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  width: 100%;
+  padding-top: 16px;
+  z-index: 99999;
 }
 
 .active{
@@ -191,6 +195,7 @@ img{
   padding: 15px 25px;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 16px;
 }
 
 .wallet-icon {

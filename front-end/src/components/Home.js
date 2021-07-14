@@ -54,6 +54,30 @@ export default function Home({ setAddress }) {
           <div>
             <img className="hands-image" src={hands} alt="hands" />
           </div>
+          <div className="arweave-warning">
+          <p>*Uploading to Arweave isn’t free. But we’ve got you covered for now.</p>
+          </div>
+        </div>
+
+        <div style={{backgroundColor:"black"}} className="home-hero">
+          <div>
+          <h1 className="home-title">Give superpowers to your NFTs!</h1>
+          <p className="for-free">
+            (for free)<span>*</span>
+          </p>
+          <div className="login-container">
+              <button onClick={getAccount} className="login-button">
+                <img className="wallet-icon" src={wallet} alt="wallet icon" />
+                Connect Wallet
+              </button>
+            </div>
+          </div>
+          <div>
+            <img className="hands-image" src={hands} alt="hands" />
+          </div>
+          <div className="arweave-warning">
+          <p>*Uploading to Arweave isn’t free. But we’ve got you covered for now.</p>
+          </div>
         </div>
       </div>
     </div>
