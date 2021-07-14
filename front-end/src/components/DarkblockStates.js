@@ -219,7 +219,7 @@ export default function DarkblockStates({
       ) : null}
       {/* state 1 */}
       {/* no darkblock found */}
-      {!nft.is_darkblocked && nft.is_owned_by_user ? (
+      {!nft.is_darkblocked && !nft.is_owned_by_user ? (
         <div>
           <div className="create-darkblock no-darkblock">
             <h1>No Darkblock Found</h1>
@@ -234,7 +234,7 @@ export default function DarkblockStates({
       {/* state 2 */}
       {/* create darkblock */}
       {/* put exclamation back on one above */}
-      {!nft.is_darkblocked && !nft.is_owned_by_user ? (
+      {!nft.is_darkblocked && nft.is_owned_by_user ? (
         <div>
           <div className="create-darkblock">
             <form onSubmit={createDarkblockClickHandle}>
