@@ -8,16 +8,24 @@ import DetailsView from "./components/Details";
 import Nav from "./components/Nav";
 import { UserContext } from "./util/UserContext";
 import { Redirect } from "react-router";
+import { useHistory } from "react-router-dom";
 
 function App() {
   const [address, setAddress] = useState();
+  let history = useHistory();
 
   // const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+
+  const redirectToCreatedByMe = () => {
+    history.push("/nfts/createdbyme");
+  };
 
   //if no address, user cannot access dashboard
   if (!address) {
     if (localStorage.getItem("accountAddress")) {
+      //if logged in redirect to createdbyme
       setAddress(localStorage.getItem("accountAddress"));
+      redirectToCreatedByMe();
     }
   }
 
@@ -39,7 +47,7 @@ function App() {
               render={() => (address ? <MyNfts /> : <Redirect to="/home" />)}
             ></Route>
 
-            <Route exact path="/home">
+            <Route exact path="/">
               <Home setAddress={setAddress} />
             </Route>
 

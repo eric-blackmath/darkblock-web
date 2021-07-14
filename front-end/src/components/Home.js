@@ -20,7 +20,7 @@ export default function Home({ setAddress }) {
   };
 
   const redirectToNFts = () => {
-    history.push("/nfts/all");
+    history.push("/nfts/createdbyme");
   };
 
   const fetchUserProfile = async (account) => {
@@ -37,7 +37,9 @@ export default function Home({ setAddress }) {
       <div className="home-page">
         <div className="home-hero">
           <h1>Give superpowers to your NFTs!</h1>
-          <p>(for free)<span>*</span></p>
+          <p>
+            (for free)<span>*</span>
+          </p>
         </div>
       </div>
     </div>

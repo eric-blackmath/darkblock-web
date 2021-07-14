@@ -36,7 +36,7 @@ export default function Nav({ setAddress, address }) {
   const handleLogOut = () => {
     LoginUtil.logOutUser();
     setAddress("");
-    history.push("/home");
+    history.push("/");
   };
 
   const getAccount = async () => {
@@ -52,7 +52,7 @@ export default function Nav({ setAddress, address }) {
   };
 
   const redirectToNFts = () => {
-    history.push("/nfts/all");
+    history.push("/nfts/createdbyme");
   };
 
   return (

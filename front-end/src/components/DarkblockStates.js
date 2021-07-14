@@ -7,7 +7,6 @@ import { useEffect, useState, useContext } from "react";
 import FileChooserOne from "./FileChooser";
 import goldblock from "../images/goldblock.png";
 
-
 export default function DarkblockStates({
   levelTwoFileSelectionHandler,
   nft,
@@ -265,6 +264,7 @@ export default function DarkblockStates({
 
                   <FileChooserOne
                     fileSelectionHandler={levelTwoFileSelectionHandler}
+                    level="one"
                   />
 
                   {/* <div className="custom-file mb-4">
@@ -290,9 +290,10 @@ export default function DarkblockStates({
                       <li>All features of level 1</li>
                     </ul>
                   </div>
-                     {/* <FileChooserOne
+                  <FileChooserOne
                     fileSelectionHandler={levelTwoFileSelectionHandler}
-                  /> */}
+                    level="two"
+                  />
                 </div>
               </div>
 

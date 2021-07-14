@@ -19,6 +19,7 @@ export default function CreatedByMe() {
   const { account } = useParams();
 
   useEffect(() => {
+    console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
     try {
       fetchData();
     } catch (e) {
