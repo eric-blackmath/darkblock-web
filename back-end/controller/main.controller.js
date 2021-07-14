@@ -83,7 +83,7 @@ const upload = async (req, res) => {
 
     // Get the wallet we have stored locally
     let walletFile = fs.readFileSync(
-      "C:/Users/livingRoom/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
+      "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
     ); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
@@ -124,6 +124,27 @@ const verifyNFTs = async (req, res) => {
     }
   });
   res.status(200).send(matches);
+};
+
+/**
+ * @param  {request} req //a post request with Nft-Id's(ids) in the body
+ * @param  {} res
+ * parses ids from the body, puts it in a query, hits arweave
+ * api for verification, returns a string of nft-ids all the matches
+ * seprarated by a comma
+ */
+const verifyNFT = async (req, res) => {
+  var arweaveQuery = await ParseUtil.getFullQuery(req);
+  var matchMeta = "";
+  await ArweaveApi.verifyNFTsById(arweaveQuery).then((transactions) => {
+    if (transactions.length > 0) {
+      //extract 'field' [NFT-Id] from transactions.tags
+      matchMeta = ParseUtil.getMetaOfMatch(transactions[0]);
+    } else {
+      //no matches
+    }
+  });
+  res.status(200).send(matchMeta);
 };
 
 /**
@@ -219,4 +240,5 @@ module.exports = {
   protocolTest,
   protocolUpload,
   verifySignature,
+  verifyNFT,
 };

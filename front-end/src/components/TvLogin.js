@@ -65,7 +65,7 @@ export default function TvLogin({ address }) {
     const epoch = Date.now(); // Unix timestamp in milliseconds
     var sessionToken = epoch + address;
     console.log(`Session  : ${sessionToken}`);
-    const signature = await MetamaskUtil.signTypedData(sessionToken, address);
+    const signature = await MetamaskUtil.signTypedData(sessionToken);
     console.log(`Signature : ${signature}`);
     return epoch + "_" + signature;
   };
@@ -73,8 +73,11 @@ export default function TvLogin({ address }) {
   return (
     <div className="tv-login">
       {isConnectSuccess ? (
-        <div className="tv-success"><h1 className="tv-success-text">Sweet!<br></br> You have successfully been connected.</h1>
-        <p className="tv-app-text">You can now continue on your TV app.</p>
+        <div className="tv-success">
+          <h1 className="tv-success-text">
+            Sweet!<br></br> You have successfully been connected.
+          </h1>
+          <p className="tv-app-text">You can now continue on your TV app.</p>
         </div>
       ) : (
         <div>

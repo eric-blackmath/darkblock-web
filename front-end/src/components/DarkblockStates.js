@@ -2,18 +2,22 @@ import React from "react";
 import "../styles/preview.scss";
 import "../styles/detail.scss";
 import { UserContext } from "../util/UserContext";
+import * as DateUtil from "../util/date";
 import { useEffect, useState, useContext } from "react";
 import FileChooserOne from "./FileChooser";
 import goldblock from "../images/goldblock.png";
 
 export default function DarkblockStates({
-  levelOneFileSelectionHandler,
   levelTwoFileSelectionHandler,
-  isDarkblocked,
-  isOwnedByUser,
+  nft,
   createDarkblockHandle,
+  isUploading,
+  fileName,
+  selectedLevel,
+  darkblockDescription,
+  onDarkblockDescriptionChange,
 }) {
-  var levelFileSelectionHandler = levelOneFileSelectionHandler;
+  // var levelFileSelectionHandler = levelOneFileSelectionHandler;
   var levelTwoFileSelectionHandler = levelTwoFileSelectionHandler;
 
   var createDarkblockClickHandle = createDarkblockHandle;
@@ -23,8 +27,12 @@ export default function DarkblockStates({
   useEffect(() => {
     // File Upload
     //
+
+    if (!nft.is_darkblocked && nft.is_owned_by_user) {
+      //init the upload stuff here for create darkblock
+    }
     function ekUpload() {
-      console.log(`IsOwnedByUser : ${isOwnedByUser}`);
+      console.log(`IsOwnedByUser : ${nft.is_owned_by_user}`);
       function Init() {
         console.log("Upload Initialised");
 
@@ -60,7 +68,7 @@ export default function DarkblockStates({
 
         // Cancel event and hover styling
         fileDragHover(e);
-        levelFileSelectionHandler(files);
+        levelTwoFileSelectionHandler(files);
 
         // Process all File objects
         for (var i = 0, f; (f = files[i]); i++) {
@@ -178,7 +186,7 @@ export default function DarkblockStates({
     <div>
       {/* state 0 */}
       {/* there is a darkblock */}
-      {isDarkblocked ? (
+      {nft.is_darkblocked ? (
         <div>
           <div className="create-darkblock darkblock-found">
             <h1 className="dbfound-title">Protected by Darkblock</h1>
@@ -187,29 +195,30 @@ export default function DarkblockStates({
                 <img className="gold-block" src={goldblock} alt="gold block" />
               </div>
               <div className="dbfound-content">
+                <label>
+                  {nft.encryptionLevel === "one" ? "Level 1" : "Level 2"}
+                </label>
                 <h5 className="dbfound-subtitle">Description</h5>
-                <p className="dbfound-text">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Semper feugiat nibh sed pulvinar proin gravida hendrerit
-                  lectus. Nulla facilisi etiam dignissim diam quis enim lobortis
-                  scelerisque fermentum.
-                </p>
-              
+                <p className="dbfound-text">{nft.darkblock_description}</p>
+
                 <h5 className="dbfound-subtitle">Date Created</h5>
-                <p className="dbfound-text">date created here</p>
+                <p className="dbfound-text">
+                  {DateUtil.getFormattedDateFromMillis(
+                    nft.darkblock_date_created
+                  )}
+                </p>
                 <p className="dbfound-text">
                   {" "}
                   To view this Darkblock you need the Darkblock Android TV app.
                 </p>
-                </div>
+              </div>
             </div>
           </div>
         </div>
       ) : null}
       {/* state 1 */}
       {/* no darkblock found */}
-      {!isDarkblocked && !isOwnedByUser ? (
+      {!nft.is_darkblocked && !nft.is_owned_by_user ? (
         <div>
           <div className="create-darkblock no-darkblock">
             <h1>No Darkblock Found</h1>
@@ -223,7 +232,7 @@ export default function DarkblockStates({
       ) : null}
       {/* state 2 */}
       {/* create darkblock */}
-      {!isDarkblocked && isOwnedByUser ? (
+      {!nft.is_darkblocked && nft.is_owned_by_user ? (
         <div>
           <div className="create-darkblock">
             <form onSubmit={createDarkblockClickHandle}>
@@ -253,7 +262,7 @@ export default function DarkblockStates({
                   </div>
 
                   <FileChooserOne
-                    fileSelectionHandler={levelOneFileSelectionHandler}
+                    fileSelectionHandler={levelTwoFileSelectionHandler}
                   />
 
                   <div className="custom-file mb-4">
@@ -261,11 +270,11 @@ export default function DarkblockStates({
                       type="file"
                       className="custom-file-input"
                       id="levelOneFile"
-                      onChange={levelFileSelectionHandler}
+                      onChange={levelTwoFileSelectionHandler}
                     />
-                    {/* <label className="custom-file-label" htmlFor="levelOneFile">
-                      {level === "one" ? fileName : null}
-                    </label> */}
+                    <label className="custom-file-label" htmlFor="levelOneFile">
+                      {selectedLevel === "one" ? fileName : null}
+                    </label>
                   </div>
                 </div>
                 <div>
@@ -287,18 +296,18 @@ export default function DarkblockStates({
                 <textarea
                   className="textarea"
                   placeholder="Add a description of the Darkblock or leave empty..."
-                  // value={darkblockDescription}
-                  // onChange={onDarkblockDescriptionChange}
+                  value={darkblockDescription}
+                  onChange={onDarkblockDescriptionChange}
                 ></textarea>
               </div>
               <div className="button-container">
-                {/* {isDarkblocked || isUploading ? null : (
+                {isUploading ? null : (
                   <input
                     type="submit"
                     value="Create Darkblock"
                     className="create-darkblock-button"
                   />
-                )} */}
+                )}
 
                 {/* {fileUploadProgress > 0 ? (
                   <label>{fileUploadProgress}</label>
