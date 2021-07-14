@@ -5,6 +5,7 @@ import * as RaribleApi from "../api/rarible-api";
 import * as MetamaskUtil from "../util/metamask-util";
 import * as LoginUtil from "../util/login-util";
 import { useHistory } from "react-router-dom";
+import "../styles/home.scss";
 
 //Logs user into metamask and fetches their account address
 export default function Home({ setAddress }) {
@@ -31,5 +32,14 @@ export default function Home({ setAddress }) {
     }
   };
 
-  return <div>Home Page</div>;
+  return (
+    <div>
+      <div className="home-page">
+        <div className="home-hero">
+          <h1>Give superpowers to your NFTs!</h1>
+          <p>(for free)<span>*</span></p>
+        </div>
+      </div>
+    </div>
+  );
 }
