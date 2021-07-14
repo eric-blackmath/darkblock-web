@@ -6,6 +6,7 @@ import * as MetamaskUtil from "../util/metamask-util";
 import * as LoginUtil from "../util/login-util";
 import { useHistory } from "react-router-dom";
 import "../styles/home.scss";
+import hands from "../images/hands.png";
 
 //Logs user into metamask and fetches their account address
 export default function Home({ setAddress }) {
@@ -34,12 +35,17 @@ export default function Home({ setAddress }) {
 
   return (
     <div>
-      <div className="home-page">
+      <div className="home-page home-container">
         <div className="home-hero">
-          <h1>Give superpowers to your NFTs!</h1>
-          <p>
+          <div>
+          <h1 className="home-title">Give superpowers to your NFTs!</h1>
+          <p className="for-free">
             (for free)<span>*</span>
           </p>
+          </div>
+          <div>
+            <img className="hands-image" src={hands} alt="hands" />
+          </div>
         </div>
       </div>
     </div>

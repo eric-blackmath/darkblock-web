@@ -1,0 +1,32 @@
+.home-container {
+  width: 85vw;
+//   max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-hero {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  @media only screen and (max-width:768px){
+      flex-direction: column;
+  }
+}
+
+.hands-image{
+    max-width: 100%;
+}
+
+.for-free{
+    font-size: 32px;
+    font-weight: 100;
+    margin:0;
+}
+
+.home-title {
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 48px;
+  margin: 0;
+}
