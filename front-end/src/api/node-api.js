@@ -39,7 +39,7 @@ export const verifyNFT = (data) => {
   // params: {
   //   ids: "Here are some ids to verify",
   // },
-  const URL = `${baseUrlDev}/verify-id`;
+  const URL = `${baseUrlProd}/verify-id`;
   return axios
     .post(URL, data, {
       headers: {

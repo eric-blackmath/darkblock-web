@@ -26,10 +26,10 @@ export const getMappedNft = async (nft) => {
 
   if (darkblockedNft) {
     //attach darblock data with it
-    nftId = darkblockedNft[0].value;
-    darkblockDescription = darkblockedNft[1].value;
-    dateCreated = darkblockedNft[2].value;
-    encryptionLevel = darkblockedNft[3].value;
+    nftId = !darkblockedNft[0] ? "" : darkblockedNft[0].value;
+    darkblockDescription = !darkblockedNft[1] ? "" : darkblockedNft[1].value;
+    dateCreated = !darkblockedNft[2] ? "" : darkblockedNft[2].value;
+    encryptionLevel = !darkblockedNft[3] ? "" : darkblockedNft[3].value;
   }
   // const nftId = darkblockedNft.data[0].name;
   // darkblockedNft.data[0].name
