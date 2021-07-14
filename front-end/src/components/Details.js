@@ -18,6 +18,7 @@ export default function DetailsView() {
   const [nft, setNft] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUploadCompleted, setIsUploadCompleted] = useState(false);
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileUploadProgress, setFileUploadProgress] = useState("");
@@ -109,6 +110,10 @@ export default function DetailsView() {
 
       NodeApi.postTransaction(data, options).then((data) => {
         //handle the response
+        //TODO handle the isCompleted with the status code
+
+        setIsUploading(false);
+        setIsUploadCompleted(true);
         console.log(`Message : ${data.message}`);
       });
     } catch (err) {
@@ -209,6 +214,7 @@ export default function DetailsView() {
               nft={nft}
               createDarkblockHandle={onCreateDarkblockClick}
               isUploading={isUploading}
+              isUploadCompleted={isUploadCompleted}
               fileName={fileName}
               selectedLevel={selectedLevel}
               darkblockDescription={darkblockDescription}

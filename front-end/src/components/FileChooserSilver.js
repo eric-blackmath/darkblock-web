@@ -12,8 +12,6 @@ export default function FileChooser({ fileSelectionHandlerLevelOne }) {
     //
     function ekUpload() {
       function Init() {
-        console.log("Upload Initialised");
-
         var fileSelect = document.getElementById("file-upload"),
           fileDrag = document.getElementById("file-drag"),
           submitButton = document.getElementById("submit-button");
@@ -86,7 +84,6 @@ export default function FileChooser({ fileSelectionHandlerLevelOne }) {
           // document.getElementById("file-upload-form").reset();
         }
       }
-
 
       // Check for the various File API support.
       if (window.File && window.FileList && window.FileReader) {
