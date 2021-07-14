@@ -10,8 +10,6 @@ export default function FileChooser({ fileSelectionHandlerLevelTwo }) {
   useEffect(() => {
     function ekUploadtwo() {
       function Init() {
-        console.log("Upload Initialised");
-
         var fileSelect = document.getElementById("file-uploadtwo"),
           fileDrag = document.getElementById("file-dragtwo"),
           submitButton = document.getElementById("submit-button");

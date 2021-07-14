@@ -14,6 +14,7 @@ export default function DarkblockStates({
   nft,
   createDarkblockHandle,
   isUploading,
+  isUploadCompleted,
   fileName,
   selectedLevel,
   darkblockDescription,
@@ -235,7 +236,22 @@ export default function DarkblockStates({
       {/* state 2 */}
       {/* create darkblock */}
       {/* put exclamation back on one above */}
-      {!nft.is_darkblocked && nft.is_owned_by_user ? (
+      {!nft.is_darkblocked &&
+      nft.is_owned_by_user &&
+      isUploading &&
+      !isUploadCompleted ? (
+        <div>Loading State</div>
+      ) : null}
+      {!nft.is_darkblocked &&
+      nft.is_owned_by_user &&
+      !isUploading &&
+      isUploadCompleted ? (
+        <div>Upload Completed</div>
+      ) : null}
+      {!nft.is_darkblocked &&
+      nft.is_owned_by_user &&
+      !isUploading &&
+      !isUploadCompleted ? (
         <div>
           <div className="create-darkblock">
             <form onSubmit={createDarkblockClickHandle}>
