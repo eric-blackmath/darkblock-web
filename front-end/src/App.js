@@ -24,7 +24,6 @@ function App() {
   return (
     <div className="App">
       <Nav setAddress={setAddress} address={address} />
-
       <div className="content">
         <Switch>
           <UserContext.Provider value={address}>
