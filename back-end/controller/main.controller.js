@@ -5,6 +5,7 @@ const baseUrl = "http://localhost:8080/files/";
 const ParseUtil = require("../utils/parse");
 const sigUtil = require("eth-sig-util");
 
+const ARWEAVE_WALLET_PATH = "/home/ubuntu/arweave.json";
 const protocolUpload = async (req, res) => {
   console.log(`Protocol endpoint reached `);
 
@@ -37,9 +38,7 @@ const protocolUpload = async (req, res) => {
     }
 
     // Get the wallet we have stored locally
-    let walletFile = fs.readFileSync(
-      "C:/darkblock/arweave-key-fmTpIBFrCbAyUjV-f3VOq7Szs5RaMovb1Pf9MlUnjVk.json"
-    ); //to wallet file
+    let walletFile = fs.readFileSync(ARWEAVE_WALLET_PATH); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
 
@@ -82,9 +81,7 @@ const upload = async (req, res) => {
     }
 
     // Get the wallet we have stored locally
-    let walletFile = fs.readFileSync(
-      "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json"
-    ); //to wallet file
+    let walletFile = fs.readFileSync(ARWEAVE_WALLET_PATH); //to wallet file
 
     const arweaveWallet = JSON.parse(walletFile);
 
@@ -229,6 +226,7 @@ const verifySignature = async (req, res) => {
 
 const protocolTest = async (req, res) => {
   console.log(`Protocol Initializing`);
+  require("dotenv").config();
 };
 
 // Export all ya need

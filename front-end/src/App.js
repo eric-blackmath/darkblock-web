@@ -38,40 +38,42 @@ function App() {
             <Route
               exact
               path="/nfts/all"
-              render={() => (address ? <MyNfts /> : <Redirect to="/home" />)}
+              render={() => (address ? <MyNfts /> : <Redirect to="/" />)}
             ></Route>
 
             <Route
               exact
               path="/nfts/all/:account"
-              render={() => (address ? <MyNfts /> : <Redirect to="/home" />)}
+              render={() => (address ? <MyNfts /> : <Redirect to="/" />)}
             ></Route>
 
-            <Route exact path="/">
-              <Home setAddress={setAddress} />
-            </Route>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                address ? (
+                  <Redirect to="/nfts/createdbyme" />
+                ) : (
+                  <Home setAddress={setAddress} />
+                )
+              }
+            ></Route>
 
             <Route
               exact
               path="/nfts/createdbyme"
-              render={() =>
-                address ? <CreatedByMe /> : <Redirect to="/home" />
-              }
+              render={() => (address ? <CreatedByMe /> : <Redirect to="/" />)}
             ></Route>
 
             <Route
               exact
               path="/nfts/createdbyme/:account"
-              render={() =>
-                address ? <CreatedByMe /> : <Redirect to="/home" />
-              }
+              render={() => (address ? <CreatedByMe /> : <Redirect to="/" />)}
             ></Route>
 
             <Route
               path="/details/:contract/:token"
-              render={() =>
-                address ? <DetailsView /> : <Redirect to="/home" />
-              }
+              render={() => (address ? <DetailsView /> : <Redirect to="/" />)}
             ></Route>
 
             <Route exact path="/tv">
