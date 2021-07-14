@@ -122,7 +122,7 @@ export default function DetailsView() {
     setDarkblockDescription(e.target.value);
   };
 
-  const levelOneFileSelectionHandler = (files) => {
+  const levelOneFileSelectionHandler = async (files) => {
     //level one file is picked
     //TODO handle when user cancels the process
     console.log(`Level One Selected`);

@@ -4,7 +4,8 @@ import "../styles/detail.scss";
 import { UserContext } from "../util/UserContext";
 import * as DateUtil from "../util/date";
 import { useEffect, useState, useContext } from "react";
-import FileChooserOne from "./FileChooser";
+import FileChooserSilver from "./FileChooserSilver";
+import FileChooserGold from "./FileChooserGold";
 import goldblock from "../images/goldblock.png";
 
 export default function DarkblockStates({
@@ -18,8 +19,8 @@ export default function DarkblockStates({
   darkblockDescription,
   onDarkblockDescriptionChange,
 }) {
-  var levelFileSelectionHandler = levelOneFileSelectionHandler;
-  var levelTwoFileSelectionHandler = levelTwoFileSelectionHandler;
+  var levelOneFileSelectionHandlerMiddle = levelOneFileSelectionHandler;
+  var levelTwoFileSelectionHandlerMiddle = levelTwoFileSelectionHandler;
 
   var createDarkblockClickHandle = createDarkblockHandle;
 
@@ -263,9 +264,10 @@ export default function DarkblockStates({
                     </ul>
                   </div>
 
-                  <FileChooserOne
-                    fileSelectionHandler={levelOneFileSelectionHandler}
-                    level="one"
+                  <FileChooserSilver
+                    fileSelectionHandlerLevelOne={
+                      levelOneFileSelectionHandlerMiddle
+                    }
                   />
 
                   {/* <div className="custom-file mb-4">
@@ -291,9 +293,11 @@ export default function DarkblockStates({
                       <li>All features of level 1</li>
                     </ul>
                   </div>
-                  <FileChooserOne
-                    fileSelectionHandler={levelTwoFileSelectionHandler}
-                    level="two"
+
+                  <FileChooserGold
+                    fileSelectionHandlerLevelTwo={
+                      levelTwoFileSelectionHandlerMiddle
+                    }
                   />
                 </div>
               </div>

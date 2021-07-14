@@ -63,14 +63,14 @@ export const getMappedNft = async (nft) => {
 };
 
 const checkIfNftOwnedByUser = (nft) => {
-  // const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
+  const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
   const loggedInAccount = localStorage.getItem("accountAddress");
   // console.log(`Account Address : ${loggedInAccount}`);
   // console.log(`Owner Address : ${nft.owner.address}`);
   // console.log(`Creator Address : ${nft.creator.address}`);
 
   //localStorage.getItem("accountAddress")
-  if (nft.creator.address === loggedInAccount) {
+  if (nft.creator.address === accountAddress) {
     return true;
   } else {
     return false;
