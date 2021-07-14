@@ -204,6 +204,7 @@ export default function DetailsView() {
               </div>
             </div>
             <Darkblock
+              levelOneFileSelectionHandler={levelOneFileSelectionHandler}
               levelTwoFileSelectionHandler={levelTwoFileSelectionHandler}
               nft={nft}
               createDarkblockHandle={onCreateDarkblockClick}

@@ -159,34 +159,68 @@ export default function FileChooser({ fileSelectionHandler, level }) {
 
   return (
     <div>
-      {level === "one" ? <div>Level One</div> : <div>Level Two</div>}
-      <div id="file-upload-form" className="uploader">
-        <input
-          id="file-upload"
-          type="file"
-          name="fileUpload"
-          accept="image/*"
-        />
-        <img className="silverblock" src={silverblock} alt="silverblock" />
-        <label htmlFor="file-upload" id="file-drag">
-          <div className="select-file">
-            <span className="yellow-text">Upload file</span> or drop here
+      {level === "one" ? (
+        <div>
+          <div id="file-upload-form" className="uploader">
+            <input
+              id="file-upload"
+              type="file"
+              name="fileUpload"
+              accept="image/*"
+            />
+            <img className="silverblock" src={silverblock} alt="silverblock" />
+            <label htmlFor="file-upload" id="file-drag">
+              <div className="select-file">
+                <span className="yellow-text">Upload file</span> or drop here
+              </div>
+              <img id="file-image" src="#" alt="Preview" className="hidden" />
+              <div id="start">
+                <div id="notimage" className="hidden">
+                  Please select an image
+                </div>
+                {/* <span id="file-upload-btn" className="btn btn-primary">Select a file</span> */}
+              </div>
+              <div id="response" className="hidden">
+                <div id="messages"></div>
+                <progress className="progress" id="file-progress" value="0">
+                  <span>0</span>%
+                </progress>
+              </div>
+            </label>
           </div>
-          <img id="file-image" src="#" alt="Preview" className="hidden" />
-          <div id="start">
-            <div id="notimage" className="hidden">
-              Please select an image
-            </div>
-            {/* <span id="file-upload-btn" className="btn btn-primary">Select a file</span> */}
+        </div>
+      ) : (
+        // Level Two file chooser
+        <div>
+          <div id="file-upload-form" className="uploader">
+            <input
+              id="file-upload"
+              type="file"
+              name="fileUpload"
+              accept="image/*"
+            />
+            <img className="silverblock" src={silverblock} alt="silverblock" />
+            <label htmlFor="file-upload" id="file-drag">
+              <div className="select-file">
+                <span className="yellow-text">Upload file</span> or drop here
+              </div>
+              <img id="file-image" src="#" alt="Preview" className="hidden" />
+              <div id="start">
+                <div id="notimage" className="hidden">
+                  Please select an image
+                </div>
+                {/* <span id="file-upload-btn" className="btn btn-primary">Select a file</span> */}
+              </div>
+              <div id="response" className="hidden">
+                <div id="messages"></div>
+                <progress className="progress" id="file-progress" value="0">
+                  <span>0</span>%
+                </progress>
+              </div>
+            </label>
           </div>
-          <div id="response" className="hidden">
-            <div id="messages"></div>
-            <progress className="progress" id="file-progress" value="0">
-              <span>0</span>%
-            </progress>
-          </div>
-        </label>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

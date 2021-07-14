@@ -25,7 +25,7 @@ function App() {
     if (localStorage.getItem("accountAddress")) {
       //if logged in redirect to createdbyme
       setAddress(localStorage.getItem("accountAddress"));
-      redirectToCreatedByMe();
+      // redirectToCreatedByMe();
     }
   }
 

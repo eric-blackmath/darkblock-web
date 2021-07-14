@@ -8,6 +8,7 @@ import FileChooserOne from "./FileChooser";
 import goldblock from "../images/goldblock.png";
 
 export default function DarkblockStates({
+  levelOneFileSelectionHandler,
   levelTwoFileSelectionHandler,
   nft,
   createDarkblockHandle,
@@ -17,7 +18,7 @@ export default function DarkblockStates({
   darkblockDescription,
   onDarkblockDescriptionChange,
 }) {
-  // var levelFileSelectionHandler = levelOneFileSelectionHandler;
+  var levelFileSelectionHandler = levelOneFileSelectionHandler;
   var levelTwoFileSelectionHandler = levelTwoFileSelectionHandler;
 
   var createDarkblockClickHandle = createDarkblockHandle;
@@ -263,7 +264,7 @@ export default function DarkblockStates({
                   </div>
 
                   <FileChooserOne
-                    fileSelectionHandler={levelTwoFileSelectionHandler}
+                    fileSelectionHandler={levelOneFileSelectionHandler}
                     level="one"
                   />
 
