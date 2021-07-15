@@ -167,7 +167,7 @@ export default function DetailsView() {
           </div>
           <div>
             <p className="nft-deatil-owner">
-              Owned by <span className="owner-color">{nft.owner}</span>
+              Owned by <a href="" target="_blank"><span className="owner-color">{nft.owner}</span></a>
             </p>
           </div>
           <div className="detail-container">
@@ -177,7 +177,7 @@ export default function DetailsView() {
               <div className="about-the-nft">
                 <div className="flex-grid-thirds">
                   <div className="col">
-                    Creator <span className="about-span">{nft.creator}</span>
+                    Creator <a href="" target="_blank"><span className="about-span">{nft.creator}</span></a>
                   </div>
                   <div className="col">
                     Date Created{" "}

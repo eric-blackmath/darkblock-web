@@ -194,12 +194,38 @@ export default function DarkblockStates({
       {nft.is_darkblocked === true ? (
         <div>
           {nft.encryptionLevel === "one" ? (
-            <div>Level One Darkblocked UI</div>
-          ) : (
-            <div>Level Two Darkblocked UI</div>
-          )}
+            <div>
+              <div className="create-darkblock darkblock-found">
+            <div className="dbfound-level">
+              <label className="dbfound-label">Level 1</label>
+            </div>
 
-          <div className="create-darkblock darkblock-found">
+            <h1 className="dbfound-title">Protected by Darkblock</h1>
+            <div className="dbfound">
+              <div className="dbfound-content">
+                <img className="gold-block" src={silverblock} alt="gold block" />
+              </div>
+              <div className="dbfound-content">
+                <h5 className="dbfound-subtitle">Description</h5>
+                <p className="dbfound-text">{nft.darkblock_description}</p>
+
+                <h5 className="dbfound-subtitle">Date Created</h5>
+                <p className="dbfound-text">
+                  {DateUtil.getFormattedDateFromMillis(
+                    nft.darkblock_date_created
+                  )}
+                </p>
+                <p className="dbfound-text">
+                  {" "}
+                  To view this Darkblock you need the Darkblock Android TV app.
+                </p>
+              </div>
+            </div>
+          </div>
+            </div>
+          ) : (
+            <div>
+              <div className="create-darkblock darkblock-found">
             <div className="dbfound-level">
               <label className="dbfound-label">Level 2</label>
             </div>
@@ -226,6 +252,10 @@ export default function DarkblockStates({
               </div>
             </div>
           </div>
+            </div>
+          )}
+
+          
         </div>
       ) : null}
       {/* state 1 */}
