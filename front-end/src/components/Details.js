@@ -177,9 +177,11 @@ export default function DetailsView() {
             <p className="nft-deatil-owner">
               Owned by{" "}
               <a
+                className="owner-link"
                 onClick={redirectOwnerToOpensea}
                 href="https://opensea.io/"
                 target="_blank"
+                rel="noreferrer"
               >
                 <span className="owner-color">{nft.owner}</span>
               </a>
@@ -197,8 +199,9 @@ export default function DetailsView() {
                       href=""
                       onClick={redirectCreatorToOpensea}
                       target="_blank"
+                      rel="noreferrer"
                     >
-                      <span className="about-span">{nft.creator}</span>
+                      <span className="about-span ch-limit">{nft.creator}</span>
                     </a>
                   </div>
                   <div className="col">

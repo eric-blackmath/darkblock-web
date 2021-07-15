@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import * as LoginUtil from "../util/login-util";
 import { NavLink, useHistory } from "react-router-dom";
 import * as MetamaskUtil from "../util/metamask-util";
-import { Navh2nk } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export default function Nav({ setAddress, address }) {

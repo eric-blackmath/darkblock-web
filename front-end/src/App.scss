@@ -37,6 +37,13 @@ img{
   margin-top: 0;
 }
 
+.card-limit{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 24ch;
+}
+
 .image-container{
   height: 250px;
   // width: 250px;
