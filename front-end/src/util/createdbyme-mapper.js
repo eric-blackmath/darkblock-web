@@ -69,7 +69,7 @@ const getOwner = (nft) => {
       nft.asset.owner.user.username === NULL_ADDRESS
     ) {
       //the username of owner is not set
-      return NO_USERNAME_FOUND;
+      return nft.asset.owner.address;
     }
     return nft.asset.owner.user.username;
   } else if (nft.from_account.user) {
@@ -79,7 +79,7 @@ const getOwner = (nft) => {
       nft.from_account.user.username === NULL_ADDRESS
     ) {
       //creator username not set
-      return NO_USERNAME_FOUND;
+      return nft.from_account.adress;
     }
     return nft.from_account.user.username;
   } else {
@@ -97,7 +97,7 @@ const getCreator = (nft) => {
         nft.to_account.user.username === NULL_ADDRESS
       ) {
         //creator username not set
-        return NO_USERNAME_FOUND;
+        return nft.to_account.address;
       }
       return nft.to_account.user.username;
     }
@@ -108,7 +108,7 @@ const getCreator = (nft) => {
       nft.from_account.user.username === NULL_ADDRESS
     ) {
       //creator username not set
-      return NO_USERNAME_FOUND;
+      return nft.from_account.address;
     }
     return nft.from_account.user.username;
   } else {
