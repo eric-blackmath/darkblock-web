@@ -151,6 +151,14 @@ export default function DetailsView() {
     setFileName(files[0].name);
   };
 
+  const redirectOwnerToOpensea = () => {
+    window.open(`https://opensea.io/${nft.owner}`);
+  };
+
+  const redirectCreatorToOpensea = () => {
+    window.open(`https://opensea.io/${nft.creator}`);
+  };
+
   return (
     <div>
       {isLoaded ? (
@@ -167,7 +175,14 @@ export default function DetailsView() {
           </div>
           <div>
             <p className="nft-deatil-owner">
-              Owned by <a href="" target="_blank"><span className="owner-color">{nft.owner}</span></a>
+              Owned by{" "}
+              <a
+                onClick={redirectOwnerToOpensea}
+                href="https://opensea.io/"
+                target="_blank"
+              >
+                <span className="owner-color">{nft.owner}</span>
+              </a>
             </p>
           </div>
           <div className="detail-container">
@@ -177,7 +192,14 @@ export default function DetailsView() {
               <div className="about-the-nft">
                 <div className="flex-grid-thirds">
                   <div className="col">
-                    Creator <a href="" target="_blank"><span className="about-span">{nft.creator}</span></a>
+                    Creator{" "}
+                    <a
+                      href=""
+                      onClick={redirectCreatorToOpensea}
+                      target="_blank"
+                    >
+                      <span className="about-span">{nft.creator}</span>
+                    </a>
                   </div>
                   <div className="col">
                     Date Created{" "}
