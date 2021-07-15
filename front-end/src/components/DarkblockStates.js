@@ -7,6 +7,7 @@ import { useEffect, useState, useContext } from "react";
 import FileChooserSilver from "./FileChooserSilver";
 import FileChooserGold from "./FileChooserGold";
 import goldblock from "../images/goldblock.png";
+import silverblock from "../images/silverblock.png";
 import loading from "../images/loading.mp4";
 
 export default function DarkblockStates({
