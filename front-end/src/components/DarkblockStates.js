@@ -249,7 +249,7 @@ export default function DarkblockStates({
             <div className="create-darkblock">
               <div className="loading-container">
                 <div className="loading-animation">
-                  <video width="280" autoPlay playsInline loop>
+                  <video autoPlay playsInline loop>
                     <source src={loading} type="video/mp4" />
                   </video>
                 </div>
@@ -275,24 +275,48 @@ export default function DarkblockStates({
       isUploadCompleted === true ? (
         <div>
           {selectedLevel === "one" ? (
-            <div>Level One Success</div>
-          ) : (
-            <div>Level Two Success</div>
-          )}
-          <div>
-            <div className="create-darkblock">
-              <div className="upload-success">
-                <img className="success-image" src={goldblock} alt="block" />
-                <div className="loading-content">
-                  <h1>
-                    Your <span className="success-yellow">Supercharged</span>{" "}
-                    Darkblock has been created
-                  </h1>
+            <div>
+              <div>
+                <div className="create-darkblock">
+                  <div className="upload-success">
+                    <img
+                      className="success-image"
+                      src={silverblock}
+                      alt="block"
+                    />
+                    <div className="loading-content">
+                      <h1>
+                        Your{" "}
+                        <span className="success-yellow">Supercharged</span>{" "}
+                        Darkblock has been created
+                      </h1>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          s
+          ) : (
+            <div>
+              <div>
+                <div className="create-darkblock">
+                  <div className="upload-success">
+                    <img
+                      className="success-image"
+                      src={goldblock}
+                      alt="block"
+                    />
+                    <div className="loading-content">
+                      <h1>
+                        Your{" "}
+                        <span className="success-yellow">Protected</span>{" "}
+                        Darkblock has been created
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       ) : null}
 
