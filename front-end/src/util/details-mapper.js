@@ -17,26 +17,20 @@ export const getMappedNft = async (nft) => {
   var id = parser.getContractAndTokensDetails(nft);
   const verifyRes = await NodeApi.getDarkblockedNftFrom(id);
 
-  const darkblockedNft = verifyRes.data;
-
   var nftId = "";
   var darkblockDescription = "";
   var dateCreated = "";
   var encryptionLevel = "";
 
-  if (darkblockedNft) {
+  var darkblockedNft;
+  if (verifyRes !== undefined && verifyRes.data) {
+    darkblockedNft = verifyRes.data;
     //attach darblock data with it
     nftId = !darkblockedNft[0] ? "" : darkblockedNft[0].value;
     darkblockDescription = !darkblockedNft[1] ? "" : darkblockedNft[1].value;
     dateCreated = !darkblockedNft[2] ? "" : darkblockedNft[2].value;
     encryptionLevel = !darkblockedNft[3] ? "" : darkblockedNft[3].value;
   }
-  // const nftId = darkblockedNft.data[0].name;
-  // darkblockedNft.data[0].name
-  // darkblockedNft.data[0].name
-  // darkblockedNft.data[0].name
-
-  console.log(`Mapper ${JSON.stringify(darkblockedNft.data)}`);
 
   var mappedNft = {
     name: getName(nft),
@@ -56,23 +50,14 @@ export const getMappedNft = async (nft) => {
     darkblock_date_created: dateCreated,
     encryptionLevel: encryptionLevel === "AES-256" ? "two" : "one",
   };
-
-  // console.log(JSON.stringify(mappedNft));
-
   return mappedNft;
 };
 
 const checkIfNftOwnedByUser = (nft) => {
   const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
   const loggedInAccount = localStorage.getItem("accountAddress");
-  // console.log(`Account Address : ${loggedInAccount}`);
-  // console.log(`Owner Address : ${nft.owner.address}`);
-  // console.log(`Creator Address : ${nft.creator.address}`);
 
-  console.log(
-    `Creator : ${nft.creator.address} : loggedIn : ${loggedInAccount}`
-  );
-  //localStorage.getItem("accountAddress")
+  return true;
   if (nft.creator.address === loggedInAccount) {
     return true;
   } else {

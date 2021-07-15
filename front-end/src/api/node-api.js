@@ -10,7 +10,7 @@ export const postTransaction = (data, options) => {
   const URL = `${baseUrlDev}/upload`;
   return axios
     .post(URL, data, options)
-    .then((response) => response.data)
+    .then((response) => response)
     .catch((error) => {
       throw error;
     });

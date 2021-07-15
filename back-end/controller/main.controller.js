@@ -5,7 +5,10 @@ const baseUrl = "http://localhost:8080/files/";
 const ParseUtil = require("../utils/parse");
 const sigUtil = require("eth-sig-util");
 
-const ARWEAVE_WALLET_PATH = "/home/ubuntu/arweave.json";
+// const ARWEAVE_WALLET_PATH = "/home/ubuntu/arweave.json";
+const ARWEAVE_WALLET_PATH =
+  "C:/Users/ksaji/Documents/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json";
+
 const protocolUpload = async (req, res) => {
   console.log(`Protocol endpoint reached `);
 

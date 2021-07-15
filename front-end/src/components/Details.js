@@ -110,13 +110,17 @@ export default function DetailsView() {
         },
       };
 
-      NodeApi.postTransaction(data, options).then((data) => {
+      NodeApi.postTransaction(data, options).then((response) => {
         //handle the response
         //TODO handle the isCompleted with the status code
 
-        setIsUploading(false);
-        setIsUploadCompleted(true);
-        console.log(`Message : ${data.message}`);
+        if (response.status === 200) {
+          setIsUploading(false);
+          setIsUploadCompleted(true);
+          console.log(`Message : ${data.message}`);
+        } else {
+          console.log(`Something went wrong with creating the darkblock`);
+        }
       });
     } catch (err) {
       //catch some errors here
