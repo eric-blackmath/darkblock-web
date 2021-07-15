@@ -7,7 +7,7 @@ const baseUrlProd = "/api";
 
 //uploads the file+tags to back-end to trigger transaction
 export const postTransaction = (data, options) => {
-  const URL = `${baseUrlDev}/upload`;
+  const URL = `${baseUrlProd}/upload`;
   return axios
     .post(URL, data, options)
     .then((response) => response)
@@ -21,7 +21,7 @@ export const verifyNFTs = (data) => {
   // params: {
   //   ids: "Here are some ids to verify",
   // },
-  const URL = `${baseUrlDev}/verify`;
+  const URL = `${baseUrlProd}/verify`;
   return axios
     .post(URL, data, {
       headers: {
@@ -39,7 +39,7 @@ export const verifyNFT = (data) => {
   // params: {
   //   ids: "Here are some ids to verify",
   // },
-  const URL = `${baseUrlDev}/verify-id`;
+  const URL = `${baseUrlProd}/verify-id`;
   return axios
     .post(URL, data, {
       headers: {

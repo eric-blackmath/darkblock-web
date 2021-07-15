@@ -20,12 +20,12 @@ export const filterNftsForCreatedByMe = (nfts) => {
     // console.log(nfts[i].asset.name);
   }
 
-  console.log(`filteredNfts : ${filteredNfts.length}`);
+  // console.log(`filteredNfts : ${filteredNfts.length}`);
 
   //take care of duplicates
-  var uniqueNfts = [...new Set(filteredNfts)];
+  // var uniqueNfts = [...new Set(filteredNfts)];
 
-  console.log(`uniqueNfts : ${uniqueNfts.length}`);
+  // console.log(`uniqueNfts : ${uniqueNfts.length}`);
 
   return filteredNfts;
 };
