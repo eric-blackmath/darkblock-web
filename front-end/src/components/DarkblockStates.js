@@ -193,11 +193,15 @@ export default function DarkblockStates({
       {/* there is a darkblock */}
       {nft.is_darkblocked === true ? (
         <div>
+          {nft.encryptionLevel === "one" ? (
+            <div>Level One Darkblocked UI</div>
+          ) : (
+            <div>Level Two Darkblocked UI</div>
+          )}
+
           <div className="create-darkblock darkblock-found">
             <div className="dbfound-level">
-              <label className="dbfound-label">
-                {nft.encryptionLevel === "one" ? "Level 1" : "Level 2"}
-              </label>
+              <label className="dbfound-label">Level 2</label>
             </div>
 
             <h1 className="dbfound-title">Protected by Darkblock</h1>
@@ -308,8 +312,7 @@ export default function DarkblockStates({
                     />
                     <div className="loading-content">
                       <h1>
-                        Your{" "}
-                        <span className="success-yellow">Protected</span>{" "}
+                        Your <span className="success-yellow">Protected</span>{" "}
                         Darkblock has been created
                       </h1>
                     </div>
