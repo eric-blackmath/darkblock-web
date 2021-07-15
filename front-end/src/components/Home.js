@@ -18,9 +18,11 @@ export default function Home({ setAddress }) {
   const getAccount = async () => {
     //handle the case of when metamask is not installed
     const address = await MetamaskUtil.signInAndGetAccount();
-    setAddress(address); //when address is set, user is redirected to dashboard
-    LoginUtil.keepUserLoggedIn(address);
-    redirectToNFts();
+    if (address) {
+      setAddress(address); //when address is set, user is redirected to dashboard
+      LoginUtil.keepUserLoggedIn(address);
+      redirectToNFts();
+    }
   };
 
   const redirectToNFts = () => {

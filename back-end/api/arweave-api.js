@@ -202,7 +202,7 @@ const verifyNFTsById = async (queryArweave) => {
   });
 
   let data = await verifyRes.json();
-  console.log(`Transaction Matches : ${JSON.stringify(data)}`);
+  // console.log(`Transaction Matches : ${JSON.stringify(data)}`);
   // console.log(`Transaction Matches : ${data.data.transactions.edges.length}`);
 
   return data.data.transactions.edges;

@@ -10,7 +10,7 @@ import * as parser from "./parser";
  *
  */
 
-const NO_USERNAME_FOUND = "No Username";
+const NO_USERNAME = "No Username";
 const NULL_ADDRESS = "NullAddress";
 
 export const getMappedNft = async (nft) => {
@@ -69,8 +69,11 @@ const checkIfNftOwnedByUser = (nft) => {
   // console.log(`Owner Address : ${nft.owner.address}`);
   // console.log(`Creator Address : ${nft.creator.address}`);
 
+  console.log(
+    `Creator : ${nft.creator.address} : loggedIn : ${loggedInAccount}`
+  );
   //localStorage.getItem("accountAddress")
-  if (nft.creator.address === accountAddress) {
+  if (nft.creator.address === loggedInAccount) {
     return true;
   } else {
     return false;
@@ -113,7 +116,8 @@ const getOwner = (nft) => {
     //got owner
     if (!nft.owner.user.username || nft.owner.user.username === "NullAddress") {
       //the username of owner is not set
-      return "No Username";
+      console.log(JSON.stringify(nft.owner.address));
+      return nft.owner.address;
     }
     return nft.owner.user.username;
   } else if (nft.creator.user) {
@@ -123,12 +127,12 @@ const getOwner = (nft) => {
       nft.creator.user.username === "NullAddress"
     ) {
       //creator username not set
-      return "No Username";
+      return NO_USERNAME;
     }
-    return nft.creator.user.username;
+    return nft.creator.user.address;
   } else {
     //no owner, no creator
-    return "No Username";
+    return "No Owner";
   }
 };
 
@@ -140,19 +144,19 @@ const getCreator = (nft) => {
       nft.creator.user.username === "NullAddress"
     ) {
       //the username of owner is not set
-      return "No Username";
+      return NO_USERNAME;
     }
     return nft.creator.user.username;
   } else if (nft.owner.user) {
     //got owner
     if (!nft.owner.user.username || nft.owner.user.username === "NullAddress") {
       //owner username not set
-      return "No Username";
+      return nft.owner.user.address;
     }
-    return nft.owner.user.username;
+    return NO_USERNAME;
   } else {
     //no owner, no creator
-    return "No Username";
+    return NO_USERNAME;
   }
 };
 

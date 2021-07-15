@@ -36,6 +36,7 @@ export default function DetailsView() {
           (res) => res.assets[0]
         );
         const mappedNft = await DetailsMeMapper.getMappedNft(nft);
+        console.log(mappedNft.is_owned_by_user);
         setNft(mappedNft);
         setIsLoaded(true); //load it in ui
       } catch (e) {
@@ -56,6 +57,7 @@ export default function DetailsView() {
     e.preventDefault();
 
     //check the owner of the nft
+    console.log(nft.is_owned_by_user);
     if (nft.is_owned_by_user === true) {
       console.log(`Creating Darkblock`);
       initDarkblockCreation();

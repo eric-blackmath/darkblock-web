@@ -15,23 +15,7 @@ export default function Nav({ setAddress, address }) {
   let history = useHistory();
   let location = useLocation();
 
-  useEffect(() => {
-    // setNavigation();
-    // console.log(`Path Nav : ${location.pathname}`);
-  }, []);
-
-  // function setNavigation() {
-  //   var path = window.location.pathname;
-  //   path = path.replace(/\/$/, "");
-  //   path = decodeURIComponent(path);
-
-  //   $(".nav a").each(function () {
-  //     var href = $(this).attr("href");
-  //     if (path.substring(0, href.length) === href) {
-  //       $(this).closest(".nav-h2nk").addClass("active");
-  //     }
-  //   });
-  // }
+  useEffect(() => {}, []);
 
   const handleLogOut = () => {
     LoginUtil.logOutUser();
@@ -42,12 +26,18 @@ export default function Nav({ setAddress, address }) {
   const getAccount = async () => {
     //handle the case of when metamask is not installed
     const address = await MetamaskUtil.signInAndGetAccount();
-    setAddress(address); //when address is set, user is redirected to dashboard
-    LoginUtil.keepUserLoggedIn(address);
-    if (location.pathname === "/tv") {
-      //dont redirect
+    if (address) {
+      setAddress(address); //when address is set, user is redirected to dashboard
+      LoginUtil.keepUserLoggedIn(address);
+      if (location.pathname === "/tv") {
+        //dont redirect
+      } else {
+        redirectToNFts();
+      }
     } else {
-      redirectToNFts();
+      alert(
+        "Login Failed! Please make sure you have Metamask extension enabled."
+      );
     }
   };
 
@@ -83,16 +73,6 @@ export default function Nav({ setAddress, address }) {
                   My NFT's
                 </NavLink>
               </h2>
-
-              {/* <a className="nav-h2nk" href="/nfts/all">
-                {" "}
-                <h2 className="nav-item">My NFT's</h2>
-              </a> */}
-              {/* <a className="nav-h2nk" href="/nfts/createdbyme">
-                <h2 className="nav-item">Created By Me</h2>
-              </a> */}
-              {/* <button onCh2ck={handleLogOut}>LogOut</button> */}
-
               <div className="dropdown">
                 <button className="dropbtn">
                   {" "}

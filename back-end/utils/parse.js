@@ -53,7 +53,7 @@ const getIdOfMatches = (transactions, field) => {
     var tags = transactions[i].node.tags;
     let result = tags.find((o) => o.name === field);
     matches += result.value + ",";
-    console.log(`Transaction Match:${result.value}`);
+    // console.log(`Transaction Match:${result.value}`);
   }
   return matches.substring(0, matches.length - 1);
 };
@@ -77,17 +77,9 @@ const getMetaOfMatch = (transaction) => {
     let fieldFound = tags.find((o) => o.name === element);
     meta.push(fieldFound);
   });
-  // let nftId = tags.find((o) => o.name === fields[0]);
-  // meta.push(nftId);
-  // let description = tags.find((o) => o.name === fields[1]);
-  // meta.push(description);
-  // let dateCreated = tags.find((o) => o.name === fields[2]);
-  // meta.push(dateCreated);
-  // let encryptionVersion = tags.find((o) => o.name === fields[3]);
-  // meta.push(encryptionVersion);
 
-  console.log(`Transaction Match:${meta[0].name}`);
-  console.log(`Transaction Match:${meta[0].value}`);
+  // console.log(`Transaction Match:${meta[0].name}`);
+  // console.log(`Transaction Match:${meta[0].value}`);
 
   return meta;
 };

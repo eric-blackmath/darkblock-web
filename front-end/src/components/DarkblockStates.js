@@ -190,7 +190,7 @@ export default function DarkblockStates({
     <div>
       {/* state 0 */}
       {/* there is a darkblock */}
-      {!nft.is_darkblocked ? (
+      {nft.is_darkblocked === true ? (
         <div>
           <div className="create-darkblock darkblock-found">
             <div className="dbfound-level">
@@ -226,7 +226,7 @@ export default function DarkblockStates({
       ) : null}
       {/* state 1 */}
       {/* no darkblock found */}
-      {!nft.is_darkblocked && nft.is_owned_by_user ? (
+      {nft.is_darkblocked === false && nft.is_owned_by_user === false ? (
         <div>
           <div className="create-darkblock no-darkblock">
             <h1>No Darkblock Found</h1>
@@ -241,10 +241,12 @@ export default function DarkblockStates({
       {/* state 2 */}
       {/* create darkblock */}
       {/* put exclamation back on one above */}
-      {!nft.is_darkblocked &&
-      !isUploading &&
-      isUploadCompleted ? (
+      {nft.is_darkblocked === false &&
+      nft.is_owned_by_user === true &&
+      isUploading === true &&
+      isUploadCompleted === false ? (
         <div>
+          <div>
           <div className="create-darkblock">
             <div className="loading-container">
             <div className="loading-animation">
@@ -259,12 +261,14 @@ export default function DarkblockStates({
             </div>
           </div>
         </div>
+        </div>
       ) : null}
-      {!nft.is_darkblocked &&
-      !nft.is_owned_by_user &&
-      isUploading &&
-      isUploadCompleted ? (
+      {nft.is_darkblocked === false &&
+      nft.is_owned_by_user === true &&
+      isUploading === false &&
+      isUploadCompleted === true ? (
         <div>
+          <div>
           <div className="create-darkblock">
             <div className="upload-success">
             <img className="success-image" src={goldblock} alt="block" />
@@ -273,12 +277,14 @@ export default function DarkblockStates({
             </div>
             </div>
           </div>
+        </div>s
         </div>
       ) : null}
-      {nft.is_darkblocked &&
-      !nft.is_owned_by_user &&
-      !isUploading &&
-      !isUploadCompleted ? (
+
+      {nft.is_darkblocked === false &&
+      nft.is_owned_by_user === true &&
+      isUploading === false &&
+      isUploadCompleted === false ? (
         <div>
           <div className="create-darkblock">
             <form onSubmit={createDarkblockClickHandle}>
