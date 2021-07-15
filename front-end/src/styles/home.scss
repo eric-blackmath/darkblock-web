@@ -1,6 +1,6 @@
 .home-container {
   width: 85vw;
-//   max-width: 1200px;
+  //   max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -10,19 +10,19 @@
   flex-direction: row;
   position: relative;
   height: 100vh;
-  @media only screen and (max-width:768px){
-      flex-direction: column;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
   }
 }
 
-.hands-image{
-    max-width: 100%;
+.hands-image {
+  max-width: 100%;
 }
 
-.for-free{
-    font-size: 32px;
-    font-weight: 100;
-    margin:0;
+.for-free {
+  font-size: 32px;
+  font-weight: 100;
+  margin: 0;
 }
 
 .home-title {
@@ -33,9 +33,99 @@
   margin: 0;
 }
 
-.arweave-warning{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    color: #9a9a9a;
+.arweave-warning {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #9a9a9a;
+}
+
+.choose-level {
+  background-color: black;
+  border-radius: 16px;
+  color: white;
+  margin-top: 40px;
+}
+
+.level-container {
+  padding: 0 48px;
+  @media screen and (max-width: 768px) {
+    padding: 0 16px;
+  }
+}
+
+.level-title {
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 48px;
+  margin: 0;
+  text-align: center;
+  padding-top: 88px;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 40px;
+  grid-row-gap: 0px;
+  padding: 48px;
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.blocks {
+  display: block;
+  margin: auto;
+}
+
+.tv-info {
+  position: relative;
+}
+
+.text-block {
+  position: absolute;
+  bottom: 24px;
+  right: 0px;
+  left: 0;
+  color: white;
+  text-align: center;
+  width: 60%;
+  display: block;
+  margin: auto;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.tv-image {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.tv-link {
+  margin-top: 16px;
+  display: block;
+}
+
+.tv-container {
+  padding: 0 48px;
+  margin-top: 40px;
+  @media screen and (max-width: 768px) {
+    padding: 0 16px;
+  }
+}
+
+.tv-home-title {
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 36px;
+  margin-bottom: 24px;
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 }

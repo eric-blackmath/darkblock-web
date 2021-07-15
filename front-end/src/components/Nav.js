@@ -66,6 +66,7 @@ export default function Nav({ setAddress, address }) {
             <div className="nav-content">
               <h2 className="nav-link nav-item">
                 <NavLink
+                  exact
                   className="nav-link"
                   activeClassName="active"
                   to="/nfts/createdbyme"
@@ -76,7 +77,6 @@ export default function Nav({ setAddress, address }) {
               <h2 className="nav-link nav-item">
                 <NavLink
                   className="nav-link"
-                  exact
                   activeClassName="active"
                   to="/nfts/all"
                 >

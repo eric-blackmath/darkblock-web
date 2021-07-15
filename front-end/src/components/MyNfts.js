@@ -8,6 +8,7 @@ import * as MyNftsMapper from "../util/my-nfts-mapper";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import loadingblock from "../images/loadingblock.svg";
 
 export default function MyNfts() {
   const [nfts, setNfts] = useState([]);
@@ -69,7 +70,32 @@ export default function MyNfts() {
           ))}
         </ul>
       ) : (
-        <label>Loading</label>
+        <div className="list-group">
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+        <div>
+          <img src={loadingblock} alt="loading" />
+        </div>
+      </div>
       )}
 
       {isLoaded && noNftsFound ? (

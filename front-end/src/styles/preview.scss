@@ -107,6 +107,13 @@
     }
     #messages {
       margin-bottom: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 10ch;
+      display: block;
+      margin: auto;
+      margin-bottom: 8px;
     }
   }
 
@@ -270,6 +277,13 @@
     }
     #messagestwo {
       margin-bottom: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 10ch;
+      display: block;
+      margin: auto;
+      margin-bottom: 8px;
     }
   }
 

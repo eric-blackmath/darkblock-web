@@ -8,6 +8,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import * as CreatedByMeMapper from "../util/createdbyme-mapper";
 import NFTItem from "./NftItem";
+import loadingblock from "../images/loadingblock.svg";
 
 export default function CreatedByMe() {
   const [nfts, setNfts] = useState([]);
@@ -66,7 +67,32 @@ export default function CreatedByMe() {
           ))}
         </ul>
       ) : (
-        <label>Loading</label>
+        <div className="list-group">
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+        </div>
       )}
 
       {isLoaded && noNftsFound ? (

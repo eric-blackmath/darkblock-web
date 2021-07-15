@@ -190,7 +190,7 @@ export default function DarkblockStates({
     <div>
       {/* state 0 */}
       {/* there is a darkblock */}
-      {nft.is_darkblocked ? (
+      {!nft.is_darkblocked ? (
         <div>
           <div className="create-darkblock darkblock-found">
             <div className="dbfound-level">
@@ -261,8 +261,8 @@ export default function DarkblockStates({
         </div>
       ) : null}
       {!nft.is_darkblocked &&
-      nft.is_owned_by_user &&
-      !isUploading &&
+      !nft.is_owned_by_user &&
+      isUploading &&
       isUploadCompleted ? (
         <div>
           <div className="create-darkblock">
@@ -275,7 +275,7 @@ export default function DarkblockStates({
           </div>
         </div>
       ) : null}
-      {!nft.is_darkblocked &&
+      {nft.is_darkblocked &&
       !nft.is_owned_by_user &&
       !isUploading &&
       !isUploadCompleted ? (

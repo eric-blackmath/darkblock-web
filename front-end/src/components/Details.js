@@ -192,7 +192,7 @@ export default function DetailsView() {
                 <h1 className="detail-about-nft">Chain Info</h1>
                 <div className="chain-content">
                   <div className="chain-flex">
-                    <p>Contact Address</p>
+                    <p>Contract Address</p>
                     <span className="chain-span contract-address">
                       {nft.contract}
                     </span>
