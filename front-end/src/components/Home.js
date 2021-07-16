@@ -10,6 +10,7 @@ import hands from "../images/hands.png";
 import goldblock from "../images/goldblock.png";
 import silverblock from "../images/silverblock.png";
 import tvimage from "../images/tvimage.png";
+import Footer from "../components/footer";
 
 //Logs user into metamask and fetches their account address
 export default function Home({ setAddress }) {
@@ -50,7 +51,7 @@ export default function Home({ setAddress }) {
             <div className="login-container">
               <button onClick={getAccount} className="login-button">
                 <img className="wallet-icon" src={wallet} alt="wallet icon" />
-                Connect Wallet
+                <span style={{paddingTop:"3px"}}>Connect Wallet</span>
               </button>
             </div>
           </div>
@@ -119,8 +120,8 @@ export default function Home({ setAddress }) {
             </div>
           </div>
         </div>
-
       </div>
+      <Footer />
     </div>
   );
 }

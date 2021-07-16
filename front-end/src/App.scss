@@ -5,22 +5,22 @@
 // font-style: normal;
 
 //open sans
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
 // font-family: 'Open Sans', sans-serif;
 
 body {
+  overflow-x: hidden;
   // margin: 8px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-.MuiPagination-root{
+.MuiPagination-root {
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
-  
 }
 
-img{
+img {
   pointer-events: none;
 }
 
@@ -37,14 +37,14 @@ img{
   margin-top: 0;
 }
 
-.card-limit{
+.card-limit {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 24ch;
 }
 
-.image-container{
+.image-container {
   height: 250px;
   // width: 250px;
   display: flex;
@@ -65,15 +65,15 @@ img{
   padding: 40px;
   // padding-top: 100px;
 
-  @media only screen and (max-width:1024px){
+  @media only screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media only screen and (max-width:768px){
+  @media only screen and (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media only screen and (max-width:375px){
+  @media only screen and (max-width: 375px) {
     grid-template-columns: repeat(1, 1fr);
   }
 }
@@ -99,7 +99,7 @@ img{
 }
 
 .nav {
-  font-family: 'abril-display';
+  font-family: "abril-display";
   display: flex;
   align-items: center;
   // padding: 0 48px;
@@ -113,25 +113,26 @@ img{
   z-index: 99999;
 }
 
-.active{
-  border-bottom: 4px solid #FFC324;
+.active {
+  border-bottom: 4px solid #ffc324;
+  padding-bottom: 14px !important;
 }
 
-.nav-logo{
+.nav-logo {
   // width: 35%;
   padding-left: 48px;
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-.nav-logo-loggedout{
+.nav-logo-loggedout {
   // width: 45%;
   padding-left: 48px;
   // padding-top: 16px;
   // padding-bottom: 16px;
 }
 
-.login-container{
+.login-container {
   padding: 16px 0px;
 }
 
@@ -139,7 +140,7 @@ img{
   display: flex;
   margin-left: auto;
   padding-right: 48px;
-  align-items: center;
+  align-items: flex-end;
   // padding-top: 16px;
   // padding-bottom: 16px;
 }
@@ -163,7 +164,7 @@ img{
   background-color: #ffffff;
   min-width: 75px;
   border-radius: 4px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -177,17 +178,25 @@ img{
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
-.dropdown:hover .dropbtn {background-color: none;}
+.dropdown:hover .dropbtn {
+  background-color: none;
+}
 
-.nav-link{
+.nav-link {
   color: inherit;
   text-decoration: none;
   // margin: 0 25px;
-  padding: 0 16px;
+  padding: 16px 16px;
+  margin: 0;
+  font-size: 16px;
 }
 
 // .nav-item {
@@ -204,6 +213,10 @@ img{
   font-size: 16px;
   cursor: pointer;
   margin-top: 16px;
+  border-radius: 4px;
+  font-family: abril-display, serif;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .wallet-icon {
@@ -233,17 +246,16 @@ img{
   // max-width: 282px;
   height: 430px;
   position: relative;
-  transition: .3s all ease;
+  transition: 0.3s all ease;
   box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25);
-
 
   // &:hover{
   //   border: 1px solid #c4c4c4;
   // }
 }
 
-.card-body{
-  background-color: #F4F4F0;
+.card-body {
+  background-color: #f4f4f0;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -252,23 +264,23 @@ img{
   border-radius: 4px;
 }
 
-.meta-data{
-  font-family: 'Open Sans', sans-serif;
+.meta-data {
+  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-size: 12px;
   margin: 0;
-  color: #38383B;
+  color: #38383b;
 }
 
-.created-by{
+.created-by {
   margin-top: 12px;
 }
 
-.meta-bold{
+.meta-bold {
   font-weight: 700;
 }
 
-.isdarkblock{
+.isdarkblock {
   background-color: #f9f9f9;
   padding: 4px 12px;
   font-size: 9px;
@@ -278,11 +290,11 @@ img{
   border-radius: 4px;
 }
 
-.none-found{
+.none-found {
   text-align: center;
 }
 
-.none-found-p{
+.none-found-p {
   font-size: 32px;
   display: block;
   margin: auto;

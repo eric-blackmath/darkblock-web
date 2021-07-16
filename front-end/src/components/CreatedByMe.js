@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import * as CreatedByMeMapper from "../util/createdbyme-mapper";
 import NFTItem from "./NftItem";
 import loadingblock from "../images/loadingblock.svg";
+import Footer from "../components/footer";
 
 export default function CreatedByMe() {
   const [nfts, setNfts] = useState([]);
@@ -112,6 +113,7 @@ export default function CreatedByMe() {
           paginate={paginate}
         />
       ) : null}
+      <Footer />
     </React.Fragment>
   );
 }

@@ -10,6 +10,7 @@ import * as parser from "../util/parser";
 import * as MetamaskUtil from "../util/metamask-util";
 import Darkblock from "./DarkblockStates";
 import * as DetailsMeMapper from "../util/details-mapper";
+import Footer from "../components/footer";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -159,6 +160,10 @@ export default function DetailsView() {
     window.open(`https://opensea.io/${nft.creator}`);
   };
 
+  const redirectAddress = () => {
+    window.open(`https://etherscan.io/address/${nft.contract}`);
+  };
+
   return (
     <div>
       {isLoaded ? (
@@ -225,9 +230,17 @@ export default function DetailsView() {
                 <div className="chain-content">
                   <div className="chain-flex">
                     <p>Contract Address</p>
-                    <span className="chain-span contract-address">
-                      {nft.contract}
-                    </span>
+                    <a
+                      className="owner-link contract-link"
+                      onClick={redirectAddress}
+                      href="https://opensea.io/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span className="chain-span contract-address">
+                        {nft.contract}
+                      </span>
+                    </a>
                   </div>
                   <div className="chain-flex">
                     <p>Token Id</p>
@@ -363,6 +376,7 @@ export default function DetailsView() {
           </div>
         </div>
       ) : null}
+      <Footer />
     </div>
   );
 }

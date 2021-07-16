@@ -57,6 +57,16 @@
 .owner-color {
   color: #e8ab0c;
   font-weight: 700;
+
+  @media screen and (max-width: 768px) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 24ch;
+    text-align: center;
+    display: block;
+    margin: auto;
+  }
 }
 
 .create-darkblock {
@@ -72,6 +82,7 @@
   font-style: normal;
   font-size: 36px;
   margin: 0;
+  margin-bottom: 24px;
 }
 
 .detail-about-nft {
@@ -99,6 +110,10 @@
   grid-template-rows: 1fr;
   grid-column-gap: 24px;
   grid-row-gap: 0px;
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .flex-grid-thirds {
@@ -112,6 +127,9 @@
   border-right: 1px solid #c4c4c4;
   border-bottom: 1px solid #c4c4c4;
   width: 100%;
+  @media only screen and (max-width: 768px) {
+    padding: 0;
+  }
 }
 
 .flex-grid-thirds .col:nth-child(3) {
@@ -174,7 +192,7 @@
 .chain-flex {
   display: flex;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
   border-top: 1px solid #acacac;
 }
 
@@ -266,10 +284,11 @@
 
 .create-darkblock-button {
   background: #ffc324;
+  font-weight: 700;
   border-radius: 5px;
   border: none;
   outline: none;
-  padding: 16px;
+  padding: 16px 24px;
   color: #000000;
   font-size: 16px;
   margin-left: auto;
@@ -413,6 +432,7 @@
   border-bottom: 0.5px solid #888888;
   width: 100%;
   margin-bottom: 40px;
+  padding-bottom: 16px;
 }
 
 .dbfound-label {
@@ -433,4 +453,12 @@
 
 .creator-link {
   text-decoration: none;
+}
+
+.contract-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 12ch;
+  margin-left: auto;
 }

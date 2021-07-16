@@ -5,6 +5,7 @@ import { UserContext } from "../util/UserContext";
 import { useState, useEffect, useContext } from "react";
 import * as DarkblockApi from "../api/darkblock-api";
 import * as MetamaskUtil from "../util/metamask-util";
+import Footer from "../components/footer";
 
 export default function TvLogin({ address }) {
   // const address = useContext(UserContext);
@@ -102,6 +103,7 @@ export default function TvLogin({ address }) {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }

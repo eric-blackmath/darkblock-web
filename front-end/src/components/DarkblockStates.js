@@ -187,6 +187,7 @@ export default function DarkblockStates({
   // darkblocked true - already darkblocked (state 0)
   // darkblocked false, own false - ask the owner      (state 1)
   // darkblocked false, own true - create darkblock    (state 2)
+
   return (
     <div>
       {/* state 0 */}

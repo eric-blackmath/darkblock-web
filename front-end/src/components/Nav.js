@@ -97,7 +97,7 @@ export default function Nav({ setAddress, address }) {
             <div className="login-container">
               <button onClick={getAccount} className="login-button">
                 <img className="wallet-icon" src={wallet} alt="wallet icon" />
-                Connect Wallet
+                <span style={{paddingTop:"3px"}}>Connect Wallet</span>
               </button>
             </div>
           </div>
