@@ -17,6 +17,11 @@
 
 .hands-image {
   max-width: 100%;
+  @media only screen and (max-width:768px){
+    width: 75%;
+    display: block;
+    margin: auto;
+  }
 }
 
 .for-free {
@@ -31,6 +36,10 @@
   font-style: normal;
   font-size: 48px;
   margin: 0;
+
+  @media only screen and (max-width:768px){
+    margin-top: 40px;
+  }
 }
 
 .arweave-warning {
