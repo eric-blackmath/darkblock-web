@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
 import "../App.scss";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {

@@ -39,6 +39,9 @@ export default function CreatedByMe() {
 
     if (data !== undefined && data.length > 0) {
       console.log(`Total Nfts : ${data.length}`);
+      if (data.length < 8) {
+        setPostsPerPage(data.length);
+      }
 
       //do the filtering here
       const filteredData = Filter.filterNftsForCreatedByMe(data);
@@ -106,7 +109,7 @@ export default function CreatedByMe() {
         </div>
       ) : null}
 
-      {nfts.length > 10 ? (
+      {nfts.length > 8 ? (
         <Pagination
           postsPerPage={postsPerPage}
           totalPosts={nfts.length}

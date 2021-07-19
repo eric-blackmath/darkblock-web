@@ -109,7 +109,7 @@ export default function MyNfts() {
         </div>
       ) : null}
 
-      {nfts.length > 10 ? (
+      {nfts.length > 8 ? (
         <Pagination
           postsPerPage={postsPerPage}
           totalPosts={nfts.length}
