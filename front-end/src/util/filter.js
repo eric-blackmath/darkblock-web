@@ -11,7 +11,9 @@ export const filterNftsForCreatedByMe = (nfts) => {
     ) {
       //check for collections vs assets
       // console.table(`Nft : ${JSON.stringify(nfts[i])}`);
-      // console.log(`Nft : ${nfts[i].asset.token_id}`);
+      // console.log(
+      //   `Nft : ${nfts[i].asset.asset_contract.address}:${nfts[i].asset.token_id}`
+      // );
 
       if (!nfts[i].asset) {
         //skip over the collections
@@ -20,15 +22,36 @@ export const filterNftsForCreatedByMe = (nfts) => {
       }
       filteredNfts.push(nfts[i]);
     }
-    // console.log(nfts[i].asset.name);
   }
 
-  // console.table(`Nft : ${JSON.stringify(filteredNfts)}`);
+  var uniqueNfts = [];
 
-  //take care of duplicates
-  // var uniqueNfts = [...new Set(filteredNfts)];
+  //filter out duplicates
+  try {
+    uniqueNfts = removeDupes(filteredNfts);
+  } catch (e) {
+    console.log(e);
+  }
+  return uniqueNfts;
+};
 
-  // console.log(`uniqueNfts : ${uniqueNfts.length}`);
+export const removeDupes = (nfts) => {
+  var uniqueArr = nfts.reduce(function (accumulator, current) {
+    if (checkIfAlreadyExist(current)) {
+      return accumulator;
+    } else {
+      return accumulator.concat([current]);
+    }
 
-  return filteredNfts;
+    function checkIfAlreadyExist(currentVal) {
+      return accumulator.some(function (item) {
+        return (
+          item.asset.asset_contract.address ===
+            currentVal.asset.asset_contract.address &&
+          item.asset.token_id === currentVal.asset.token_id
+        );
+      });
+    }
+  }, []);
+  return uniqueArr;
 };

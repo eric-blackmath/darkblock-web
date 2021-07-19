@@ -30,8 +30,8 @@ export const getAllNfts = async (accountAddress) => {
   do {
     var tempNfts = await getNfts(accountAddress, offset);
     if (tempNfts !== undefined && tempNfts.length > 0) {
-      console.log(`Do : ${tempNfts.length}`);
       offset += 50;
+      console.log(`Posts Fetched : ${offset}`);
       tempNfts.forEach((element) => {
         allNfts.push(element);
       });
@@ -55,8 +55,8 @@ export const getAllNftsCreatedByUser = async (accountAddress) => {
   do {
     var tempNfts = await getNftsCreatedByUser(accountAddress, offset);
     if (tempNfts !== undefined && tempNfts.length > 0) {
-      console.log(`Do : ${tempNfts.length}`);
       offset += 300;
+      console.log(`Posts Fetched : ${offset}`);
       tempNfts.forEach((element) => {
         allNfts.push(element);
       });

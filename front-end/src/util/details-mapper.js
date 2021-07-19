@@ -11,7 +11,8 @@ import * as parser from "./parser";
  */
 
 const NO_USERNAME = "No Username";
-const NULL_ADDRESS = "NullAddress";
+const NULL_USERNAME = "NullAddress";
+const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export const getMappedNft = async (nft) => {
   var id = parser.getContractAndTokensDetails(nft);
@@ -98,8 +99,19 @@ const getDescription = (nft) => {
 const getOwner = (nft) => {
   if (nft.owner.user) {
     //got owner
-    if (!nft.owner.user.username || nft.owner.user.username === "NullAddress") {
+    if (!nft.owner.user.username || nft.owner.user.username === NULL_USERNAME) {
       //the username of owner is not set
+      if (nft.owner.address === NULL_ADDRESS && nft.creator.user) {
+        //got owner
+        if (
+          nft.creator.user.username &&
+          nft.creator.user.username !== NULL_USERNAME
+        ) {
+          return nft.creator.user.username;
+        }
+        //if owner address is null, we set the creator (in this case from_account)
+        return nft.creator.address;
+      }
       return nft.owner.address;
     }
     return nft.owner.user.username;
@@ -107,7 +119,7 @@ const getOwner = (nft) => {
     //got creator
     if (
       !nft.creator.user.username ||
-      nft.creator.user.username === "NullAddress"
+      nft.creator.user.username === NULL_USERNAME
     ) {
       //creator username not set
       return nft.creator.address;
@@ -124,7 +136,7 @@ const getCreator = (nft) => {
     //got creator
     if (
       !nft.creator.user.username ||
-      nft.creator.user.username === "NullAddress"
+      nft.creator.user.username === NULL_USERNAME
     ) {
       //the username of owner is not set
       return nft.creator.address;
@@ -132,7 +144,7 @@ const getCreator = (nft) => {
     return nft.creator.user.username;
   } else if (nft.owner.user) {
     //got owner
-    if (!nft.owner.user.username || nft.owner.user.username === "NullAddress") {
+    if (!nft.owner.user.username || nft.owner.user.username === NULL_USERNAME) {
       //owner username not set
       return nft.owner.address;
     }
