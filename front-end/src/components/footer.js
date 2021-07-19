@@ -6,7 +6,7 @@ import footerdb from "../images/footerdb.svg";
 export default function Footer() {
   return (
     <div>
-      <div className="footer">
+      <footer className="footer">
         <div className="footer-grid">
           <div className="footer-column">
             <h1 className="footer-title">Contact</h1>
@@ -97,7 +97,7 @@ export default function Footer() {
             <img className="footer-db" src={footerdb} alt="icon" />
             <p className="footer-copyright">2021 ©</p>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
