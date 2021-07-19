@@ -161,7 +161,7 @@ export default function DetailsView() {
   };
 
   const redirectAddress = () => {
-    window.open(`https://etherscan.io/address/${nft.contract}`);
+    window.open(`https://opensea.io/assets/${nft.contract}/${nft.token}`);
   };
 
   return (
