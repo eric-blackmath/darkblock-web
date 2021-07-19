@@ -35,7 +35,7 @@ export default function CreatedByMe() {
     if (account) {
       accountAddress = account;
     }
-    var data = await OpenseaApi.getNftsCreatedByUser(accountAddress);
+    var data = await OpenseaApi.getAllNftsCreatedByUser(accountAddress);
 
     if (data !== undefined && data.length > 0) {
       console.log(`Total Nfts : ${data.length}`);

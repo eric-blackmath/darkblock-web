@@ -10,6 +10,9 @@ export const filterNftsForCreatedByMe = (nfts) => {
           "0x0000000000000000000000000000000000000000")
     ) {
       //check for collections vs assets
+      // console.table(`Nft : ${JSON.stringify(nfts[i])}`);
+      // console.log(`Nft : ${nfts[i].asset.token_id}`);
+
       if (!nfts[i].asset) {
         //skip over the collections
         console.log(`This one is a collection : ${i}`);
@@ -20,7 +23,7 @@ export const filterNftsForCreatedByMe = (nfts) => {
     // console.log(nfts[i].asset.name);
   }
 
-  // console.log(`filteredNfts : ${filteredNfts.length}`);
+  // console.table(`Nft : ${JSON.stringify(filteredNfts)}`);
 
   //take care of duplicates
   // var uniqueNfts = [...new Set(filteredNfts)];
