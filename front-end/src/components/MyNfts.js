@@ -30,7 +30,7 @@ export default function MyNfts() {
       if (account) {
         accountAddress = account;
       }
-      var data = await OpenseaApi.getNfts(accountAddress);
+      var data = await OpenseaApi.getAllNfts(accountAddress);
 
       if (data !== undefined && data.length > 0) {
         console.log(`Nfts : ${data.length}`);
@@ -72,31 +72,31 @@ export default function MyNfts() {
         </ul>
       ) : (
         <div className="list-group">
-        <div>
-          <img src={loadingblock} alt="loading" />
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
+          <div>
+            <img src={loadingblock} alt="loading" />
+          </div>
         </div>
-        <div>
-          <img src={loadingblock} alt="loading" />
-        </div>
-        <div>
-          <img src={loadingblock} alt="loading" />
-        </div>
-        <div>
-          <img src={loadingblock} alt="loading" />
-        </div>
-        <div>
-          <img src={loadingblock} alt="loading" />
-        </div>
-        <div>
-          <img src={loadingblock} alt="loading" />
-        </div>
-        <div>
-          <img src={loadingblock} alt="loading" />
-        </div>
-        <div>
-          <img src={loadingblock} alt="loading" />
-        </div>
-      </div>
       )}
 
       {isLoaded && noNftsFound ? (
