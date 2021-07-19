@@ -63,7 +63,8 @@ img {
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   padding: 40px;
-  // padding-top: 100px;
+  max-width: 1300px;
+  margin: auto;
 
   @media only screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
