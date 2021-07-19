@@ -32,8 +32,8 @@ img {
   max-width: 100%;
   display: block;
   overflow: hidden;
-  margin: auto;
-  margin-bottom: 16px;
+  // margin: auto;
+  // margin-bottom: 16px;
   margin-top: 0;
 }
 
@@ -46,10 +46,10 @@ img {
 
 .image-container {
   height: 250px;
-  // width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .nft-meta {
@@ -68,10 +68,14 @@ img {
 
   @media only screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
+    max-width: 930px;
+    margin: auto;
   }
 
   @media only screen and (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
+    max-width: 672px;
+    margin: auto;
   }
 
   @media only screen and (max-width: 375px) {
@@ -299,6 +303,13 @@ img {
   @media only screen and (min-width:2560px){
     height: 1600px;
   }
+}
+
+.list-height{
+  @media only screen and (min-width:2560px){
+    height: 1600px;
+  }
+
 }
 
 .none-found-p {

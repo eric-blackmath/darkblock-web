@@ -8,9 +8,9 @@
   font-size: 36px;
 }
 
-.tv-login{
-    text-align: center;
-}
+// .tv-login{
+//     text-align: center;
+// }
 
 .tv-app-text{
     margin-top: 40px;
@@ -79,4 +79,15 @@
   border: 1px solid #9a9a9a;
   color: #565555;
   border-radius: 4px;
+}
+
+
+.tv-height{
+  @media only screen and (min-width:2560px){
+    height: 1600px;
+  }
+
+  @media only screen and (max-width:1440px){
+    height: 600px;
+  }
 }

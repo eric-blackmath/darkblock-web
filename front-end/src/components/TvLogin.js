@@ -81,7 +81,7 @@ export default function TvLogin({ address }) {
           <p className="tv-app-text">You can now continue on your TV app.</p>
         </div>
       ) : (
-        <div>
+        <div className="tv-height">
           {" "}
           <h1 className="tv-title">Enter TV code and connect</h1>
           <div className="tv-code">
