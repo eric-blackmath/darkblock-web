@@ -9,6 +9,7 @@ import FileChooserGold from "./FileChooserGold";
 import goldblock from "../images/goldblock.png";
 import silverblock from "../images/silverblock.png";
 import loading from "../images/loading.mp4";
+import $ from "jquery";
 
 export default function DarkblockStates({
   levelOneFileSelectionHandler,
@@ -188,6 +189,15 @@ export default function DarkblockStates({
   // darkblocked false, own false - ask the owner      (state 1)
   // darkblocked false, own true - create darkblock    (state 2)
 
+  // no file selected
+  $(document).ready(function () {
+    $("input:file").change(function () {
+      if ($(this).val()) {
+        $("input:submit").attr("disabled", false); 
+      }
+    });
+  });
+
   return (
     <div>
       {/* state 0 */}
@@ -197,66 +207,74 @@ export default function DarkblockStates({
           {nft.encryptionLevel === "one" ? (
             <div>
               <div className="create-darkblock darkblock-found">
-            <div className="dbfound-level">
-              <label className="dbfound-label">Level 1</label>
-            </div>
+                <div className="dbfound-level">
+                  <label className="dbfound-label">Level 1</label>
+                </div>
 
-            <h1 className="dbfound-title">Protected by Darkblock</h1>
-            <div className="dbfound">
-              <div className="dbfound-content">
-                <img className="gold-block" src={silverblock} alt="gold block" />
-              </div>
-              <div className="dbfound-content">
-                <h5 className="dbfound-subtitle">Description</h5>
-                <p className="dbfound-text">{nft.darkblock_description}</p>
+                <h1 className="dbfound-title">Protected by Darkblock</h1>
+                <div className="dbfound">
+                  <div className="dbfound-content">
+                    <img
+                      className="gold-block"
+                      src={silverblock}
+                      alt="gold block"
+                    />
+                  </div>
+                  <div className="dbfound-content">
+                    <h5 className="dbfound-subtitle">Description</h5>
+                    <p className="dbfound-text">{nft.darkblock_description}</p>
 
-                <h5 className="dbfound-subtitle">Date Created</h5>
-                <p className="dbfound-text">
-                  {DateUtil.getFormattedDateFromMillis(
-                    nft.darkblock_date_created
-                  )}
-                </p>
-                <p className="dbfound-text">
-                  {" "}
-                  To view this Darkblock you need the Darkblock Android TV app.
-                </p>
+                    <h5 className="dbfound-subtitle">Date Created</h5>
+                    <p className="dbfound-text">
+                      {DateUtil.getFormattedDateFromMillis(
+                        nft.darkblock_date_created
+                      )}
+                    </p>
+                    <p className="dbfound-text">
+                      {" "}
+                      To view this Darkblock you need the Darkblock Android TV
+                      app.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
             </div>
           ) : (
             <div>
               <div className="create-darkblock darkblock-found">
-            <div className="dbfound-level">
-              <label className="dbfound-label">Level 2</label>
-            </div>
+                <div className="dbfound-level">
+                  <label className="dbfound-label">Level 2</label>
+                </div>
 
-            <h1 className="dbfound-title">Protected by Darkblock</h1>
-            <div className="dbfound">
-              <div className="dbfound-content">
-                <img className="gold-block" src={goldblock} alt="gold block" />
-              </div>
-              <div className="dbfound-content">
-                <h5 className="dbfound-subtitle">Description</h5>
-                <p className="dbfound-text">{nft.darkblock_description}</p>
+                <h1 className="dbfound-title">Protected by Darkblock</h1>
+                <div className="dbfound">
+                  <div className="dbfound-content">
+                    <img
+                      className="gold-block"
+                      src={goldblock}
+                      alt="gold block"
+                    />
+                  </div>
+                  <div className="dbfound-content">
+                    <h5 className="dbfound-subtitle">Description</h5>
+                    <p className="dbfound-text">{nft.darkblock_description}</p>
 
-                <h5 className="dbfound-subtitle">Date Created</h5>
-                <p className="dbfound-text">
-                  {DateUtil.getFormattedDateFromMillis(
-                    nft.darkblock_date_created
-                  )}
-                </p>
-                <p className="dbfound-text">
-                  {" "}
-                  To view this Darkblock you need the Darkblock Android TV app.
-                </p>
+                    <h5 className="dbfound-subtitle">Date Created</h5>
+                    <p className="dbfound-text">
+                      {DateUtil.getFormattedDateFromMillis(
+                        nft.darkblock_date_created
+                      )}
+                    </p>
+                    <p className="dbfound-text">
+                      {" "}
+                      To view this Darkblock you need the Darkblock Android TV
+                      app.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
             </div>
           )}
-
-          
         </div>
       ) : null}
       {/* state 1 */}
@@ -440,6 +458,8 @@ export default function DarkblockStates({
                     type="submit"
                     value="Create Darkblock"
                     className="create-darkblock-button"
+                    id="darkblock-submit"
+                    disabled
                   />
                 )}
 
