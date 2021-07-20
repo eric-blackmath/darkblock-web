@@ -8,7 +8,7 @@ export const getNfts = (accountAddress, offset) => {
   //event_type=created&
   var config = {
     method: "get",
-    url: `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=${offset}&limit=50&owner=${accountAddress}`,
+    url: `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=${offset}&limit=8&owner=${accountAddress}`,
     headers: {},
   };
 
