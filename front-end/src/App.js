@@ -14,12 +14,6 @@ function App() {
   const [address, setAddress] = useState();
   let history = useHistory();
 
-  // const value = useMemo(() => ({ user, setUser }), [user, setUser]);
-
-  const redirectToCreatedByMe = () => {
-    history.push("/nfts/created");
-  };
-
   //if no address, user cannot access dashboard
   if (!address) {
     if (localStorage.getItem("accountAddress")) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const dummy_account = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
+// const dummy_account = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
 
 //fetches nfts associated to accountAddress
 export const getNfts = (accountAddress, offset) => {
@@ -8,7 +8,7 @@ export const getNfts = (accountAddress, offset) => {
   //event_type=created&
   var config = {
     method: "get",
-    url: `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=${offset}&limit=8&owner=${accountAddress}`,
+    url: `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=${offset}&limit=50&owner=${accountAddress}`,
     headers: {},
   };
 

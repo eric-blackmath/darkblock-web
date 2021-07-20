@@ -21,7 +21,7 @@ export default function CreatedByMe() {
   const { account } = useParams();
 
   useEffect(() => {
-    console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
+    // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
     try {
       fetchData();
     } catch (e) {
@@ -66,13 +66,12 @@ export default function CreatedByMe() {
       {/* <button>Go to detailsView</button> */}
       {isLoaded ? (
         <div className="list-height">
-        <ul className="list-group">
-          {currentNftsMeta.map((listitem, index) => (
-            <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
-          ))}
-        </ul>
+          <ul className="list-group">
+            {currentNftsMeta.map((listitem, index) => (
+              <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
+            ))}
+          </ul>
         </div>
-
       ) : (
         <div className="list-group">
           <div>
