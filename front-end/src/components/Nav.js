@@ -41,14 +41,14 @@ export default function Nav({ setAddress, address }) {
   };
 
   const redirectToNFts = () => {
-    history.push("/nfts/createdbyme");
+    history.push("/nfts/created");
   };
 
   return (
     <div className="nav">
       {address ? (
         <div className="nav">
-          <a href="/nfts/createdbyme">
+          <a href="/nfts/created">
             <img className="nav-logo" src={logo} alt="darkblock logo" />
           </a>
           {location.pathname === "/tv" ? null : (
@@ -58,7 +58,7 @@ export default function Nav({ setAddress, address }) {
                   exact
                   className="nav-link"
                   activeClassName="active"
-                  to="/nfts/createdbyme"
+                  to="/nfts/created"
                 >
                   Created By Me
                 </NavLink>
@@ -67,7 +67,7 @@ export default function Nav({ setAddress, address }) {
                 <NavLink
                   className="nav-link"
                   activeClassName="active"
-                  to="/nfts/all"
+                  to="/nfts/collected"
                 >
                   My NFT's
                 </NavLink>
@@ -97,7 +97,7 @@ export default function Nav({ setAddress, address }) {
             <div className="login-container">
               <button onClick={getAccount} className="login-button">
                 <img className="wallet-icon" src={wallet} alt="wallet icon" />
-                <span style={{paddingTop:"3px"}}>Connect Wallet</span>
+                <span style={{ paddingTop: "3px" }}>Connect Wallet</span>
               </button>
             </div>
           </div>

@@ -27,7 +27,7 @@ export default function Home({ setAddress }) {
   };
 
   const redirectToNFts = () => {
-    history.push("/nfts/createdbyme");
+    history.push("/nfts/created");
   };
 
   const fetchUserProfile = async (account) => {
@@ -51,7 +51,7 @@ export default function Home({ setAddress }) {
             <div className="login-container">
               <button onClick={getAccount} className="login-button">
                 <img className="wallet-icon" src={wallet} alt="wallet icon" />
-                <span style={{paddingTop:"3px"}}>Connect Wallet</span>
+                <span style={{ paddingTop: "3px" }}>Connect Wallet</span>
               </button>
             </div>
           </div>
@@ -113,9 +113,16 @@ export default function Home({ setAddress }) {
           <div className="tv-info">
             <img className="tv-image" src={tvimage} alt="tv" />
             <div className="text-block">
-              <h1 className="tv-home-title">View your Darkblocks on the big screen along with all your other NFTs</h1>
-              <p>Download the Darkblock Android TV app to decrypt and display your Darkblocks.
-                <span className="tv-link">This is a link to the TV app store</span>
+              <h1 className="tv-home-title">
+                View your Darkblocks on the big screen along with all your other
+                NFTs
+              </h1>
+              <p>
+                Download the Darkblock Android TV app to decrypt and display
+                your Darkblocks.
+                <span className="tv-link">
+                  This is a link to the TV app store
+                </span>
               </p>
             </div>
           </div>

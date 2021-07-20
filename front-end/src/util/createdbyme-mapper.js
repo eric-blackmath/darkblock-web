@@ -84,6 +84,7 @@ const getOwner = (nft) => {
         if (nft.from_account.address === NULL_ADDRESS && nft.to_account) {
           if (
             nft.to_account.user &&
+            nft.to_account.user.username &&
             nft.to_account.user.username !== NULL_USERNAME
           ) {
             return nft.to_account.user.username;

@@ -17,7 +17,7 @@ function App() {
   // const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   const redirectToCreatedByMe = () => {
-    history.push("/nfts/createdbyme");
+    history.push("/nfts/created");
   };
 
   //if no address, user cannot access dashboard
@@ -31,20 +31,20 @@ function App() {
 
   return (
     <div className="App">
-      <img src={seoimage} alt="seo" style={{display:"none"}} />
+      <img src={seoimage} alt="seo" style={{ display: "none" }} />
       <Nav setAddress={setAddress} address={address} />
       <div className="content">
         <Switch>
           <UserContext.Provider value={address}>
             <Route
               exact
-              path="/nfts/all"
+              path="/nfts/collected"
               render={() => (address ? <MyNfts /> : <Redirect to="/" />)}
             ></Route>
 
             <Route
               exact
-              path="/nfts/all/:account"
+              path="/nfts/collected/:account"
               render={() => (address ? <MyNfts /> : <Redirect to="/" />)}
             ></Route>
 
@@ -53,7 +53,7 @@ function App() {
               path="/"
               render={() =>
                 address ? (
-                  <Redirect to="/nfts/createdbyme" />
+                  <Redirect to="/nfts/created" />
                 ) : (
                   <Home setAddress={setAddress} />
                 )
@@ -62,13 +62,13 @@ function App() {
 
             <Route
               exact
-              path="/nfts/createdbyme"
+              path="/nfts/created"
               render={() => (address ? <CreatedByMe /> : <Redirect to="/" />)}
             ></Route>
 
             <Route
               exact
-              path="/nfts/createdbyme/:account"
+              path="/nfts/created/:account"
               render={() => (address ? <CreatedByMe /> : <Redirect to="/" />)}
             ></Route>
 

@@ -67,6 +67,14 @@ const getOwner = (nft) => {
     //got owner
     if (!nft.owner.user.username || nft.owner.user.username === NULL_USERNAME) {
       //the username of owner is not set
+      if (nft.owner.address === NULL_ADDRESS && nft.last_sale) {
+        if (
+          nft.last_sale.transaction &&
+          nft.last_sale.transaction.from_account
+        ) {
+          return nft.last_sale.transaction.from_account.address;
+        }
+      }
       if (nft.owner.address === NULL_ADDRESS && nft.creator.user) {
         //got owner
         if (
