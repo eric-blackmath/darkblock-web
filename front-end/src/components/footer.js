@@ -12,7 +12,7 @@ export default function Footer() {
             <h1 className="footer-title">Contact</h1>
             <ul className="footer-item">
               <li>
-                <a className="footer-link" href="mailto:info@darkblock.io">
+                <a rel="noreferrer" className="footer-link" href="mailto:info@darkblock.io">
                   info@darkblock.io
                 </a>
               </li>
@@ -23,6 +23,7 @@ export default function Footer() {
             <ul className="footer-item">
               <li>
                 <a
+                  rel="noreferrer"
                   className="footer-link"
                   href="https://darkblock.io"
                   target="_blank"
@@ -32,6 +33,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  rel="noreferrer"
                   className="footer-link non-link"
                 //   href=""
                   target="_blank"
@@ -41,6 +43,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  rel="noreferrer"
                   className="footer-link"
                   href="https://darkblock.medium.com/darkblock-bridge-to-the-decentralized-digital-frontier-e1ec1eeb5a60"
                   target="_blank"
@@ -55,6 +58,7 @@ export default function Footer() {
             <ul className="footer-item">
               <li>
                 <a
+                  rel="noreferrer"
                   className="footer-link"
                   href="https://darkblock.medium.com/"
                   target="_blank"
@@ -64,6 +68,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  rel="noreferrer"
                   className="footer-link non-link"
                 //   href=""
                   target="_blank"
@@ -73,6 +78,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  rel="noreferrer"
                   className="footer-link"
                   href="https://twitter.com/darkblockio"
                   target="_blank"
@@ -82,6 +88,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  rel="noreferrer"
                   className="footer-link"
                   href="https://www.instagram.com/darkblock.io/"
                   target="_blank"
