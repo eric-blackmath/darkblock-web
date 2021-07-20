@@ -165,7 +165,7 @@ export default function DetailsView() {
   };
 
   return (
-    <div>
+    <div className="detail-background">
       {isLoaded ? (
         <div className="detail-page-container">
           <div className="detail-preview-image ">

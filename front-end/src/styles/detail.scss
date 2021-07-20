@@ -178,12 +178,20 @@
   border: 1px solid #c4c4c4;
 }
 
+.detail-background{
+  background-color: #f9f9f9;
+}
+
 .detail-page-container {
   padding: 120px;
-  background-color: #f9f9f9;
   max-width: 1200px;
   @media (max-width: 1024px) {
     padding: 48px;
+  }
+  @media (min-width: 2560px) {
+    max-width: 1200px;
+    height: 1600px;
+    margin: auto;
   }
 }
 
