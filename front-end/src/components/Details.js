@@ -201,7 +201,6 @@ export default function DetailsView() {
                   <div className="col">
                     Creator{" "}
                     <a
-                      href=""
                       onClick={redirectCreatorToOpensea}
                       target="_blank"
                       rel="noreferrer"
