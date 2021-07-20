@@ -9,8 +9,7 @@ import Nav from "./components/Nav";
 import { UserContext } from "./util/UserContext";
 import { Redirect } from "react-router";
 import { useHistory } from "react-router-dom";
-import { Helmet } from "react-helmet";
-
+import seoimage from "./images/logo512.png";
 function App() {
   const [address, setAddress] = useState();
   let history = useHistory();
@@ -32,40 +31,7 @@ function App() {
 
   return (
     <div className="App">
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Darkblock</title>
-        {/* Google SEO  */}
-        <meta name="title" content="Darkblock" />
-        <meta
-          name="description"
-          content="The Darkblock web app gives superpowers to your NFTs. With Darkblock you can now attach an encrypted file to your pre-existing NFT that only the NFT owner can decrypt. To decrypt and display the Darkblock download the Darkblock Android TV app."
-        />
-        <meta name="keywords" content="" />
-        {/* <meta name="robots" content="index, follow" /> */}
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="language" content="English" />
-
-        {/* Facebook SEO  */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://app.darkblock.io" />
-        <meta property="og:title" content="Darkblock" />
-        <meta
-          property="og:description"
-          content="The Darkblock web app gives superpowers to your NFTs. With Darkblock you can now attach an encrypted file to your pre-existing NFT that only the NFT owner can decrypt. To decrypt and display the Darkblock download the Darkblock Android TV app."
-        />
-        <meta property="og:image" content="./images/logo512.png" />
-
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="http://app.darkblock.io" />
-        <meta property="twitter:title" content="Darkblock" />
-        <meta
-          property="twitter:description"
-          content="The Darkblock web app gives superpowers to your NFTs. With Darkblock you can now attach an encrypted file to your pre-existing NFT that only the NFT owner can decrypt. To decrypt and display the Darkblock download the Darkblock Android TV app."
-        />
-        <meta property="twitter:image" content="./images/logo512.png"></meta>
-      </Helmet>
+      <img src={seoimage} alt="seo" style={{display:"none"}} />
       <Nav setAddress={setAddress} address={address} />
       <div className="content">
         <Switch>
