@@ -11,8 +11,7 @@ export default function FileChooser({ fileSelectionHandlerLevelTwo }) {
     function ekUploadtwo() {
       function Init() {
         var fileSelect = document.getElementById("file-uploadtwo"),
-          fileDrag = document.getElementById("file-dragtwo"),
-          submitButton = document.getElementById("submit-button");
+          fileDrag = document.getElementById("file-dragtwo");
 
         fileSelect.addEventListener("change", fileSelectHandler, false);
 

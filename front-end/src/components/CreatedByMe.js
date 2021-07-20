@@ -22,37 +22,37 @@ export default function CreatedByMe() {
 
   useEffect(() => {
     // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
+
+    const fetchData = async () => {
+      console.log(`Passed Arg : ${account}`);
+      var accountAddress = address;
+      if (account) {
+        accountAddress = account;
+      }
+      var data = await OpenseaApi.getAllNftsCreatedByUser(accountAddress);
+
+      if (data !== undefined && data.length > 0) {
+        if (data.length < 8) {
+          setPostsPerPage(data.length);
+        }
+
+        //do the filtering here
+        const filteredData = Filter.filterNftsForCreatedByMe(data);
+        const mappedNfts = await CreatedByMeMapper.getMappedList(filteredData);
+        setNfts(mappedNfts);
+        setIsLoaded(true);
+      } else {
+        setNoNftsFound(true);
+        setIsLoaded(true);
+      }
+    };
+
     try {
       fetchData();
     } catch (e) {
       console.log(e);
     }
-  }, []);
-
-  const fetchData = async () => {
-    console.log(`Passed Arg : ${account}`);
-    var accountAddress = address;
-    if (account) {
-      accountAddress = account;
-    }
-    var data = await OpenseaApi.getAllNftsCreatedByUser(accountAddress);
-
-    if (data !== undefined && data.length > 0) {
-      console.log(`Total Nfts : ${data.length}`);
-      if (data.length < 8) {
-        setPostsPerPage(data.length);
-      }
-
-      //do the filtering here
-      const filteredData = Filter.filterNftsForCreatedByMe(data);
-      const mappedNfts = await CreatedByMeMapper.getMappedList(filteredData);
-      setNfts(mappedNfts);
-      setIsLoaded(true);
-    } else {
-      setNoNftsFound(true);
-      setIsLoaded(true);
-    }
-  };
+  }, [account, address]);
 
   // Pagination setup
   const indexOfLastNft = currentPage * postsPerPage;

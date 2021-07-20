@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Takes care of all the calls to our Node Api
 
-const baseUrlDev = "http://localhost:5000";
+// const baseUrlDev = "http://localhost:5000";
 const baseUrlProd = "/api";
 
 //uploads the file+tags to back-end to trigger transaction
@@ -18,9 +18,6 @@ export const postTransaction = (data, options) => {
 
 //gets an arr of id's matched
 export const verifyNFTs = (data) => {
-  // params: {
-  //   ids: "Here are some ids to verify",
-  // },
   const URL = `${baseUrlProd}/verify`;
   return axios
     .post(URL, data, {
@@ -36,9 +33,6 @@ export const verifyNFTs = (data) => {
 
 //get meta data of the match
 export const verifyNFT = (data) => {
-  // params: {
-  //   ids: "Here are some ids to verify",
-  // },
   const URL = `${baseUrlProd}/verify-id`;
   return axios
     .post(URL, data, {
@@ -81,12 +75,6 @@ export const getDarkblockedNftFrom = async (id) => {
     const verifyRes = await verifyNFT(data);
     //handle the response
     return verifyRes;
-    // var matches = verifyRes.data;
-    // if (matches) {
-    //   //nft already darkblocked
-    //   setIsDarkblocked(true);
-    //   console.log(`Verify Response : ${JSON.stringify(matches)}`);
-    // }
   } catch (err) {
     //catch some errors here
     console.log(err);
