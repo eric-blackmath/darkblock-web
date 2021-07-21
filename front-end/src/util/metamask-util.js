@@ -1,6 +1,5 @@
 import Web3 from "web3";
 // A JS library for recovering signatures:
-import * as sigUtil from "eth-sig-util";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8080");
 

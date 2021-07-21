@@ -1,7 +1,5 @@
 import React from "react";
 import wallet from "../images/wallet.svg";
-import logo from "../images/dark-logo.svg";
-import * as RaribleApi from "../api/rarible-api";
 import * as MetamaskUtil from "../util/metamask-util";
 import * as LoginUtil from "../util/login-util";
 import { useHistory } from "react-router-dom";
@@ -28,15 +26,6 @@ export default function Home({ setAddress }) {
 
   const redirectToNFts = () => {
     history.push("/nfts/created");
-  };
-
-  const fetchUserProfile = async (account) => {
-    try {
-      const user = await RaribleApi.getUserProfile(account);
-      return user;
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (

@@ -1,8 +1,7 @@
 import React from "react";
 import "../App.scss";
 import "../styles/tv.scss";
-import { UserContext } from "../util/UserContext";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import * as DarkblockApi from "../api/darkblock-api";
 import * as MetamaskUtil from "../util/metamask-util";
 import Footer from "../components/footer";
@@ -14,27 +13,21 @@ export default function TvLogin({ address }) {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   useEffect(() => {
-    console.log(`Tv login triggered : ${address}`);
     checkIfUserLoggedIn();
   }, [address]);
 
   const checkIfUserLoggedIn = () => {
     if (!address) {
-      console.log(`User set to logged Out`);
       setIsUserLoggedIn(false);
     } else {
-      console.log(`User set to logged In`);
       setIsUserLoggedIn(true);
     }
   };
+
   const onSubmit = async () => {
     try {
       checkIfUserLoggedIn();
-
-      console.log(`Address : ${address} : ${isUserLoggedIn}`);
-
       var submitResponse;
-
       if (isUserLoggedIn === false) {
         //make him login, then send the code
         alert("Please make sure you are logged in first");
@@ -44,7 +37,6 @@ export default function TvLogin({ address }) {
         if (submitResponse.status === 200) {
           //code submitted succesfully
           setIsConnectSuccess(true);
-          console.log(`Code Submitted, Redirecting you somewhere`);
         }
       }
     } catch (e) {
@@ -58,16 +50,13 @@ export default function TvLogin({ address }) {
 
   const submitCode = async (address) => {
     const signedSessionToken = await getSignedSession(address);
-    console.log(`Address : ${address}`);
     return DarkblockApi.confirmTvLogin(code, address, signedSessionToken);
   };
 
   const getSignedSession = async (address) => {
     const epoch = Date.now(); // Unix timestamp in milliseconds
     var sessionToken = epoch + address;
-    console.log(`Session  : ${sessionToken}`);
     const signature = await MetamaskUtil.signTypedData(sessionToken);
-    console.log(`Signature : ${signature}`);
     return epoch + "_" + signature;
   };
 

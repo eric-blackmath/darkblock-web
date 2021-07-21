@@ -7,7 +7,6 @@ import { UserContext } from "../util/UserContext";
 import * as MyNftsMapper from "../util/my-nfts-mapper";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
 
@@ -19,13 +18,9 @@ export default function MyNfts() {
   const [currentPage, setCurrentPage] = useState(1);
   const address = useContext(UserContext);
   const { account } = useParams();
-  let location = useLocation();
 
   useEffect(() => {
-    console.log(`Path Nav : ${location.pathname}`);
-
     const fetchData = async () => {
-      console.log(`Passed Arg : ${account}`);
       var accountAddress = address;
       if (account) {
         accountAddress = account;
@@ -33,7 +28,6 @@ export default function MyNfts() {
       var data = await OpenseaApi.getAllNfts(accountAddress);
 
       if (data !== undefined && data.length > 0) {
-        console.log(`Nfts : ${data.length}`);
         //for pagination, if data is less than 10, we dont want pagination
         if (data.length < 8) {
           setPostsPerPage(data.length);
@@ -52,7 +46,7 @@ export default function MyNfts() {
     } catch (e) {
       console.log(e);
     }
-  }, []);
+  }, [account, address]);
 
   // Pagination setup
   const indexOfLastNft = currentPage * postsPerPage;
@@ -66,13 +60,12 @@ export default function MyNfts() {
       {/* <button>Go to detailsView</button> */}
       {isLoaded ? (
         <div className="list-height">
-        <ul className="list-group">
-          {currentNftsMeta.map((listitem, index) => (
-            <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
-          ))}
-        </ul>
+          <ul className="list-group">
+            {currentNftsMeta.map((listitem, index) => (
+              <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
+            ))}
+          </ul>
         </div>
-
       ) : (
         <div className="list-group">
           <div>

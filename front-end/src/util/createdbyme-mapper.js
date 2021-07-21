@@ -65,48 +65,52 @@ const getName = (nft) => {
 };
 
 const getOwner = (nft) => {
-  if (nft.asset.owner.user) {
-    //got owner
-    if (
-      !nft.asset.owner.user.username ||
-      nft.asset.owner.user.username === NULL_USERNAME
-    ) {
-      //if the username is null, or NullAddress
-      if (nft.asset.owner.address === NULL_ADDRESS && nft.from_account.user) {
-        //got owner
-        if (
-          nft.from_account.user.username &&
-          nft.from_account.user.username !== NULL_USERNAME
-        ) {
-          return nft.from_account.user.username;
-        }
-        //if owner address is null, we set the creator (in this case from_account)
-        if (nft.from_account.address === NULL_ADDRESS && nft.to_account) {
+  if (nft.asset.owner) {
+    if (nft.asset.owner.user) {
+      //got owner
+      if (
+        !nft.asset.owner.user.username ||
+        nft.asset.owner.user.username === NULL_USERNAME
+      ) {
+        //if the username is null, or NullAddress
+        if (nft.asset.owner.address === NULL_ADDRESS && nft.from_account.user) {
+          //got owner
           if (
-            nft.to_account.user &&
-            nft.to_account.user.username &&
-            nft.to_account.user.username !== NULL_USERNAME
+            nft.from_account.user.username &&
+            nft.from_account.user.username !== NULL_USERNAME
           ) {
-            return nft.to_account.user.username;
+            return nft.from_account.user.username;
           }
-          return nft.to_account.address;
+          //if owner address is null, we set the creator (in this case from_account)
+          if (nft.from_account.address === NULL_ADDRESS && nft.to_account) {
+            if (
+              nft.to_account.user &&
+              nft.to_account.user.username &&
+              nft.to_account.user.username !== NULL_USERNAME
+            ) {
+              return nft.to_account.user.username;
+            }
+            return nft.to_account.address;
+          }
+          return nft.from_account.address;
         }
-        return nft.from_account.address;
+        //the username of owner is not set
+        return nft.asset.owner.address;
       }
-      //the username of owner is not set
-      return nft.asset.owner.address;
+      return nft.asset.owner.user.username;
     }
-    return nft.asset.owner.user.username;
-  } else if (nft.from_account.user) {
-    //got from_account info
-    if (
-      !nft.from_account.user.username ||
-      nft.from_account.user.username === NULL_USERNAME
-    ) {
-      //creator username not set
-      return nft.from_account.adress;
+  } else if (nft.from_account) {
+    if (nft.from_account.user) {
+      //got from_account info
+      if (
+        !nft.from_account.user.username ||
+        nft.from_account.user.username === NULL_USERNAME
+      ) {
+        //creator username not set
+        return nft.from_account.adress;
+      }
+      return nft.from_account.user.username;
     }
-    return nft.from_account.user.username;
   } else {
     //no owner, no creator
     return NO_USERNAME_FOUND;
@@ -126,19 +130,21 @@ const getCreator = (nft) => {
       }
       return nft.to_account.user.username;
     }
-  } else if (nft.from_account.user) {
-    //got from_account info
-    if (
-      !nft.from_account.user.username ||
-      nft.from_account.user.username === NULL_USERNAME
-    ) {
-      if (nft.from_account.address === NULL_ADDRESS) {
-        return localStorage.getItem("accountAddress");
+  } else if (nft.from_account) {
+    if (nft.from_account.user) {
+      //got from_account info
+      if (
+        !nft.from_account.user.username ||
+        nft.from_account.user.username === NULL_USERNAME
+      ) {
+        if (nft.from_account.address === NULL_ADDRESS) {
+          return localStorage.getItem("accountAddress");
+        }
+        //creator username not set
+        return nft.from_account.address;
       }
-      //creator username not set
-      return nft.from_account.address;
+      return nft.from_account.user.username;
     }
-    return nft.from_account.user.username;
   } else {
     return NO_USERNAME_FOUND;
   }

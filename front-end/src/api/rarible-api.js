@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const dummy_account = "0xbc355f371084200cd177131154ca8829fba0e623";
+// const dummy_account = "0xbc355f371084200cd177131154ca8829fba0e623";
 
 //fetches nfts associated to accountAddress
 export const getNfts = (accountAddress) => {

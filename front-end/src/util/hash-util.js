@@ -3,7 +3,6 @@ import CryptoJS from "crypto-js";
 export function hashInChunks(file) {
   var SHA256 = CryptoJS.algo.SHA256.create();
   var counter = 0;
-  var self = this;
 
   return new Promise((resolve, reject) => {
     loading(
@@ -12,10 +11,12 @@ export function hashInChunks(file) {
         var wordBuffer = CryptoJS.lib.WordArray.create(data);
         SHA256.update(wordBuffer);
         counter += data.byteLength;
-        console.log(((counter / file.size) * 100).toFixed(0) + "%");
+        console.log(
+          ("Hashing File : " + (counter / file.size) * 100).toFixed(0) + "%"
+        );
       },
       function (data) {
-        console.log("100%");
+        console.log("Hashing File : 100%");
         var encrypted = SHA256.finalize().toString();
         data = null;
         resolve(encrypted);

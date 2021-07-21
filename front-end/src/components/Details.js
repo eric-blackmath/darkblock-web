@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import "../styles/detail.scss";
 import * as OpenseaApi from "../api/opensea-api";
 import * as HashUtil from "../util/hash-util";
-import * as parser from "../util/parser";
 import * as MetamaskUtil from "../util/metamask-util";
 import Darkblock from "./DarkblockStates";
 import * as DetailsMeMapper from "../util/details-mapper";
@@ -26,7 +25,7 @@ export default function DetailsView() {
   const { contract, token } = useParams();
   const [darkblockDescription, setDarkblockDescription] = useState("");
 
-  const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
+  // const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
 
   useEffect(() => {
     //!TODO Handle the id validation, then init requests
@@ -37,7 +36,6 @@ export default function DetailsView() {
           (res) => res.assets[0]
         );
         const mappedNft = await DetailsMeMapper.getMappedNft(nft);
-        console.log(mappedNft.is_owned_by_user);
         setNft(mappedNft);
         setIsLoaded(true); //load it in ui
       } catch (e) {
@@ -50,15 +48,12 @@ export default function DetailsView() {
     } catch (e) {
       console.log(e);
     }
-
-    console.log(`Logged In User : ${address}`);
-  }, []);
+  }, [contract, token]);
 
   const onCreateDarkblockClick = async (e) => {
     e.preventDefault();
 
     //check the owner of the nft
-    console.log(nft.is_owned_by_user);
     if (nft.is_owned_by_user === true) {
       console.log(`Creating Darkblock`);
       initDarkblockCreation();
@@ -97,9 +92,9 @@ export default function DetailsView() {
           const { loaded, total } = progressEvent;
           let percent = Math.floor((loaded * 100) / total);
           console.log(
-            `${Formatter.formatBytes(loaded)} of ${Formatter.formatBytes(
-              total
-            )} | ${percent}%`
+            `Uploading File : ${Formatter.formatBytes(
+              loaded
+            )} of ${Formatter.formatBytes(total)} | ${percent}%`
           );
 
           if (percent < 100) {
@@ -264,114 +259,6 @@ export default function DetailsView() {
               darkblockDescription={darkblockDescription}
               onDarkblockDescriptionChange={onDarkblockDescriptionChange}
             />
-            {/* <div className="create-darkblock">
-              <form onSubmit={onCreateDarkblockClick}>
-                <div>
-                  <div className="create-darkblock-container">
-                    <h1 className="create-title">Create Darkblock</h1>
-                    <p className="create-subtitle">
-                      Upload your file and select your Darkblock level.{" "}
-                    </p>
-                    <p className="create-subtitle">
-                      Note: You need the Darkblock Android TV app to view a
-                      Darkblock upgrade.
-                    </p>
-                  </div>
-                </div>
-                <div className="upgrade-grid">
-                  <div>
-                    <div className="upgrade-level">
-                      <p className="upgrade-number">LEVEL 1</p>
-                    </div>
-                    <div className="upgrade-title">
-                      <span className="upgrade-type">SUPERCHARGED</span>
-                      <ul className="upgrade-detail-list">
-                        <li>Massive filesize support</li>
-                        <li>Stored forever on Arweave</li>
-                      </ul>
-                    </div>
-
-                    <Preview
-                      levelOneFileSelectionHandler={
-                        levelOneFileSelectionHandler
-                      }
-                      isDarkblocked={isDarkblocked}
-                      isOwnedByUser={isOwnedByUser}
-                    />
-                    <div className="custom-file mb-4">
-                      <input
-                        type="file"
-                        className="custom-file-input"
-                        id="levelOneFile"
-                        onChange={onLevelOneFileChange}
-                      />
-                      <label
-                        className="custom-file-label"
-                        htmlFor="levelOneFile"
-                      >
-                        {level === "one" ? fileName : null}
-                      </label>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="upgrade-level">
-                      <p className="upgrade-number">LEVEL 2</p>
-                    </div>
-                    <div className="upgrade-title">
-                      <span className="upgrade-type">
-                        Protected by Darkblock
-                      </span>
-                      <ul className="upgrade-detail-list">
-                        <li>Software encryption</li>
-                        <li>All features of level 1</li>
-                      </ul>
-                    </div>
-                    <PreviewTwo
-                      levelTwoFileSelectionHandler={
-                        levelTwoFileSelectionHandler
-                      }
-                    />
-                    <div className="custom-file mb-4">
-                      <input
-                        type="file"
-                        className="custom-file-input"
-                        id="levelTwoFile"
-                        onChange={onLevelTwoFileChange}
-                      />
-                      <label
-                        className="custom-file-label"
-                        htmlFor="levelTwoFile"
-                      >
-                        {level === "two" ? fileName : null}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="about-darkblock">About the Darkblock</p>
-                  <textarea
-                    className="textarea"
-                    placeholder="Add a description of the Darkblock or leave empty..."
-                    value={darkblockDescription}
-                    onChange={onDarkblockDescriptionChange}
-                  ></textarea>
-                </div>
-                <div className="button-container">
-                  {isDarkblocked || isUploading ? null : ( 
-                    <input
-                      type="submit"
-                      value="Create Darkblock"
-                      className="create-darkblock-button"
-                    />
-                  )}
-
-                  {fileUploadProgress > 0 ? (
-                    <label>{fileUploadProgress}</label>
-                  ) : null}
-                </div>
-              </form>
-            </div> */}
           </div>
         </div>
       ) : null}

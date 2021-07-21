@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const dummy_account = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
+// const dummy_account = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
+
+const MY_NFTS_LIMIT = 50;
+const CREATED_BY_ME_LIMIT = 300;
 
 //fetches nfts associated to accountAddress
 export const getNfts = (accountAddress, offset) => {
@@ -8,7 +11,7 @@ export const getNfts = (accountAddress, offset) => {
   //event_type=created&
   var config = {
     method: "get",
-    url: `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=${offset}&limit=8&owner=${accountAddress}`,
+    url: `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=${offset}&limit=${MY_NFTS_LIMIT}&owner=${accountAddress}`,
     headers: {},
   };
 
@@ -30,17 +33,15 @@ export const getAllNfts = async (accountAddress) => {
   do {
     var tempNfts = await getNfts(accountAddress, offset);
     if (tempNfts !== undefined && tempNfts.length > 0) {
-      offset += 50;
-      console.log(`Posts Fetched : ${offset}`);
+      offset += MY_NFTS_LIMIT;
       tempNfts.forEach((element) => {
         allNfts.push(element);
       });
+      console.log(`Posts Fetched : ${allNfts.length}`);
     } else {
       break;
     }
-  } while (tempNfts.length === 50);
-  console.log(`All Nfts Length = ${allNfts.length}`);
-
+  } while (tempNfts.length === MY_NFTS_LIMIT);
   return allNfts;
 };
 
@@ -55,17 +56,15 @@ export const getAllNftsCreatedByUser = async (accountAddress) => {
   do {
     var tempNfts = await getNftsCreatedByUser(accountAddress, offset);
     if (tempNfts !== undefined && tempNfts.length > 0) {
-      offset += 300;
-      console.log(`Posts Fetched : ${offset}`);
+      offset += CREATED_BY_ME_LIMIT;
       tempNfts.forEach((element) => {
         allNfts.push(element);
       });
+      console.log(`Posts Fetched : ${allNfts.length}`);
     } else {
       break;
     }
-  } while (tempNfts.length === 300);
-  console.log(`All Nfts Length = ${allNfts.length}`);
-
+  } while (tempNfts.length === CREATED_BY_ME_LIMIT);
   return allNfts;
 };
 
@@ -75,7 +74,7 @@ export const getNftsCreatedByUser = (accountAddress, offset) => {
   //event_type=created&
   var config = {
     method: "get",
-    url: `https://api.opensea.io/api/v1/events?account_address=${accountAddress}&only_opensea=false&limit=300&offset=${offset}
+    url: `https://api.opensea.io/api/v1/events?account_address=${accountAddress}&only_opensea=false&limit=${CREATED_BY_ME_LIMIT}&offset=${offset}
     `,
     headers: {},
   };
