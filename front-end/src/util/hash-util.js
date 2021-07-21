@@ -12,7 +12,7 @@ export function hashInChunks(file) {
         SHA256.update(wordBuffer);
         counter += data.byteLength;
         console.log(
-          ("Hashing File : " + (counter / file.size) * 100).toFixed(0) + "%"
+          "Hashing File : " + ((counter / file.size) * 100).toFixed(0) + "%"
         );
       },
       function (data) {
