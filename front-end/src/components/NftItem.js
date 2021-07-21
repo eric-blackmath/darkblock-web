@@ -26,12 +26,8 @@ const NFTITem = ({ nft }) => {
             <Card.Text className="meta-data card-limit">
               Owned By: <span className="meta-bold">{nft.owner}</span>
             </Card.Text>
-            <Card.Text className="meta-data isdarkblock">
-              <span className="meta-bold">
-                {nft.is_darkblocked
-                  ? "Protected by Darkblock"
-                  : "No Darkblock found"}
-              </span>
+            <Card.Text className="meta-data db-box">
+            {nft.is_darkblocked ? <span className="isdarkblock">Protected By <span className="db-bold">Darkblock</span></span> :  <p className="nodarkblock">No Darkblock Found</p>}
             </Card.Text>
           </Card.Body>
         </Card>
