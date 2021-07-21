@@ -93,6 +93,7 @@ export default function FileChooser({ fileSelectionHandlerLevelOne }) {
     }
 
     ekUpload();
+    // eslint-disable-next-line
   }, []);
 
   return (

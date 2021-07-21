@@ -14,6 +14,7 @@ export default function TvLogin({ address }) {
 
   useEffect(() => {
     checkIfUserLoggedIn();
+    // eslint-disable-next-line
   }, [address]);
 
   const checkIfUserLoggedIn = () => {
@@ -65,14 +66,16 @@ export default function TvLogin({ address }) {
       {isConnectSuccess ? (
         <div className="tv-success tv-height">
           <h1 className="tv-success-text">
-          The Darkblock TV App should now be signed in.
+            The Darkblock TV App should now be signed in.
           </h1>
           <p className="tv-app-text">Troubles? Please refresh and try again.</p>
         </div>
       ) : (
         <div className="tv-height">
           {" "}
-          <h1 className="tv-title">Enter 6 digit code from the TV App to Sign in.</h1>
+          <h1 className="tv-title">
+            Enter 6 digit code from the TV App to Sign in.
+          </h1>
           <p className="tv-meta">Requires Metamask for wallet verification.</p>
           <div className="tv-code">
             <input
