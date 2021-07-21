@@ -74,16 +74,17 @@ export default function TvLogin({ address }) {
   return (
     <div className="tv-login">
       {isConnectSuccess ? (
-        <div className="tv-success">
+        <div className="tv-success tv-height">
           <h1 className="tv-success-text">
-            Sweet!<br></br> You have successfully been connected.
+          The Darkblock TV App should now be signed in. <br></br>Troubles? Please refresh and try again.
           </h1>
           <p className="tv-app-text">You can now continue on your TV app.</p>
         </div>
       ) : (
         <div className="tv-height">
           {" "}
-          <h1 className="tv-title">Enter TV code and connect</h1>
+          <h1 className="tv-title">Enter 6 digit code from the TV App to Sign in.</h1>
+          <p className="tv-meta">Requires Metamask for wallet verification.</p>
           <div className="tv-code">
             <input
               id="code"
