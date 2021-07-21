@@ -65,9 +65,9 @@ export default function TvLogin({ address }) {
       {isConnectSuccess ? (
         <div className="tv-success tv-height">
           <h1 className="tv-success-text">
-          The Darkblock TV App should now be signed in. <br></br>Troubles? Please refresh and try again.
+          The Darkblock TV App should now be signed in.
           </h1>
-          <p className="tv-app-text">You can now continue on your TV app.</p>
+          <p className="tv-app-text">Troubles? Please refresh and try again.</p>
         </div>
       ) : (
         <div className="tv-height">
