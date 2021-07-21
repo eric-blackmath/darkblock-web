@@ -69,8 +69,8 @@ export default function Footer() {
               <li>
                 <a
                   rel="noreferrer"
-                  className="footer-link non-link"
-                //   href=""
+                  className="footer-link"
+                  href="http://chat.darkblock.io"
                   target="_blank"
                 >
                   Discord
