@@ -190,7 +190,7 @@
   border: 1px solid #c4c4c4;
 }
 
-.detail-background{
+.detail-background {
   background-color: #f9f9f9;
 }
 
@@ -201,15 +201,16 @@
   @media (max-width: 1024px) {
     padding: 48px;
   }
-  @media (min-width: 2560px) {
-    max-width: 1200px;
-    height: 1600px;
+  // @media (min-width: 2560px) {
+  //   max-width: 1200px;
+  //   height: 1600px;
+  //   margin: auto;
+  // }
+  @media (max-width: 3000px) and (min-width: 1500px) {
+    height: 2000px;
     margin: auto;
+    max-width: 1200px;
   }
-  @media (max-width:2560px) and (min-width:1440px) {
-    height: 1600px;
-}
-
 }
 
 .chain-info {
@@ -291,7 +292,7 @@
   margin-top: 40px;
 }
 
-.subtitle-space{
+.subtitle-space {
   margin-bottom: 24px;
 }
 
@@ -328,7 +329,7 @@
 }
 
 input:disabled {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .button-container {

@@ -72,6 +72,13 @@ export default function CreatedByMe() {
               <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
             ))}
           </ul>
+                {nfts.length > 8 ? (
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={nfts.length}
+          paginate={paginate}
+        />
+      ) : null}
         </div>
       ) : (
         <div className="list-group">
@@ -112,13 +119,7 @@ export default function CreatedByMe() {
         </div>
       ) : null}
 
-      {nfts.length > 8 ? (
-        <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={nfts.length}
-          paginate={paginate}
-        />
-      ) : null}
+
       <Footer />
     </React.Fragment>
   );
