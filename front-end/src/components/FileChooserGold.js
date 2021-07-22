@@ -42,7 +42,7 @@ export default function FileChooser({ fileSelectionHandlerLevelTwo }) {
         // Cancel event and hover styling
         fileDragHover(e);
 
-        levelTwoFileSelectionHandler(files); //send the files back to details
+        levelTwoFileSelectionHandler(e); //send the files back to details
 
         // Process all File objects
         for (var i = 0, f; (f = files[i]); i++) {

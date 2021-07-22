@@ -9,6 +9,8 @@ import * as HashUtil from "../util/hash-util";
 import * as MetamaskUtil from "../util/metamask-util";
 import Darkblock from "./DarkblockStates";
 import * as DetailsMeMapper from "../util/details-mapper";
+import * as FileSupportHandler from "../util/file-support-handler";
+
 import Footer from "../components/footer";
 
 export default function DetailsView() {
@@ -129,22 +131,31 @@ export default function DetailsView() {
     setDarkblockDescription(e.target.value);
   };
 
-  const levelOneFileSelectionHandler = async (files) => {
+  const levelOneFileSelectionHandler = async (e) => {
     //level one file is picked
     //TODO handle when user cancels the process
-    console.log(`Level One Selected`);
-    setSelectedLevel("one");
-    setFile(files[0]);
-    setFileName(files[0].name);
+
+    const isFileSupported = FileSupportHandler.isFileFormatSupported(e);
+
+    if (isFileSupported === true) {
+      console.log(`Level One Selected`);
+      setSelectedLevel("one");
+      setFile(e.target.files[0]);
+      setFileName(e.target.files[0].name);
+    }
   };
 
-  const levelTwoFileSelectionHandler = async (files) => {
+  const levelTwoFileSelectionHandler = async (e) => {
     //level two file is picked
     //TODO handle when user cancels the process
-    console.log(`Level Two Selected`);
-    setSelectedLevel("two");
-    setFile(files[0]);
-    setFileName(files[0].name);
+    const isFileSupported = FileSupportHandler.isFileFormatSupported(e);
+
+    if (isFileSupported === true) {
+      console.log(`Level Two Selected`);
+      setSelectedLevel("two");
+      setFile(e.target.files[0]);
+      setFileName(e.target.files[0].name);
+    }
   };
 
   const redirectOwnerToOpensea = () => {
