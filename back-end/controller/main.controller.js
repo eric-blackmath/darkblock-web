@@ -7,7 +7,7 @@ const sigUtil = require("eth-sig-util");
 
 const ARWEAVE_WALLET_PATH = "/home/ubuntu/arweave.json";
 // const ARWEAVE_WALLET_PATH =
-// "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json";
+//   "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json";
 
 const protocolUpload = async (req, res) => {
   console.log(`Protocol endpoint reached `);
