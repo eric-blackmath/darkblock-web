@@ -27,6 +27,10 @@
 }
 
 .nft-detail-name {
+  max-width: 25ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-family: abril-display, serif;
   font-weight: 700;
   font-style: normal;
