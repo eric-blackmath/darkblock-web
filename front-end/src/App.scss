@@ -93,6 +93,10 @@ img {
 }
 
 .nft-title {
+  max-width: 25ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   outline: none;
   border: none;
   width: 100%;
@@ -108,15 +112,14 @@ img {
   font-family: "abril-display";
   display: flex;
   align-items: center;
-  // padding: 0 48px;
-  // position: fixed;
-  // width: -webkit-fill-available;
   background-color: white;
   box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.08);
-  // position: fixed;
   width: 100%;
-  // padding-top: 16px;
   z-index: 99999;
+  @media only screen and (max-width:500px){
+    // flex-direction: column;
+    // align-items: flex-start;
+  }
 }
 
 .active {
@@ -132,14 +135,19 @@ img {
 }
 
 .nav-logo-loggedout {
-  // width: 45%;
   padding-left: 48px;
-  // padding-top: 16px;
-  // padding-bottom: 16px;
+  @media only screen and (max-width:500px){
+    padding-left: 16px;
+  }
 }
 
 .login-container {
-  padding: 16px 0px;
+  // padding: 16px 0px;
+  @media only screen and (max-width:500px){
+    padding-top: 0;
+    padding-bottom: 0px;
+    padding-right: 16px;
+  }
 }
 
 .nav-content {
@@ -147,8 +155,15 @@ img {
   margin-left: auto;
   padding-right: 48px;
   align-items: flex-end;
-  // padding-top: 16px;
-  // padding-bottom: 16px;
+  @media only screen and (max-width:500px){
+    align-items: center;
+    margin: 0;
+    padding-left: 48px;
+    padding-top: 0;
+    margin-top: 0;
+    padding: 0;
+    margin-left: auto;
+  }
 }
 
 .dropbtn {
@@ -223,6 +238,11 @@ img {
   font-family: abril-display, serif;
   font-weight: 700;
   font-style: normal;
+  margin-bottom: 16px;
+
+  @media only screen and (max-width:375px){
+    padding: 6px 12px;
+  }
 }
 
 .wallet-icon {
@@ -254,7 +274,7 @@ img {
   position: relative;
   transition: 0.3s all ease;
   box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25);
-  &:hover{
+  &:hover {
     box-shadow: 0px 1px 30px rgba(0, 0, 0, 0.25);
   }
 }
@@ -285,7 +305,7 @@ img {
   font-weight: 700;
 }
 
-.db-box{
+.db-box {
   margin-top: 12px;
 }
 
@@ -301,7 +321,7 @@ img {
 }
 
 .isdarkblock {
-  background-color: #FFC324;
+  background-color: #ffc324;
   padding: 4px 12px;
   font-size: 9px;
   margin-top: 12px;
@@ -311,26 +331,25 @@ img {
   color: black;
 }
 
-.db-bold{
+.db-bold {
   font-weight: 700;
 }
 
 .none-found {
   text-align: center;
   // height: 600px;
-  @media only screen and (min-width:1440px){
+  @media only screen and (min-width: 1440px) {
     height: 600px;
   }
-  @media only screen and (min-width:2560px){
+  @media only screen and (min-width: 2560px) {
     height: 1600px;
   }
 }
 
-.list-height{
-  @media only screen and (min-width:2560px){
-    height: 1600px;
-  }
-
+.list-height {
+  @media (max-width:3000px) and (min-width:1500px) {
+    height: 2100px;
+}
 }
 
 .none-found-p {

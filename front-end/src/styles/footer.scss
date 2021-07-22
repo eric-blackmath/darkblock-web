@@ -5,7 +5,11 @@
   padding-top: 80px;
   padding-bottom: 24px;
   color: #ffffff;
-//   margin-top: 40px;
+  margin-top: 40px;
+@media only screen and (max-width:500px){
+    padding-left: 80px;
+    padding-right: 80px;
+  }
 }
 
 .footer-grid {
@@ -14,6 +18,10 @@
   grid-template-rows: 1fr;
   grid-column-gap: 24px;
   grid-row-gap: 0px;
+  @media only screen and (max-width:500px){
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: 24px;
+  }
 
 //   @media only screen and(max-width:768px){
 //     grid-template-columns: repeat(1, 1fr);

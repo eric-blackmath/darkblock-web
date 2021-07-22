@@ -27,6 +27,10 @@
 }
 
 .nft-detail-name {
+  max-width: 50ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-family: abril-display, serif;
   font-weight: 700;
   font-style: normal;
@@ -37,6 +41,7 @@
 
   @media only screen and (max-width: 768px) {
     font-size: 48px;
+    padding: 0;
   }
 }
 
@@ -120,6 +125,9 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  @media only screen and (max-width: 768px) {
+    display: block;
+  }
 }
 
 .flex-grid-thirds .col {
@@ -172,6 +180,10 @@
   margin: 0;
   margin-bottom: 8px;
   padding: 16px;
+  @media only screen and (max-width: 768px) {
+    padding: 0px 0px;
+    padding-bottom: 16px;
+  }
 }
 
 .about-the-nft {
@@ -279,7 +291,12 @@
   margin-top: 40px;
 }
 
+.subtitle-space{
+  margin-bottom: 24px;
+}
+
 .textarea {
+  border-radius: 4px;
   resize: none;
   outline: none;
   width: 100%;
@@ -292,7 +309,7 @@
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  margin-top: 16px;
+  margin-top: 8px;
   color: #9a9a9a;
   background-color: #38383b;
 }
@@ -308,6 +325,10 @@
   font-size: 16px;
   margin-left: auto;
   cursor: pointer;
+}
+
+input:disabled {
+  opacity: .5;
 }
 
 .button-container {
