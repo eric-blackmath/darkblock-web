@@ -228,7 +228,7 @@ export default function DarkblockStates({
                 <div className="create-darkblock-container">
                   <h1 className="create-title">Create Darkblock</h1>
                   <p className="create-subtitle">
-                    Upload your file and select your Darkblock level.{" "}
+                    Upload your file (max 350MB) and select your Darkblock level.{" "}
                   </p>
                   <p className="create-subtitle subtitle-space">
                     Note: You need the Darkblock Android TV app to view a
@@ -242,7 +242,7 @@ export default function DarkblockStates({
                     <p className="upgrade-number">LEVEL 1</p>
                   </div>
                   <div className="upgrade-title">
-                    <span className="upgrade-type">SUPERCHARGED</span>
+                    <span className="upgrade-type">Supercharged</span>
                     <ul className="upgrade-detail-list">
                       <li>Large filesize support (350MB)</li>
                       <li>Stored forever on Arweave</li>

@@ -327,6 +327,10 @@
   cursor: pointer;
 }
 
+input:disabled {
+  opacity: .5;
+}
+
 .button-container {
   display: flex;
   margin-top: 24px;
