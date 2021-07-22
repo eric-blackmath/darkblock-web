@@ -7,7 +7,7 @@ const sigUtil = require("eth-sig-util");
 
 const ARWEAVE_WALLET_PATH = "/home/ubuntu/arweave.json";
 // const ARWEAVE_WALLET_PATH =
-//   "C:/Users/ksaji/Documents/arweave-key-JxRiV4nzg46XiKVZrvVbirHI3VWKjtAbIGPoBgKSD4w.json";
+// "C:/Users/ksaji/Documents/arweave-wallet/3211c2fe-3157-4677-81c1-1488e47976dd.json";
 
 const protocolUpload = async (req, res) => {
   console.log(`Protocol endpoint reached `);
@@ -113,17 +113,37 @@ const upload = async (req, res) => {
  * seprarated by a comma
  */
 const verifyNFTs = async (req, res) => {
-  var arweaveQuery = await ParseUtil.getFullQuery(req);
+  var ids = await ParseUtil.extractIdsFromRequest(req);
+  var idsArr = ids.split(",");
+  var idsLen = idsArr.length;
+
   var matches = "";
-  await ArweaveApi.verifyNFTsById(arweaveQuery).then((transactions) => {
+
+  const idsChunks = ParseUtil.getArrInChunks(idsArr);
+
+  console.log(
+    `Total Nfts : ${idsLen} : NoOfRequestsToBeMadeToArweave : ${idsChunks.length}`
+  );
+
+  for (let i = 0; i < idsChunks.length; i++) {
+    console.log(
+      `Verification Request to Arweave for ${i} Arr : ${idsChunks[i].length} ids`
+    );
+
+    var chunkIdsStr = idsChunks[i].toString();
+    var arweaveQuery = ParseUtil.getFullQueryWithMaxLimit(chunkIdsStr);
+    var transactions = await ArweaveApi.verifyNFTsById(arweaveQuery);
     if (transactions.length > 0) {
       //extract 'field' [NFT-Id] from transactions.tags
-      matches = ParseUtil.getIdOfMatches(transactions, "NFT-Id");
-    } else {
-      //no matches
+      console.log(`Transactions Found in this Arr : ${transactions.length}`);
+      matches += ParseUtil.getIdOfMatches(transactions, "NFT-Id");
     }
-  });
-  res.status(200).send(matches);
+  }
+
+  //all requests to arweave done
+  console.log(`Matches : ${matches.substring(0, matches.length - 1)}`);
+  const matchesFinal = matches.substring(0, matches.length - 1);
+  res.status(200).send(matchesFinal);
 };
 
 /**

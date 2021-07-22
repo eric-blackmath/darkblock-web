@@ -186,7 +186,7 @@ const makeProtocolTransaction = async (arweaveWallet, posted) => {
 const verifyNFTsById = async (queryArweave) => {
   const URL = `https://arweave.net/graphql`;
 
-  const verifyRes = await fetch("https://arweave.net/graphql", {
+  const verifyRes = await fetch(URL, {
     method: "POST",
     headers: {
       "Accept-Encoding": "gzip, deflate, br",
@@ -202,7 +202,6 @@ const verifyNFTsById = async (queryArweave) => {
   });
 
   let data = await verifyRes.json();
-  // console.log(`Transaction Matches : ${JSON.stringify(data)}`);
   // console.log(`Transaction Matches : ${data.data.transactions.edges.length}`);
 
   return data.data.transactions.edges;

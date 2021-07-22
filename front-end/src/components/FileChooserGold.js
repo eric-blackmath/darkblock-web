@@ -102,7 +102,7 @@ export default function FileChooser({ fileSelectionHandlerLevelTwo }) {
             id="file-uploadtwo" //maybe not change this one
             type="file"
             name="fileUpload"
-            accept="image/*"
+            accept=".mp4, .png, .jpeg, .gif, .jpg"
           />
           <img className="goldblock" src={goldblock} alt="silverblock" />
           <label htmlFor="file-uploadtwo" id="file-dragtwo">

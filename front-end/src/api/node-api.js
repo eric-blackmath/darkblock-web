@@ -2,12 +2,12 @@ import axios from "axios";
 
 // Takes care of all the calls to our Node Api
 
-// const baseUrlDev = "http://localhost:5000";
-const baseUrlProd = "/api";
+// const baseUrl = "http://localhost:5000";
+const baseUrl = "/api";
 
 //uploads the file+tags to back-end to trigger transaction
 export const postTransaction = (data, options) => {
-  const URL = `${baseUrlProd}/upload`;
+  const URL = `${baseUrl}/upload`;
   return axios
     .post(URL, data, options)
     .then((response) => response)
@@ -18,7 +18,7 @@ export const postTransaction = (data, options) => {
 
 //gets an arr of id's matched
 export const verifyNFTs = (data) => {
-  const URL = `${baseUrlProd}/verify`;
+  const URL = `${baseUrl}/verify`;
   return axios
     .post(URL, data, {
       headers: {
@@ -33,7 +33,7 @@ export const verifyNFTs = (data) => {
 
 //get meta data of the match
 export const verifyNFT = (data) => {
-  const URL = `${baseUrlProd}/verify-id`;
+  const URL = `${baseUrl}/verify-id`;
   return axios
     .post(URL, data, {
       headers: {

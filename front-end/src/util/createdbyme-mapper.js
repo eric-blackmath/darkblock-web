@@ -20,7 +20,6 @@ export const getMappedList = async (nfts) => {
 
   var mappedNfts = [];
   for (let i = 0; i < nfts.length; i++) {
-    //
     var nft = {
       name: getName(nfts[i]),
       creator: getCreator(nfts[i]),

@@ -19,7 +19,38 @@ const getFullQuery = async (req) => {
     }); // form.parse
   });
 
-  return `query {\n transactions(\n tags: { name: "${field}", values: [${formfields.ids}] }\n ) {\n edges {\n node {\n id tags {name value}\n }\n }\n }\n}\n`;
+  // var totalNfts = formfields.ids.split(",").length;
+  // console.log(`Ids Parse : ${totalNfts}`);
+
+  return `query {\n transactions(\n first: 100, tags: { name: "${field}", values: [${formfields.ids}] }\n ) {\n edges {\n node {\n id tags {name value}\n }\n }\n }\n}\n`;
+};
+
+/**
+ * @param  {string} ids
+ * returns the full query with max limit
+ * ! since we only want the matching NFT-Id's, it constructs query for just that
+ */
+const getFullQueryWithMaxLimit = (ids) => {
+  const field = "NFT-Id";
+  return `query {\n transactions(\n first: 100, tags: { name: "${field}", values: [${ids}] }\n ) {\n edges {\n node {\n id tags {name value}\n }\n }\n }\n}\n`;
+};
+/**
+ * @param  {request} req
+ * parses ids from the request
+ */
+const extractIdsFromRequest = async (req) => {
+  var form = new formidable.IncomingForm();
+  var formfields = await new Promise(function (resolve, reject) {
+    form.parse(req, function (err, fields, files) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(fields);
+    }); // form.parse
+  });
+
+  return formfields.ids;
 };
 
 /**
@@ -55,7 +86,7 @@ const getIdOfMatches = (transactions, field) => {
     matches += result.value + ",";
     // console.log(`Transaction Match:${result.value}`);
   }
-  return matches.substring(0, matches.length - 1);
+  return matches;
 };
 
 /**
@@ -84,9 +115,29 @@ const getMetaOfMatch = (transaction) => {
   return meta;
 };
 
+//divides the array into subarray of elements chunks
+const getArrInChunks = (arr) => {
+  var perChunk = 100; // items per chunk
+
+  return arr.reduce((resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / perChunk);
+
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = []; // start a new chunk
+    }
+
+    resultArray[chunkIndex].push(item);
+
+    return resultArray;
+  }, []);
+};
+
 module.exports = {
   getFullQuery,
   getIdOfMatches,
   getDataForSignatureVerification,
   getMetaOfMatch,
+  getFullQueryWithMaxLimit,
+  extractIdsFromRequest,
+  getArrInChunks,
 };

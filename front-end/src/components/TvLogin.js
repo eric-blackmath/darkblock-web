@@ -46,7 +46,7 @@ export default function TvLogin({ address }) {
   };
 
   const handleOnCodeChange = (e) => {
-    setCode(e.target.value);
+    setCode(e.target.value.toUpperCase());
   };
 
   const submitCode = async (address) => {
@@ -83,7 +83,7 @@ export default function TvLogin({ address }) {
               autoComplete="off"
               className="pin-input"
               placeholder="Please enter code here"
-              value={code}
+              value={code.toUpperCase()}
               maxLength="6"
               pattern="[0-9]*"
               onChange={handleOnCodeChange}

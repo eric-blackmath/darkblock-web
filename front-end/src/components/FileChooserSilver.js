@@ -104,7 +104,7 @@ export default function FileChooser({ fileSelectionHandlerLevelOne }) {
             id="file-upload"
             type="file"
             name="fileUpload"
-            accept="image/*"
+            accept=".mp4, .png, .jpeg, .gif, .jpg"
           />
           <img className="silverblock" src={silverblock} alt="silverblock" />
           <label htmlFor="file-upload" id="file-drag">
