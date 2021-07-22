@@ -230,7 +230,7 @@ export default function DarkblockStates({
                   <p className="create-subtitle">
                     Upload your file and select your Darkblock level.{" "}
                   </p>
-                  <p className="create-subtitle">
+                  <p className="create-subtitle subtitle-space">
                     Note: You need the Darkblock Android TV app to view a
                     Darkblock upgrade.
                   </p>
@@ -244,7 +244,7 @@ export default function DarkblockStates({
                   <div className="upgrade-title">
                     <span className="upgrade-type">SUPERCHARGED</span>
                     <ul className="upgrade-detail-list">
-                      <li>Massive filesize support</li>
+                      <li>Large filesize support (350MB)</li>
                       <li>Stored forever on Arweave</li>
                     </ul>
                   </div>
@@ -291,7 +291,7 @@ export default function DarkblockStates({
                 <p className="about-darkblock">About the Darkblock</p>
                 <textarea
                   className="textarea"
-                  placeholder="Add a description of the Darkblock or leave empty..."
+                  placeholder="Add a description of the Darkblock (optional)"
                   value={darkblockDescription}
                   onChange={onDarkblockDescriptionChange}
                 ></textarea>
