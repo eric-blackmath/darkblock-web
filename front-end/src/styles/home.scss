@@ -113,6 +113,9 @@
 .tv-image {
   width: 100%;
   border-radius: 16px;
+  @media only screen and (max-width:500px){
+    filter: brightness(0.5);
+  }
 }
 
 .tv-link {
