@@ -71,9 +71,9 @@ export default function Home({ setAddress }) {
                   <p className="upgrade-number">LEVEL 1</p>
                 </div>
                 <div className="upgrade-title">
-                  <span className="upgrade-type">SUPERCHARGED</span>
+                  <span className="upgrade-type">Supercharged</span>
                   <ul className="upgrade-detail-list">
-                    <li>Massive filesize support</li>
+                    <li>Large filesize support (350MB)</li>
                     <li>Stored forever on Arweave</li>
                   </ul>
                 </div>
