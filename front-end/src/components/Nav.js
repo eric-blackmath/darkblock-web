@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../App.scss";
-import logo from "../images/beta-logo.svg";
+import logo from "../images/logo.svg";
 import wallet from "../images/wallet.svg";
 import { useEffect } from "react";
 import * as LoginUtil from "../util/login-util";
