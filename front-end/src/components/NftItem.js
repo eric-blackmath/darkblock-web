@@ -22,8 +22,7 @@ const NFTITem = ({ nft }) => {
               {nft.name}
             </Card.Title>
             <Card.Text className="meta-data card-limit">
-              Created By:{" "}
-              <span className="meta-bold">{"Testing" + nft.creator}</span>
+              Created By: <span className="meta-bold">{nft.creator}</span>
             </Card.Text>
             <Card.Text className="meta-data card-limit">
               Owned By: <span className="meta-bold">{nft.owner}</span>
