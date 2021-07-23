@@ -8,10 +8,13 @@ import hands from "../images/hands.png";
 import goldblock from "../images/goldblock.png";
 import silverblock from "../images/silverblock.png";
 import tvimage from "../images/tvimage.png";
-import Footer from "../components/footer";
+import FooterHome from "../components/footerhome";
 
 //Logs user into metamask and fetches their account address
 export default function Home({ setAddress }) {
+  const fhome = {
+    position: 'relative !important'
+  }
   let history = useHistory();
 
   const getAccount = async () => {
@@ -117,7 +120,7 @@ export default function Home({ setAddress }) {
           </div>
         </div>
       </div>
-      <Footer />
+      <FooterHome />
     </div>
   );
 }

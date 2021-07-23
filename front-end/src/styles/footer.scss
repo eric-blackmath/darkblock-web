@@ -6,7 +6,26 @@
   padding-bottom: 24px;
   color: #ffffff;
   margin-top: 40px;
-@media only screen and (max-width:500px){
+
+  @media (max-width:3000px) and (min-width:1500px) {
+    position: fixed;
+    width: 92%;
+    left: 0;
+    bottom: 0;
+}
+
+.footer-home{
+    position: relative;
+    background-color: #121212;
+    padding-left: 120px;
+    padding-right: 120px;
+    padding-top: 80px;
+    padding-bottom: 24px;
+    color: #ffffff;
+    margin-top: 40px;
+}
+
+  @media only screen and (max-width:500px){
     padding-left: 80px;
     padding-right: 80px;
   }
