@@ -210,8 +210,9 @@ export default function DetailsView() {
                       onClick={redirectCreatorToOpensea}
                       target="_blank"
                       rel="noreferrer"
-                      className="creator-link"
+                      className="creator-link tooltip"
                     >
+                      {/* <span className="tooltiptext">{nft.creator}</span> */}
                       <span className="about-span ch-limit">{nft.creator}</span>
                     </a>
                   </div>
