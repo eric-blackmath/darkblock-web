@@ -8,6 +8,7 @@ export const isFileFormatSupported = (event) => {
     case "mp4":
     case "bmp":
     case "svg":
+    case "webm":
       return true;
     default:
       event.target.value = null;
