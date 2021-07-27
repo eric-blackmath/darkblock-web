@@ -235,18 +235,23 @@ export default function DetailsView() {
                 <h1 className="detail-about-nft">Chain Info</h1>
                 <div className="chain-content">
                   <div className="chain-flex">
-                    <p>Contract Address</p>
-                    <a
-                      className="owner-link contract-link"
-                      onClick={redirectAddress}
-                      href="https://opensea.io/"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <span className="chain-span contract-address">
-                        {nft.contract}
-                      </span>
-                    </a>
+                    <p style={{ marginRight: "auto" }}>Contract Address</p>
+                    <div className="tooltip">
+                      <a
+                        className="owner-link contract-link"
+                        onClick={redirectAddress}
+                        href="https://opensea.io/"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <span className="tooltiptext tooltip-contract">
+                          {nft.contract}
+                        </span>
+                        <div className="chain-span contract-address">
+                          <span>{nft.contract}</span>
+                        </div>
+                      </a>
+                    </div>
                   </div>
                   <div className="chain-flex">
                     <p>Token Id</p>
@@ -254,6 +259,7 @@ export default function DetailsView() {
                   </div>
                   <div className="chain-flex blockchain">
                     <p>BlockChain</p>
+
                     <span className="chain-span">{nft.blockchain}</span>
                   </div>
                 </div>
