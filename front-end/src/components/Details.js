@@ -212,7 +212,7 @@ export default function DetailsView() {
                       rel="noreferrer"
                       className="creator-link tooltip"
                     >
-                      {/* <span className="tooltiptext">{nft.creator}</span> */}
+                      <span className="tooltiptext">{nft.creator}</span>
                       <span className="about-span ch-limit">{nft.creator}</span>
                     </a>
                   </div>
