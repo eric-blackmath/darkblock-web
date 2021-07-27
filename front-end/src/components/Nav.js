@@ -1,7 +1,6 @@
 import React from "react";
-
 import "../App.scss";
-import logo from "../images/logo.svg";
+import logo from "../images/Black.svg";
 import wallet from "../images/wallet.svg";
 import { useEffect } from "react";
 import * as LoginUtil from "../util/login-util";
@@ -96,7 +95,7 @@ export default function Nav({ setAddress, address }) {
             <div className="login-container">
               <button onClick={getAccount} className="login-button">
                 <img className="wallet-icon" src={wallet} alt="wallet icon" />
-                <span style={{ paddingTop: "3px" }}>Connect Wallet</span>
+                <span style={{ paddingTop: "3px", lineHeight:"19px" }}>Connect Wallet</span>
               </button>
             </div>
           </div>
