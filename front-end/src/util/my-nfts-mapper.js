@@ -10,7 +10,7 @@ import * as parser from "../util/parser";
  *
  */
 
-const NO_USERNAME_FOUND = "No Username";
+const NO_USERNAME_FOUND = localStorage.getItem("accountAddress");
 const NULL_USERNAME = "NullAddress";
 const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -76,6 +76,12 @@ const getOwner = (nft) => {
             nft.last_sale.transaction &&
             nft.last_sale.transaction.from_account
           ) {
+            if (
+              nft.last_sale.transaction.from_account.user &&
+              nft.last_sale.transaction.from_account.user.username
+            ) {
+              return nft.last_sale.transaction.from_account.user.username;
+            }
             return nft.last_sale.transaction.from_account.address;
           }
         }

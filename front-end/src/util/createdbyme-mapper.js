@@ -10,7 +10,7 @@ import * as parser from "../util/parser";
  *
  */
 
-const NO_USERNAME_FOUND = "No Username";
+const NO_USERNAME_FOUND = localStorage.getItem("accountAddress");
 const NULL_USERNAME = "NullAddress";
 const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 

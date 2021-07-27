@@ -10,7 +10,7 @@ import * as parser from "./parser";
  *
  */
 
-const NO_USERNAME = "No Username";
+const NO_USERNAME = localStorage.getItem("accountAddress");
 const NULL_USERNAME = "NullAddress";
 const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -104,8 +104,27 @@ const getOwner = (nft) => {
         !nft.owner.user.username ||
         nft.owner.user.username === NULL_USERNAME
       ) {
-        //the username of owner is not set
-        if (nft.owner.address === NULL_ADDRESS && nft.creator.user) {
+        if (nft.owner.address === NULL_ADDRESS && nft.last_sale) {
+          if (
+            nft.last_sale.transaction &&
+            nft.last_sale.transaction.from_account
+          ) {
+            if (
+              nft.last_sale.transaction.from_account.user &&
+              nft.last_sale.transaction.from_account.user.username
+            ) {
+              return nft.last_sale.transaction.from_account.user.username;
+            }
+            return nft.last_sale.transaction.from_account.address;
+          }
+        }
+
+        //we only have the creator in this case, no owner, no last_sale
+        if (
+          nft.owner.address === NULL_ADDRESS &&
+          nft.creator &&
+          nft.creator.user
+        ) {
           //got owner
           if (
             nft.creator.user.username &&
@@ -116,6 +135,7 @@ const getOwner = (nft) => {
           //if owner address is null, we set the creator (in this case from_account)
           return nft.creator.address;
         }
+
         return nft.owner.address;
       }
       return nft.owner.user.username;
@@ -134,7 +154,7 @@ const getOwner = (nft) => {
     }
   } else {
     //no owner, no creator
-    return "No Owner";
+    return NO_USERNAME;
   }
 };
 
