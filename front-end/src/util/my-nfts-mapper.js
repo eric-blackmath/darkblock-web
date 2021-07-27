@@ -98,6 +98,11 @@ const getOwner = (nft) => {
         return nft.owner.address;
       }
       return nft.owner.user.username;
+    } else {
+      //we have the owner, but the user is null, also got the address
+      if (nft.owner.address !== NULL_ADDRESS) {
+        return nft.owner.address;
+      }
     }
   } else if (nft.creator) {
     if (nft.creator.user) {
