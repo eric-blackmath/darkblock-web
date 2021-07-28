@@ -97,7 +97,7 @@ export default function FileChooser({ fileSelectionHandlerLevelTwo }) {
   return (
     <div>
       <div>
-        <div id="file-upload-formtwo" className="uploadertwo">
+        <div id="file-upload-formtwo" className="uploadertwo uploader-bg">
           <input
             id="file-uploadtwo" //maybe not change this one
             type="file"

@@ -3,11 +3,12 @@ import "../styles/detail.scss";
 import { useEffect } from "react";
 import "../styles/preview.scss";
 import silverblock from "../images/silverblock.png";
+import $ from "jquery";
 
 export default function FileChooser({ fileSelectionHandlerLevelOne }) {
   var levelOneFileSelectionHandler = fileSelectionHandlerLevelOne;
 
-  useEffect(() => {
+  useEffect(() => { 
     // File Upload
     //
     function ekUpload() {
@@ -94,12 +95,20 @@ export default function FileChooser({ fileSelectionHandlerLevelOne }) {
 
     ekUpload();
     // eslint-disable-next-line
+    // if ($('#file-upload').get(0).files.length === 0 ) {
+    //   $( "#file-upload-form" ).addClass( "uploader-bg" ); 
+    //   console.log("no file");
+    // } 
+    //   else {
+    //     $( "#file-upload-form" ).removeClass( "uploader-bg" );
+    //     console.log("filled");
+    // }
   }, []);
 
   return (
     <div>
       <div>
-        <div id="file-upload-form" className="uploader">
+        <div id="file-upload-form" className="uploader uploader-bg">
           <input
             id="file-upload"
             type="file"
