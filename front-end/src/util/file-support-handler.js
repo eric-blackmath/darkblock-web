@@ -29,7 +29,7 @@ export const getExtFromFile = (event) => {
   }
   const name = event.target.files[0].name;
   const lastDot = name.lastIndexOf(".");
-  const fileName = name.substring(0, lastDot);
+  // const fileName = name.substring(0, lastDot);
   const ext = name.substring(lastDot + 1);
 
   return ext;
