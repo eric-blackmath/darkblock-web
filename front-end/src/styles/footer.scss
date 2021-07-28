@@ -1,3 +1,10 @@
+footer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
 .footer {
   background-color: #121212;
   padding-left: 120px;
@@ -5,7 +12,6 @@
   padding-top: 80px;
   padding-bottom: 24px;
   color: #ffffff;
-  margin-top: 40px;
 
 //   @media (max-width:3000px) and (min-width:1500px) {
 //     position: fixed;
