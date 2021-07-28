@@ -27,6 +27,7 @@ export default function DetailsView() {
   const [fileUploadProgress, setFileUploadProgress] = useState("");
   const { contract, token } = useParams();
   const [darkblockDescription, setDarkblockDescription] = useState("");
+  const [isTestMode, setIsTestMode] = useState();
 
   // const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
 
@@ -47,11 +48,26 @@ export default function DetailsView() {
     };
 
     try {
+      setTestModeDefault();
+
       fetchDataForNft();
     } catch (e) {
       console.log(e);
     }
   }, [contract, token]);
+
+  const setTestModeDefault = () => {
+    var testModeSession = sessionStorage.getItem("test-mode");
+    if (testModeSession) {
+      if (testModeSession === "true") {
+        setIsTestMode(true);
+      } else {
+        setIsTestMode(false);
+      }
+    } else {
+      sessionStorage.setItem("test-mode", false);
+    }
+  };
 
   const onCreateDarkblockClick = async (e) => {
     e.preventDefault();
@@ -85,6 +101,11 @@ export default function DetailsView() {
     data.append("token_schema", nft.blockchain);
     data.append("darkblock_description", darkblockDescription);
     data.append("darkblock_hash", signedHash);
+    if (sessionStorage.getItem("test-mode") === "true") {
+      data.append("transaction_type", "test-mode");
+    } else {
+      data.append("transaction_type", "normal-mode");
+    }
 
     try {
       const options = {
@@ -124,6 +145,23 @@ export default function DetailsView() {
     } catch (err) {
       //catch some errors here
       console.log(err);
+    }
+  };
+
+  const handleTestModeToggle = async (e) => {
+    // setIsTestMode(!isTestMode);
+    var testModeSession = sessionStorage.getItem("test-mode");
+
+    if (testModeSession) {
+      if (testModeSession === "true") {
+        sessionStorage.setItem("test-mode", false);
+        setIsTestMode(false);
+      } else {
+        sessionStorage.setItem("test-mode", true);
+        setIsTestMode(true);
+      }
+    } else {
+      sessionStorage.setItem("test-mode", true);
     }
   };
 
@@ -177,6 +215,16 @@ export default function DetailsView() {
 
   return (
     <div className="detail-background">
+      {/* Test Mode */}
+      <label>
+        <input
+          type="checkbox"
+          checked={isTestMode}
+          onChange={handleTestModeToggle}
+        />
+        Test Mode
+      </label>
+      {/* Test Mode - End */}
       {isLoaded ? (
         <div className="detail-page-container">
           <div className="detail-preview-image ">
