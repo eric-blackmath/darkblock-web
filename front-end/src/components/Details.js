@@ -244,9 +244,9 @@ export default function DetailsView() {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <span className="tooltiptext tooltip-contract">
+                        {/* <span className="tooltiptext tooltip-contract">
                           {nft.contract}
-                        </span>
+                        </span> */}
                         <div className="chain-span contract-address">
                           <span>{nft.contract}</span>
                         </div>
