@@ -10,9 +10,7 @@ import * as MetamaskUtil from "../util/metamask-util";
 import Darkblock from "./DarkblockStates";
 import * as DetailsMeMapper from "../util/details-mapper";
 import * as FileSupportHandler from "../util/file-support-handler";
-
 import Footer from "../components/footer";
-import { pink } from "@material-ui/core/colors";
 
 export default function DetailsView() {
   // const [id, setId] = useState("0xcdeff56d50f30c7ad3d0056c13e16d8a6df6f4f5:10");
@@ -179,7 +177,7 @@ export default function DetailsView() {
     if (isFileSupported === true) {
       console.log(`Level One Selected`);
       document.getElementById("file-upload-form").classList.remove("uploader-bg");
-      document.getElementById("file-upload-form").style.border = "4px solid #FFC324";
+      document.getElementById("file-upload-form").style.border = "2px solid #FFC324";
       setSelectedLevel("one");
       setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);
