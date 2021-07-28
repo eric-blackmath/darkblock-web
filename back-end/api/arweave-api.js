@@ -84,9 +84,12 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
   transaction.addTag("NFT-Contract", tags.contract);
   transaction.addTag("NFT-Creator", tags.wallet);
   transaction.addTag("Token-Id", tags.token);
-  transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}`);
+  if (tags.transaction_type === "test-mode") {
+    transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}TESTMODE`);
+  } else {
+    transaction.addTag("NFT-Id", `${tags.contract}:${tags.token}`);
+  }
   transaction.addTag("Platform", `Ethereum ${tags.token_schema}`);
-  transaction.addTag("Authorizing-Signature", "TBD");
   transaction.addTag(
     "ArtId",
     isLevelTwo === true ? encryptionKeys.artid : artId
@@ -106,7 +109,11 @@ const makeTransaction = async (arweaveWallet, tags, file) => {
   );
   transaction.addTag("Data-Hash", fileHash);
   transaction.addTag("Data-Signature", tags.darkblock_hash);
-  transaction.addTag("Transaction-Type", "Test-Debug");
+  if (tags.transaction_type === "test-mode") {
+    transaction.addTag("Transaction-Type", "Test-Mode");
+  } else {
+    transaction.addTag("Transaction-Type", "Production-Mode");
+  }
   transaction.addTag("Type", "Darkblock");
   if (isLevelTwo === true) transaction.addTag("Encryption-Version", "0.1");
   transaction.addTag("Date-Created", Date.now());
