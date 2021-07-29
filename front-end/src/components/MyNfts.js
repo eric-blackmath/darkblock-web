@@ -25,19 +25,19 @@ export default function MyNfts() {
   var accountAddress = "";
 
   useEffect(() => {
-    $(document).ready(function(){ 
-      $(window).scroll(function(){ 
-          if ($(this).scrollTop() > 100) { 
-              $('#scroll').fadeIn(); 
-          } else { 
-              $('#scroll').fadeOut(); 
-          } 
-      }); 
-      $('#scroll').click(function(){ 
-          $("html, body").animate({ scrollTop: 0 }, 600); 
-          return false; 
-      }); 
-  });
+    $(document).ready(function () {
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+          $("#scroll").fadeIn();
+        } else {
+          $("#scroll").fadeOut();
+        }
+      });
+      $("#scroll").click(function () {
+        $("html, body").animate({ scrollTop: 0 }, 600);
+        return false;
+      });
+    });
     try {
       fetchData(currentPage);
 
@@ -67,6 +67,7 @@ export default function MyNfts() {
 
   const fetchData = async (pageNumber) => {
     // console.log(`Passed Arg : ${account}`);
+    addBlanks(nfts);
     setIsLoaded(false);
     var accountAddress = address;
     if (account) {
@@ -92,7 +93,8 @@ export default function MyNfts() {
       //do the filtering here
       const mappedNfts = await MyNftsMapper.getMappedList(data);
       const updatedNfts = [...nfts, ...mappedNfts];
-      setNfts(updatedNfts);
+      const withoutBlanks = removeBlanks(updatedNfts);
+      setNfts(withoutBlanks);
       setIsLoaded(true);
     } else {
       setHasMore(false);
@@ -110,31 +112,52 @@ export default function MyNfts() {
     setCurrentPage(currentPage + 1);
   };
 
+  const addBlanks = (nfts) => {
+    for (let i = 0; i < 8; i++) {
+      nfts.push(undefined);
+    }
+  };
+
+  const removeBlanks = (nfts) => {
+    var noBlanks = nfts.filter(function (el) {
+      return el != null;
+    });
+    return noBlanks;
+  };
+
   return (
     <React.Fragment>
       {/* <button>Go to detailsView</button> */}
       <div>
         <ul className="list-group">
           {nfts.map((nft, index) => {
-            if (nfts.length === index + 1) {
-              return (
-                <NFTItem
-                  key={index}
-                  nft={nfts[nfts.indexOf(nft)]}
-                  innerRef={lastNftRef}
-                />
-              );
+            if (nft != null) {
+              if (nfts.length === index + 1) {
+                return (
+                  <NFTItem
+                    key={index}
+                    nft={nfts[nfts.indexOf(nft)]}
+                    innerRef={lastNftRef}
+                  />
+                );
+              } else {
+                return <NFTItem key={index} nft={nfts[nfts.indexOf(nft)]} />;
+              }
             } else {
-              return <NFTItem key={index} nft={nfts[nfts.indexOf(nft)]} />;
+              return (
+                <div>
+                  <img src={loadingblock} alt="loading" />
+                </div>
+              );
             }
           })}
         </ul>
-        <a style={{display:"none"}} id="scroll" className="to-top" href="#">
-          <img  src={toparrow} alt="to top" />
-          </a>
+        <a style={{ display: "none" }} id="scroll" className="to-top" href="#">
+          <img src={toparrow} alt="to top" />
+        </a>
       </div>
 
-      {isLoaded === false ? (
+      {/* {isLoaded === false ? (
         <div className="list-group">
           <div>
             <img src={loadingblock} alt="loading" />
@@ -161,7 +184,7 @@ export default function MyNfts() {
             <img src={loadingblock} alt="loading" />
           </div>
         </div>
-      ) : null}
+      ) : null} */}
 
       {isLoaded === true && noNftsFound === true ? (
         <div className="none-found">
