@@ -55,3 +55,23 @@ export const removeDupes = (nfts) => {
   }, []);
   return uniqueArr;
 };
+
+export const removeDupesFromMapped = (nfts) => {
+  var uniqueArr = nfts.reduce(function (accumulator, current) {
+    if (checkIfAlreadyExist(current)) {
+      return accumulator;
+    } else {
+      return accumulator.concat([current]);
+    }
+
+    function checkIfAlreadyExist(currentVal) {
+      return accumulator.some(function (item) {
+        return (
+          item.contract === currentVal.contract &&
+          item.token === currentVal.token
+        );
+      });
+    }
+  }, []);
+  return uniqueArr;
+};

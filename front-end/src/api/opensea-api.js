@@ -3,7 +3,27 @@ import axios from "axios";
 // const dummy_account = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
 
 const MY_NFTS_LIMIT = 50;
-const CREATED_BY_ME_LIMIT = 300;
+const CREATED_BY_ME_LIMIT = 50;
+
+//fetches nfts associated to accountAddress, pagianted
+export const getNftsForPage = async (page, accountAddress) => {
+  //pagination query : &offset=0&limit=20
+
+  var noOfNfts = 0;
+
+  var offset = (page - 1) * MY_NFTS_LIMIT;
+
+  return await getNfts(accountAddress, offset);
+};
+
+//fetches nfts associated to accountAddress, pagianted
+export const getNftsCreatedByUserForPage = async (page, accountAddress) => {
+  //pagination query : &offset=0&limit=20
+
+  var offset = (page - 1) * CREATED_BY_ME_LIMIT;
+
+  return await getNftsCreatedByUser(accountAddress, offset);
+};
 
 //fetches nfts associated to accountAddress
 export const getNfts = (accountAddress, offset) => {
