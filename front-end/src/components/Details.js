@@ -10,7 +10,6 @@ import * as MetamaskUtil from "../util/metamask-util";
 import Darkblock from "./DarkblockStates";
 import * as DetailsMeMapper from "../util/details-mapper";
 import * as FileSupportHandler from "../util/file-support-handler";
-
 import Footer from "../components/footer";
 
 export default function DetailsView() {
@@ -177,6 +176,8 @@ export default function DetailsView() {
 
     if (isFileSupported === true) {
       console.log(`Level One Selected`);
+      document.getElementById("file-upload-form").classList.remove("uploader-bg");
+      document.getElementById("file-upload-form").style.border = "2px solid #FFC324";
       setSelectedLevel("one");
       setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);
@@ -190,6 +191,8 @@ export default function DetailsView() {
 
     if (isFileSupported === true) {
       console.log(`Level Two Selected`);
+      document.getElementById("file-upload-formtwo").classList.remove("uploader-bg");
+      document.getElementById("file-upload-formtwo").classList.add("uploader-bg-filledtwo");
       setSelectedLevel("two");
       setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);

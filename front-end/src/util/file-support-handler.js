@@ -9,7 +9,7 @@ export const isFileFormatSupported = (event) => {
     case "bmp":
     case "svg":
     case "webm":
-    case "mov":
+    case "MOV":
     case "tif":
       return true;
     default:
