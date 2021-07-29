@@ -59,7 +59,7 @@ export default function MyNfts() {
     <React.Fragment>
       {/* <button>Go to detailsView</button> */}
       {isLoaded ? (
-        <div className="list-height">
+        <div>
           <ul className="list-group">
             {currentNftsMeta.map((listitem, index) => (
               <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
