@@ -40,7 +40,9 @@ export default function MyNfts() {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           console.log(`Reached the end`);
-          setCurrentPage((prev) => prev + 1);
+          setTimeout(function () {
+            setCurrentPage((prev) => prev + 1);
+          }, 500);
         }
       });
       if (node) observer.current.observe(node);
