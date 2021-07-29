@@ -2,7 +2,6 @@ import React from "react";
 import "../App.scss";
 import * as OpenseaApi from "../api/opensea-api";
 import NFTItem from "./NftItem";
-import Pagination from "./PaginationWrapper";
 import { UserContext } from "../util/UserContext";
 import * as MyNftsMapper from "../util/my-nfts-mapper";
 import { useState, useEffect, useContext, useRef, useCallback } from "react";
@@ -17,12 +16,11 @@ export default function MyNfts() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [noNftsFound, setNoNftsFound] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [postsPerPage, setPostsPerPage] = useState(8);
+  // const [postsPerPage, setPostsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const address = useContext(UserContext);
   const { account } = useParams();
 
-  var accountAddress = "";
 
   useEffect(() => {
     $(document).ready(function () {
