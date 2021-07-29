@@ -9,6 +9,8 @@ import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
+import $ from "jquery";
+import toparrow from "../images/toparrow.svg";
 
 export default function MyNfts() {
   const [nfts, setNfts] = useState([]);
@@ -23,6 +25,19 @@ export default function MyNfts() {
   var accountAddress = "";
 
   useEffect(() => {
+    $(document).ready(function(){ 
+      $(window).scroll(function(){ 
+          if ($(this).scrollTop() > 100) { 
+              $('#scroll').fadeIn(); 
+          } else { 
+              $('#scroll').fadeOut(); 
+          } 
+      }); 
+      $('#scroll').click(function(){ 
+          $("html, body").animate({ scrollTop: 0 }, 600); 
+          return false; 
+      }); 
+  });
     try {
       fetchData(currentPage);
 
@@ -114,6 +129,9 @@ export default function MyNfts() {
             }
           })}
         </ul>
+        <a style={{display:"none"}} id="scroll" className="to-top" href="#">
+          <img  src={toparrow} alt="to top" />
+          </a>
       </div>
 
       {isLoaded === false ? (

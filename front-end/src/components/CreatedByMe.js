@@ -10,6 +10,8 @@ import * as CreatedByMeMapper from "../util/createdbyme-mapper";
 import NFTItem from "./NftItem";
 import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
+import toparrow from "../images/toparrow.svg";
+import $ from "jquery";
 
 var tempNfts = [];
 
@@ -25,6 +27,19 @@ export default function CreatedByMe() {
   const { account } = useParams();
 
   useEffect(() => {
+    $(document).ready(function(){ 
+      $(window).scroll(function(){ 
+          if ($(this).scrollTop() > 100) { 
+              $('#scroll').fadeIn(); 
+          } else { 
+              $('#scroll').fadeOut(); 
+          } 
+      }); 
+      $('#scroll').click(function(){ 
+          $("html, body").animate({ scrollTop: 0 }, 600); 
+          return false; 
+      }); 
+  });
     // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
 
     try {
@@ -167,7 +182,6 @@ export default function CreatedByMe() {
   return (
     <React.Fragment>
       {/* <button>Go to detailsView</button> */}
-      <div>
         <ul className="list-group">
           {nfts.map((nft, index) => {
             if (nfts.length === index + 1) {
@@ -182,11 +196,13 @@ export default function CreatedByMe() {
               return <NFTItem key={index} nft={nfts[nfts.indexOf(nft)]} />;
             }
           })}
+          <a style={{display:"none"}} id="scroll" className="to-top" href="#">
+          <img  src={toparrow} alt="to top" />
+          </a>
         </ul>
-      </div>
 
       {isLoaded === false ? (
-        <div className="list-group">
+        <div className="list-group loading-group">
           <div>
             <img src={loadingblock} alt="loading" />
           </div>
