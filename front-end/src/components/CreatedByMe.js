@@ -150,7 +150,7 @@ export default function CreatedByMe() {
   return (
     <React.Fragment>
       {/* <button>Go to detailsView</button> */}
-      <div className="list-height">
+      <div>
         <ul className="list-group">
           {nfts.map((listitem, index) => (
             <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
