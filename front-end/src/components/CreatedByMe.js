@@ -11,6 +11,7 @@ import NFTItem from "./NftItem";
 import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
 
+
 var tempNfts = [];
 
 export default function CreatedByMe() {
@@ -25,6 +26,7 @@ export default function CreatedByMe() {
   const { account } = useParams();
 
   useEffect(() => {
+    
     // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
 
     try {
@@ -146,9 +148,9 @@ export default function CreatedByMe() {
   // const currentNftsMeta = nfts.slice(indexOfFirstNft, indexOfLastNft);
   // Change page
   var paginate = (pageNumber) => setCurrentPage(currentPage + 1);
-
   return (
     <React.Fragment>
+    
       {/* <button>Go to detailsView</button> */}
       <div>
         <ul className="list-group">
@@ -157,7 +159,7 @@ export default function CreatedByMe() {
           ))}
         </ul>
       </div>
-
+      
       {isLoaded === false ? (
         <div className="list-group">
           <div>
