@@ -3,7 +3,6 @@ import "../styles/detail.scss";
 import { useEffect } from "react";
 import "../styles/preview.scss";
 import silverblock from "../images/silverblock.png";
-import $ from "jquery";
 
 export default function FileChooser({ fileSelectionHandlerLevelOne }) {
   var levelOneFileSelectionHandler = fileSelectionHandlerLevelOne;
