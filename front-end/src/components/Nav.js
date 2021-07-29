@@ -43,6 +43,7 @@ export default function Nav({ setAddress, address }) {
   };
 
   return (
+    <nav>
     <div className="nav">
       {address ? (
         <div className="nav">
@@ -102,5 +103,6 @@ export default function Nav({ setAddress, address }) {
         </div>
       )}
     </div>
+    </nav>
   );
 }
