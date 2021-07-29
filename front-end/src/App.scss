@@ -82,6 +82,7 @@ img {
   padding: 40px;
   max-width: 1200px;
   margin: auto;
+  padding-top: 100px;
 
   @media only screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
@@ -122,6 +123,13 @@ img {
   font-style: normal;
   color: #000000;
   margin-bottom: 12px;
+}
+
+nav{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
 }
 
 .nav {
