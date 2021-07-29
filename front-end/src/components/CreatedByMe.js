@@ -11,7 +11,6 @@ import NFTItem from "./NftItem";
 import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
 
-
 var tempNfts = [];
 
 export default function CreatedByMe() {
@@ -26,7 +25,6 @@ export default function CreatedByMe() {
   const { account } = useParams();
 
   useEffect(() => {
-    
     // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
 
     try {
@@ -44,7 +42,9 @@ export default function CreatedByMe() {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           console.log(`Reached the end`);
-          setCurrentPage((prev) => prev + 1);
+          setTimeout(function () {
+            setCurrentPage((prev) => prev + 1);
+          }, 750);
         }
       });
       if (node) observer.current.observe(node);
@@ -166,7 +166,6 @@ export default function CreatedByMe() {
   var paginate = (pageNumber) => setCurrentPage(currentPage + 1);
   return (
     <React.Fragment>
-    
       {/* <button>Go to detailsView</button> */}
       <div>
         <ul className="list-group">
@@ -185,7 +184,7 @@ export default function CreatedByMe() {
           })}
         </ul>
       </div>
-      
+
       {isLoaded === false ? (
         <div className="list-group">
           <div>
@@ -223,10 +222,6 @@ export default function CreatedByMe() {
             here to create a darkblock for that NFT
           </p>
         </div>
-      ) : null}
-
-      {hasMore === true && isLoaded === true ? (
-        <button onClick={(e) => paginate(e)}>Load More</button>
       ) : null}
 
       <Footer />

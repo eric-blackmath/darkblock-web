@@ -42,7 +42,7 @@ export default function MyNfts() {
           console.log(`Reached the end`);
           setTimeout(function () {
             setCurrentPage((prev) => prev + 1);
-          }, 500);
+          }, 750);
         }
       });
       if (node) observer.current.observe(node);
@@ -153,10 +153,6 @@ export default function MyNfts() {
             here to create a darkblock for that NFT
           </p>
         </div>
-      ) : null}
-
-      {hasMore === true && isLoaded === true ? (
-        <button onClick={(e) => paginate(e)}>Load More</button>
       ) : null}
 
       <Footer />
