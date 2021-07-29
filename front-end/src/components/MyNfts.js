@@ -96,7 +96,7 @@ export default function MyNfts() {
   return (
     <React.Fragment>
       {/* <button>Go to detailsView</button> */}
-      <div className="list-height">
+      <div>
         <ul className="list-group">
           {nfts.map((nft, index) => {
             if (nfts.length === index + 1) {
