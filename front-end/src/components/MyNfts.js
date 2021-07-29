@@ -24,6 +24,14 @@ export default function MyNfts() {
 
   var accountAddress = "";
 
+  const timeOut = async (t) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(`Completed in ${t}`);
+      }, t);
+    });
+  };
+
   useEffect(() => {
     $(document).ready(function () {
       $(window).scroll(function () {
@@ -55,9 +63,7 @@ export default function MyNfts() {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           console.log(`Reached the end`);
-          setTimeout(function () {
-            setCurrentPage((prev) => prev + 1);
-          }, 750);
+          setCurrentPage((prev) => prev + 1);
         }
       });
       if (node) observer.current.observe(node);
@@ -67,12 +73,16 @@ export default function MyNfts() {
 
   const fetchData = async (pageNumber) => {
     // console.log(`Passed Arg : ${account}`);
+
     addBlanks(nfts);
+
     setIsLoaded(false);
     var accountAddress = address;
     if (account) {
       accountAddress = account;
     }
+
+    await timeOut(0);
     var data = await OpenseaApi.getNftsForPage(pageNumber, accountAddress);
 
     if (data !== undefined && data.length > 0) {
@@ -94,6 +104,7 @@ export default function MyNfts() {
       const mappedNfts = await MyNftsMapper.getMappedList(data);
       const updatedNfts = [...nfts, ...mappedNfts];
       const withoutBlanks = removeBlanks(updatedNfts);
+
       setNfts(withoutBlanks);
       setIsLoaded(true);
     } else {
@@ -116,6 +127,7 @@ export default function MyNfts() {
     for (let i = 0; i < 8; i++) {
       nfts.push(undefined);
     }
+    setNfts(nfts);
   };
 
   const removeBlanks = (nfts) => {
@@ -157,7 +169,7 @@ export default function MyNfts() {
         </a>
       </div>
 
-      {/* {isLoaded === false ? (
+      {isLoaded === false && currentPage === 1 ? (
         <div className="list-group">
           <div>
             <img src={loadingblock} alt="loading" />
@@ -184,7 +196,7 @@ export default function MyNfts() {
             <img src={loadingblock} alt="loading" />
           </div>
         </div>
-      ) : null} */}
+      ) : null}
 
       {isLoaded === true && noNftsFound === true ? (
         <div className="none-found">
