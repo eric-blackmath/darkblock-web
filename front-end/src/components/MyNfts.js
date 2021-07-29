@@ -5,7 +5,7 @@ import NFTItem from "./NftItem";
 import Pagination from "./PaginationWrapper";
 import { UserContext } from "../util/UserContext";
 import * as MyNftsMapper from "../util/my-nfts-mapper";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
@@ -14,7 +14,7 @@ export default function MyNfts() {
   const [nfts, setNfts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [noNftsFound, setNoNftsFound] = useState(false);
-  const [showLoadMore, setShowLoadMore] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
   const [postsPerPage, setPostsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const address = useContext(UserContext);
@@ -31,6 +31,22 @@ export default function MyNfts() {
       console.log(e);
     }
   }, [account, address, currentPage]);
+
+  const observer = useRef();
+  const lastNftRef = useCallback(
+    (node) => {
+      if (!isLoaded) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          console.log(`Reached the end`);
+          setCurrentPage((prev) => prev + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoaded, hasMore]
+  );
 
   const fetchData = async (pageNumber) => {
     // console.log(`Passed Arg : ${account}`);
@@ -49,7 +65,7 @@ export default function MyNfts() {
       //hide the button if we get data less than 8
 
       if (data.length < 50) {
-        setShowLoadMore(false);
+        setHasMore(false);
       }
 
       console.log(
@@ -62,7 +78,7 @@ export default function MyNfts() {
       setNfts(updatedNfts);
       setIsLoaded(true);
     } else {
-      setShowLoadMore(false);
+      setHasMore(false);
       setNoNftsFound(true);
       setIsLoaded(true);
     }
@@ -82,9 +98,19 @@ export default function MyNfts() {
       {/* <button>Go to detailsView</button> */}
       <div className="list-height">
         <ul className="list-group">
-          {nfts.map((listitem, index) => (
-            <NFTItem key={index} nft={nfts[nfts.indexOf(listitem)]} />
-          ))}
+          {nfts.map((nft, index) => {
+            if (nfts.length === index + 1) {
+              return (
+                <NFTItem
+                  key={index}
+                  nft={nfts[nfts.indexOf(nft)]}
+                  innerRef={lastNftRef}
+                />
+              );
+            } else {
+              return <NFTItem key={index} nft={nfts[nfts.indexOf(nft)]} />;
+            }
+          })}
         </ul>
       </div>
 
@@ -127,7 +153,7 @@ export default function MyNfts() {
         </div>
       ) : null}
 
-      {showLoadMore === true && isLoaded === true ? (
+      {hasMore === true && isLoaded === true ? (
         <button onClick={(e) => paginate(e)}>Load More</button>
       ) : null}
 

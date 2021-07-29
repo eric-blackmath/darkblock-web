@@ -4,9 +4,9 @@ import "../App.scss";
 import Card from "react-bootstrap/Card";
 import noImage from "../resources/static/assets/uploads/no_image.png";
 
-const NFTITem = ({ nft }) => {
+const NFTITem = ({ nft, innerRef }) => {
   return (
-    <div className="nft-item">
+    <div className="nft-item" ref={innerRef}>
       <Link to={"/details/" + nft.contract + "/" + nft.token}>
         <Card>
           <div className="image-container">
