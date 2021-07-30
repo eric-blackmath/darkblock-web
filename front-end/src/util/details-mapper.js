@@ -58,7 +58,6 @@ const checkIfNftOwnedByUser = (nft) => {
   // const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
   const loggedInAccount = localStorage.getItem("accountAddress");
 
-  return true;
   if (nft.creator.address === loggedInAccount) {
     return true;
   } else {
