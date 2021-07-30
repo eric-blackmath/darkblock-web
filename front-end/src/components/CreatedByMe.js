@@ -46,10 +46,14 @@ export default function CreatedByMe() {
   };
 
   useEffect(() => {
-    $("a[href='#top']").click(function () {
-      $("html, body").animate({ scrollTop: 0 }, "slow");
-      return false;
-    });
+  //   $(document).ready(function(){
+  //     $("#scroll").click(function() {
+  //         $("html, body").animate({ 
+  //             scrollTop: 0 
+  //         }, "slow");
+  //         return false;
+  //     });
+  // });
     // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
 
     try {
@@ -235,7 +239,7 @@ export default function CreatedByMe() {
             );
           }
         })}
-        <a id="scroll" className="to-top" href="#top">
+        <a onClick="window.scroll(0, 0)" id="scroll" className="to-top" href="#">
           <img src={toparrow} alt="to top" />
         </a>
       </ul>

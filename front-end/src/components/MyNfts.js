@@ -41,10 +41,10 @@ export default function MyNfts() {
   };
 
   useEffect(() => {
-    $("a[href='#top']").click(function () {
-      $("html, body").animate({ scrollTop: 0 }, "slow");
-      return false;
-    });
+    // $("a[href='#top']").click(function () {
+    //   $("html, body").animate({ scrollTop: 0 }, "slow");
+    //   return false;
+    // });
     try {
       fetchData(currentPage);
 
@@ -181,7 +181,7 @@ export default function MyNfts() {
             }
           })}
         </ul>
-        <a id="scroll" className="to-top" href="#top">
+        <a onClick="window.scroll(0, 0)" id="scroll" className="to-top" href="#">
           <img src={toparrow} alt="to top" />
         </a>
       </div>
