@@ -34,18 +34,9 @@ export default function MyNfts() {
   };
 
   useEffect(() => {
-    $(document).ready(function () {
-      $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-          $("#scroll").fadeIn();
-        } else {
-          $("#scroll").fadeOut();
-        }
-      });
-      $("#scroll").click(function () {
-        $("html, body").animate({ scrollTop: 0 }, 600);
-        return false;
-      });
+    $("a[href='#top']").click(function() {
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+      return false;
     });
     try {
       fetchData(currentPage);
@@ -183,7 +174,7 @@ export default function MyNfts() {
             }
           })}
         </ul>
-        <a style={{ display: "none" }} id="scroll" className="to-top" href="#">
+        <a id="scroll" className="to-top" href="#top">
           <img src={toparrow} alt="to top" />
         </a>
       </div>
