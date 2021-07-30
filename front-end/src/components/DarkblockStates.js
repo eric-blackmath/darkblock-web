@@ -286,7 +286,18 @@ export default function DarkblockStates({
                   />
                 </div>
               </div>
-
+              <div className="test-mode">
+                    <div className="checkbox-container">
+                      <div className="testmode-label">
+                      <input type="checkbox" />
+                        <span>Turn on Test Mode</span>
+                      </div>
+                     <div> 
+                       <p className="testmode-text">Test Mode Darklocks will not be seen by the owners of the NFT, only you as the creator will be able to see them. You can create multiple test Darkblocks, the TV App will pick up the most recent one.</p>
+                     </div>
+                     
+                    </div>
+              </div>
               <div>
                 <p className="about-darkblock">About the Darkblock</p>
                 <textarea

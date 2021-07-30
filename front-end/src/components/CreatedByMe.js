@@ -12,6 +12,8 @@ import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
 import toparrow from "../images/toparrow.svg";
 import $ from "jquery";
+import Card from "react-bootstrap/Card";
+import grey from "../images/grey.svg";
 
 var tempNfts = [];
 
@@ -225,7 +227,25 @@ export default function CreatedByMe() {
           } else {
             return (
               <div key={index}>
-                <img src={loadingblock} alt="loading" />
+                <Card>
+                  <div className="image-container">
+                    <Card.Img
+                      className="preview-image"
+                      alt="darkblock image"
+                      variant="top"
+                      src={grey}
+                    />
+                  </div>
+                  <Card.Body>
+                    <Card.Title
+                      data-testid="nft-title"
+                      style={{ width: "100%", backgroundColor: "pink" }}
+                      className="nft-title"
+                    ></Card.Title>
+                    <Card.Text style={{ width: "100%", backgroundColor: "grey" }} className="meta-data card-limit"></Card.Text>
+                    <Card.Text style={{ width: "100%", backgroundColor: "grey" }} className="meta-data card-limit"></Card.Text>
+                  </Card.Body>
+                </Card>
               </div>
             );
           }
@@ -236,45 +256,46 @@ export default function CreatedByMe() {
       </ul>
 
       {isLoaded === false ? (
-        <div className="list-group loading-group">
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
+        <div className="list-group">
+          <Card>
+            <div className="image-container">
+              <Card.Img
+                className="preview-image"
+                alt="darkblock image"
+                variant="top"
+                src={grey}
+              />
+            </div>
+            <Card.Body>
+              <Card.Title
+                data-testid="nft-title"
+                style={{ width: "100%", backgroundColor: "pink" }}
+                className="nft-title"
+              ></Card.Title>
+              <Card.Text className="meta-data card-limit"></Card.Text>
+              <Card.Text className="meta-data card-limit"></Card.Text>
+            </Card.Body>
+          </Card>
         </div>
       ) : null}
 
       {isLoaded === true && noNftsFound === true ? (
         <div className="none-found">
-        <h1>We couldn't find any NFTs in your wallet!</h1>
-        <p className="none-found-p">
-        Start by creating an NFT on any Ethereum based NFT minting site and then come back here to create a Darkblock for that NFT. The NFT must be minted on-chain, if it is done gasless/lazy (on any other site but Opensea) then it may not appear.
-        </p>
-        <p className="none-found-p">
-        Questions or problems? Please come chat with us on our <a href="https://chat.darkblock.io" target="_blank">Discord</a>!
-        </p>
-        
-      </div>
+          <h1>We couldn't find any NFTs in your wallet!</h1>
+          <p className="none-found-p">
+            Start by creating an NFT on any Ethereum based NFT minting site and
+            then come back here to create a Darkblock for that NFT. The NFT must
+            be minted on-chain, if it is done gasless/lazy (on any other site
+            but Opensea) then it may not appear.
+          </p>
+          <p className="none-found-p">
+            Questions or problems? Please come chat with us on our{" "}
+            <a href="https://chat.darkblock.io" target="_blank">
+              Discord
+            </a>
+            !
+          </p>
+        </div>
       ) : null}
 
       <Footer />

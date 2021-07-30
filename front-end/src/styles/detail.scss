@@ -527,7 +527,7 @@ input:disabled {
   text-align: center;
   border-radius: 6px;
   padding: 5px 5px;
-  
+
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
@@ -536,10 +536,39 @@ input:disabled {
   margin-left: -85px;
 }
 
-.tooltip-contract{
+.tooltip-contract {
   margin-left: -140px !important;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.testmode-label {
+  color: #ffc324;
+  background-color: #191919;
+  padding: 16px;
+  width: 100%;
+  height: max-content;
+  border-radius: 4px;
+}
+
+.testmode-text{
+  color: #9a9a9a;
+  // padding: 16px;
+  margin-left: 24px;
+  font-size: 13px;
+}
+
+.checkbox-container {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+.test-mode {
+  width: 100%;
+  background-color: #000;
+  margin-top: 40px;
+  border-radius: 4px;
 }

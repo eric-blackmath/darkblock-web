@@ -10,6 +10,9 @@ import loadingblock from "../images/loadingblock.svg";
 import Footer from "../components/footer";
 import $ from "jquery";
 import toparrow from "../images/toparrow.svg";
+import Card from "react-bootstrap/Card";
+import grey from "../images/grey.svg";
+
 
 export default function MyNfts() {
   const [nfts, setNfts] = useState([]);
@@ -156,7 +159,25 @@ export default function MyNfts() {
             } else {
               return (
                 <div key={index}>
-                  <img src={loadingblock} alt="loading" />
+                  <Card>
+                  <div className="image-container">
+                    <Card.Img
+                      className="preview-image"
+                      alt="darkblock image"
+                      variant="top"
+                      src={grey}
+                    />
+                  </div>
+                  <Card.Body>
+                    <Card.Title
+                      data-testid="nft-title"
+                      style={{ width: "100%", backgroundColor: "pink" }}
+                      className="nft-title"
+                    ></Card.Title>
+                    <Card.Text className="meta-data card-limit"></Card.Text>
+                    <Card.Text className="meta-data card-limit"></Card.Text>
+                  </Card.Body>
+                </Card>
                 </div>
               );
             }
@@ -168,32 +189,27 @@ export default function MyNfts() {
       </div>
 
       {isLoaded === false && currentPage === 1 ? (
-        <div className="list-group">
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-          <div>
-            <img src={loadingblock} alt="loading" />
-          </div>
-        </div>
+       <div className="list-group">
+       <Card>
+         <div className="image-container">
+           <Card.Img
+             className="preview-image"
+             alt="darkblock image"
+             variant="top"
+             src={grey}
+           />
+         </div>
+         <Card.Body>
+           <Card.Title
+             data-testid="nft-title"
+             style={{ width: "100%", backgroundColor: "pink" }}
+             className="nft-title"
+           ></Card.Title>
+           <Card.Text className="meta-data card-limit"></Card.Text>
+           <Card.Text className="meta-data card-limit"></Card.Text>
+         </Card.Body>
+       </Card>
+     </div>
       ) : null}
 
       {isLoaded === true && noNftsFound === true ? (
