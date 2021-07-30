@@ -216,6 +216,7 @@ export default function DetailsView() {
       {/* Test Mode */}
       <label>
         <input
+          style={{marginTop:"100px"}}
           type="checkbox"
           checked={isTestMode}
           onChange={handleTestModeToggle}

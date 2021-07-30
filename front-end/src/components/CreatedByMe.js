@@ -232,12 +232,15 @@ export default function CreatedByMe() {
 
       {isLoaded === true && noNftsFound === true ? (
         <div className="none-found">
-          <h1>You have no NFTs in your wallet.</h1>
-          <p className="none-found-p">
-            Start by creating an NFT on any NFT minting site and then come back
-            here to create a darkblock for that NFT
-          </p>
-        </div>
+        <h1>We couldn't find any NFTs in your wallet!</h1>
+        <p className="none-found-p">
+        Start by creating an NFT on any Ethereum based NFT minting site and then come back here to create a Darkblock for that NFT. The NFT must be minted on-chain, if it is done gasless/lazy (on any other site but Opensea) then it may not appear.
+        </p>
+        <p className="none-found-p">
+        Questions or problems? Please come chat with us on our <a href="https://chat.darkblock.io" target="_blank">Discord</a>!
+        </p>
+        
+      </div>
       ) : null}
 
       <Footer />
