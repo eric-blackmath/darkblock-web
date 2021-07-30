@@ -13,9 +13,17 @@ import toparrow from "../images/toparrow.svg";
 import Card from "react-bootstrap/Card";
 import grey from "../images/grey.svg";
 
-
 export default function MyNfts() {
-  const [nfts, setNfts] = useState([]);
+  const [nfts, setNfts] = useState([
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [noNftsFound, setNoNftsFound] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -23,7 +31,6 @@ export default function MyNfts() {
   const [currentPage, setCurrentPage] = useState(1);
   const address = useContext(UserContext);
   const { account } = useParams();
-
 
   const timeOut = async (t) => {
     return new Promise((resolve, reject) => {
@@ -34,7 +41,7 @@ export default function MyNfts() {
   };
 
   useEffect(() => {
-    $("a[href='#top']").click(function() {
+    $("a[href='#top']").click(function () {
       $("html, body").animate({ scrollTop: 0 }, "slow");
       return false;
     });
@@ -151,24 +158,24 @@ export default function MyNfts() {
               return (
                 <div key={index}>
                   <Card>
-                  <div className="image-container">
-                    <Card.Img
-                      className="preview-image"
-                      alt="darkblock image"
-                      variant="top"
-                      src={grey}
-                    />
-                  </div>
-                  <Card.Body>
-                    <Card.Title
-                      data-testid="nft-title"
-                      style={{ width: "100%", backgroundColor: "pink" }}
-                      className="nft-title"
-                    ></Card.Title>
-                    <Card.Text className="meta-data card-limit"></Card.Text>
-                    <Card.Text className="meta-data card-limit"></Card.Text>
-                  </Card.Body>
-                </Card>
+                    <div className="image-container">
+                      <Card.Img
+                        className="preview-image"
+                        alt="darkblock image"
+                        variant="top"
+                        src={grey}
+                      />
+                    </div>
+                    <Card.Body>
+                      <Card.Title
+                        data-testid="nft-title"
+                        style={{ width: "100%", backgroundColor: "pink" }}
+                        className="nft-title"
+                      ></Card.Title>
+                      <Card.Text className="meta-data card-limit"></Card.Text>
+                      <Card.Text className="meta-data card-limit"></Card.Text>
+                    </Card.Body>
+                  </Card>
                 </div>
               );
             }
@@ -179,7 +186,7 @@ export default function MyNfts() {
         </a>
       </div>
 
-      {isLoaded === false && currentPage === 1 ? (
+      {/* {isLoaded === false && currentPage === 1 ? (
        <div className="list-group">
        <Card>
          <div className="image-container">
@@ -201,18 +208,24 @@ export default function MyNfts() {
          </Card.Body>
        </Card>
      </div>
-      ) : null}
+      ) : null} */}
 
       {isLoaded === true && noNftsFound === true ? (
         <div className="none-found">
           <h1>We couldn't find any NFTs in your wallet!</h1>
           <p className="none-found-p">
-          Start by creating an NFT on any Ethereum based NFT minting site and then come back here to create a Darkblock for that NFT. The NFT must be minted on-chain, if it is done gasless/lazy (on any other site but Opensea) then it may not appear.
+            Start by creating an NFT on any Ethereum based NFT minting site and
+            then come back here to create a Darkblock for that NFT. The NFT must
+            be minted on-chain, if it is done gasless/lazy (on any other site
+            but Opensea) then it may not appear.
           </p>
           <p className="none-found-p">
-          Questions or problems? Please come chat with us on our <a href="https://chat.darkblock.io" target="_blank">Discord</a>!
+            Questions or problems? Please come chat with us on our{" "}
+            <a href="https://chat.darkblock.io" target="_blank">
+              Discord
+            </a>
+            !
           </p>
-          
         </div>
       ) : null}
 

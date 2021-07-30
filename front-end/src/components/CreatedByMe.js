@@ -18,7 +18,16 @@ import grey from "../images/grey.svg";
 var tempNfts = [];
 
 export default function CreatedByMe() {
-  const [nfts, setNfts] = useState([]);
+  const [nfts, setNfts] = useState([
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(8);
   const [hasMore, setHasMore] = useState(true);
@@ -37,10 +46,10 @@ export default function CreatedByMe() {
   };
 
   useEffect(() => {
-$("a[href='#top']").click(function() {
-  $("html, body").animate({ scrollTop: 0 }, "slow");
-  return false;
-});
+    $("a[href='#top']").click(function () {
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+      return false;
+    });
     // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
 
     try {
@@ -99,22 +108,6 @@ $("a[href='#top']").click(function() {
       console.log(
         `Page : ${currentPage} | Reuqest Size : ${data.length} | Request-Filtered-Nfts : ${filteredData.length} | Nfts-In-List : ${nfts.length}`
       );
-      // tempNfts = [...tempNfts, ...mappedNfts];
-
-      // console.log(`TempNfts : ${tempNfts.length}`);
-
-      // if (tempNfts.length > 8) {
-      //   //this needs work
-      //   tempNfts = tempNfts.slice(0, 7);
-      // }
-
-      // if (tempNfts.length < 8 && data.length === 8) {
-      //   setCurrentPage(currentPage + 1);
-      // }
-
-      // if (tempNfts.length >= 8 || data.length < 8) {
-      //   setData();
-      // }
 
       const updatedNfts = [...nfts, ...mappedNfts];
 
@@ -129,6 +122,7 @@ $("a[href='#top']").click(function() {
           `Final Nfts Added : ${filteredFullList.length - nfts.length}`
         );
         const withoutBlanks = removeBlanks(filteredFullList);
+        console.log(`without Blanks : ${withoutBlanks.length}`);
         setNfts(withoutBlanks);
         setIsLoaded(true);
       }
@@ -145,12 +139,6 @@ $("a[href='#top']").click(function() {
         setNoNftsFound(true);
         setIsLoaded(true);
       }
-    }
-
-    if (data !== undefined) {
-      // console.log(`CreatedByMe Total Nfts : ${nfts.length}`);
-      // http://localhost:3000/nfts/created/0x60ded964eacf12818b6896076375fe4c9e78e65d
-      //do the filtering here
     }
   };
 
@@ -233,20 +221,26 @@ $("a[href='#top']").click(function() {
                       style={{ width: "100%", backgroundColor: "pink" }}
                       className="nft-title"
                     ></Card.Title>
-                    <Card.Text style={{ width: "100%", backgroundColor: "grey" }} className="meta-data card-limit"></Card.Text>
-                    <Card.Text style={{ width: "100%", backgroundColor: "grey" }} className="meta-data card-limit"></Card.Text>
+                    <Card.Text
+                      style={{ width: "100%", backgroundColor: "grey" }}
+                      className="meta-data card-limit"
+                    ></Card.Text>
+                    <Card.Text
+                      style={{ width: "100%", backgroundColor: "grey" }}
+                      className="meta-data card-limit"
+                    ></Card.Text>
                   </Card.Body>
                 </Card>
               </div>
             );
           }
         })}
-        <a  id="scroll" className="to-top" href="#top">
+        <a id="scroll" className="to-top" href="#top">
           <img src={toparrow} alt="to top" />
         </a>
       </ul>
 
-      {isLoaded === false ? (
+      {/* {isLoaded === false && currentPage === 1 ? (
         <div className="list-group">
           <Card>
             <div className="image-container">
@@ -268,7 +262,7 @@ $("a[href='#top']").click(function() {
             </Card.Body>
           </Card>
         </div>
-      ) : null}
+      ) : null} */}
 
       {isLoaded === true && noNftsFound === true ? (
         <div className="none-found">
