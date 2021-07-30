@@ -239,14 +239,13 @@ export default function DetailsView() {
           <div>
             <p className="nft-deatil-owner">
               Owned by{" "}
-              <a
+              <span
                 className="owner-link"
                 onClick={redirectOwnerToOpensea}
-                target="_blank"
                 rel="noreferrer"
               >
                 <span className="owner-color">{nft.owner}</span>
-              </a>
+              </span>
             </p>
           </div>
           <div className="detail-container">
@@ -257,15 +256,14 @@ export default function DetailsView() {
                 <div className="flex-grid-thirds">
                   <div className="col">
                     Creator{" "}
-                    <a
+                    <span
                       onClick={redirectCreatorToOpensea}
-                      target="_blank"
                       rel="noreferrer"
                       className="creator-link tooltip"
                     >
                       <span className="tooltiptext">{nft.creator}</span>
                       <span className="about-span ch-limit">{nft.creator}</span>
-                    </a>
+                    </span>
                   </div>
                   <div className="col">
                     Date Created{" "}
@@ -288,10 +286,9 @@ export default function DetailsView() {
                   <div className="chain-flex">
                     <p style={{ marginRight: "auto" }}>Contract Address</p>
                     <div className="tooltip">
-                      <a
+                      <span
                         className="owner-link contract-link"
                         onClick={redirectAddress}
-                        target="_blank"
                         rel="noreferrer"
                       >
                         {/* <span className="tooltiptext tooltip-contract">
@@ -300,7 +297,7 @@ export default function DetailsView() {
                         <div className="chain-span contract-address">
                           <span>{nft.contract}</span>
                         </div>
-                      </a>
+                      </span>
                     </div>
                   </div>
                   <div className="chain-flex">
