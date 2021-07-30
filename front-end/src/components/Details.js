@@ -242,7 +242,6 @@ export default function DetailsView() {
               <a
                 className="owner-link"
                 onClick={redirectOwnerToOpensea}
-                href="https://opensea.io/"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -292,7 +291,6 @@ export default function DetailsView() {
                       <a
                         className="owner-link contract-link"
                         onClick={redirectAddress}
-                        href="https://opensea.io/"
                         target="_blank"
                         rel="noreferrer"
                       >
