@@ -58,6 +58,7 @@ const checkIfNftOwnedByUser = (nft) => {
   // const accountAddress = "0x1fa2e96809465732c49f00661d94ad08d38e68df";
   const loggedInAccount = localStorage.getItem("accountAddress");
 
+  return true;
   if (nft.creator.address === loggedInAccount) {
     return true;
   } else {
@@ -139,6 +140,11 @@ const getOwner = (nft) => {
         return nft.owner.address;
       }
       return nft.owner.user.username;
+    } else {
+      //we have the owner, but the user is null, also got the address
+      if (nft.owner.address !== NULL_ADDRESS) {
+        return nft.owner.address;
+      }
     }
   } else if (nft.creator) {
     //got creator
@@ -151,6 +157,11 @@ const getOwner = (nft) => {
         return nft.creator.address;
       }
       return nft.creator.user.username;
+    } else {
+      //we have the owner, but the user is null, also got the address
+      if (nft.creator.address !== NULL_ADDRESS) {
+        return nft.creator.address;
+      }
     }
   } else {
     //no owner, no creator
@@ -170,6 +181,11 @@ const getCreator = (nft) => {
         return nft.creator.address;
       }
       return nft.creator.user.username;
+    } else {
+      //we have the owner, but the user is null, also got the address
+      if (nft.creator.address !== NULL_ADDRESS) {
+        return nft.creator.address;
+      }
     }
   } else if (nft.owner) {
     //got owner
@@ -182,6 +198,11 @@ const getCreator = (nft) => {
         return nft.owner.address;
       }
       return nft.owner.user.username;
+    } else {
+      //we have the owner, but the user is null, also got the address
+      if (nft.owner.address !== NULL_ADDRESS) {
+        return nft.owner.address;
+      }
     }
   } else {
     //no owner, no creator

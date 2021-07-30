@@ -72,7 +72,10 @@ export default function MyNfts() {
   const fetchData = async (pageNumber) => {
     // console.log(`Passed Arg : ${account}`);
 
-    addBlanks(nfts);
+    if (currentPage !== 1) {
+      //add blanks only on later pages, isLoaded is used for first load
+      addBlanks(nfts);
+    }
 
     setIsLoaded(false);
     var accountAddress = address;
@@ -117,12 +120,9 @@ export default function MyNfts() {
   // const indexOfFirstNft = indexOfLastNft - postsPerPage;
   // const currentNftsMeta = nfts.slice(indexOfFirstNft, indexOfLastNft);
   // Change page
-  var paginate = (e) => {
-    setCurrentPage(currentPage + 1);
-  };
 
   const addBlanks = (nfts) => {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < (nfts.length % 4) + 8; i++) {
       nfts.push(undefined);
     }
     setNfts(nfts);
@@ -155,7 +155,7 @@ export default function MyNfts() {
               }
             } else {
               return (
-                <div>
+                <div key={index}>
                   <img src={loadingblock} alt="loading" />
                 </div>
               );

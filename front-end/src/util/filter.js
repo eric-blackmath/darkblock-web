@@ -56,8 +56,24 @@ export const removeDupes = (nfts) => {
   return uniqueArr;
 };
 
+const addBlanks = (nfts) => {
+  for (let i = 0; i < (nfts.length % 4) + 8; i++) {
+    nfts.push(undefined);
+  }
+  return nfts;
+};
+
+const removeBlanks = (nfts) => {
+  var noBlanks = nfts.filter(function (el) {
+    return el != null;
+  });
+  return noBlanks;
+};
+
 export const removeDupesFromMapped = (nfts) => {
-  var uniqueArr = nfts.reduce(function (accumulator, current) {
+  //remove blanks here
+  const noBlanks = removeBlanks(nfts);
+  var uniqueArr = noBlanks.reduce(function (accumulator, current) {
     if (checkIfAlreadyExist(current)) {
       return accumulator;
     } else {
@@ -73,5 +89,6 @@ export const removeDupesFromMapped = (nfts) => {
       });
     }
   }, []);
-  return uniqueArr;
+  //add it back here
+  return addBlanks(uniqueArr);
 };

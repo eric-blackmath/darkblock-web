@@ -26,20 +26,28 @@ export default function CreatedByMe() {
   const address = useContext(UserContext);
   const { account } = useParams();
 
+  const timeOut = async (t) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(`Completed in ${t}`);
+      }, t);
+    });
+  };
+
   useEffect(() => {
-    $(document).ready(function(){ 
-      $(window).scroll(function(){ 
-          if ($(this).scrollTop() > 100) { 
-              $('#scroll').fadeIn(); 
-          } else { 
-              $('#scroll').fadeOut(); 
-          } 
-      }); 
-      $('#scroll').click(function(){ 
-          $("html, body").animate({ scrollTop: 0 }, 600); 
-          return false; 
-      }); 
-  });
+    $(document).ready(function () {
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+          $("#scroll").fadeIn();
+        } else {
+          $("#scroll").fadeOut();
+        }
+      });
+      $("#scroll").click(function () {
+        $("html, body").animate({ scrollTop: 0 }, 600);
+        return false;
+      });
+    });
     // console.log(`Arweave path : ${process.env.REACT_APP_ARWEAVE_WALLET_PATH}`);
 
     try {
@@ -57,9 +65,7 @@ export default function CreatedByMe() {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           console.log(`Reached the end`);
-          setTimeout(function () {
-            setCurrentPage((prev) => prev + 1);
-          }, 750);
+          setCurrentPage((prev) => prev + 1);
         }
       });
       if (node) observer.current.observe(node);
@@ -69,6 +75,10 @@ export default function CreatedByMe() {
 
   const fetchData = async (pageNumber) => {
     // console.log(`Passed Arg : ${account}`);
+    if (currentPage !== 1) {
+      //add blanks only on later pages, isLoaded is used for first load
+      addBlanks(nfts);
+    }
     setIsLoaded(false);
 
     var accountAddress = address;
@@ -76,6 +86,7 @@ export default function CreatedByMe() {
       accountAddress = account;
     }
 
+    await timeOut(0);
     var data = await OpenseaApi.getNftsCreatedByUserForPage(
       pageNumber,
       accountAddress
@@ -124,7 +135,8 @@ export default function CreatedByMe() {
         console.log(
           `Final Nfts Added : ${filteredFullList.length - nfts.length}`
         );
-        setNfts(filteredFullList);
+        const withoutBlanks = removeBlanks(filteredFullList);
+        setNfts(withoutBlanks);
         setIsLoaded(true);
       }
 
@@ -147,6 +159,20 @@ export default function CreatedByMe() {
       // http://localhost:3000/nfts/created/0x60ded964eacf12818b6896076375fe4c9e78e65d
       //do the filtering here
     }
+  };
+
+  const addBlanks = (nfts) => {
+    for (let i = 0; i < (nfts.length % 4) + 8; i++) {
+      nfts.push(undefined);
+    }
+    setNfts(nfts);
+  };
+
+  const removeBlanks = (nfts) => {
+    var noBlanks = nfts.filter(function (el) {
+      return el != null;
+    });
+    return noBlanks;
   };
 
   const setData = () => {
@@ -182,8 +208,9 @@ export default function CreatedByMe() {
   return (
     <React.Fragment>
       {/* <button>Go to detailsView</button> */}
-        <ul className="list-group">
-          {nfts.map((nft, index) => {
+      <ul className="list-group">
+        {nfts.map((nft, index) => {
+          if (nft != null) {
             if (nfts.length === index + 1) {
               return (
                 <NFTItem
@@ -195,11 +222,18 @@ export default function CreatedByMe() {
             } else {
               return <NFTItem key={index} nft={nfts[nfts.indexOf(nft)]} />;
             }
-          })}
-          <a style={{display:"none"}} id="scroll" className="to-top" href="#">
-          <img  src={toparrow} alt="to top" />
-          </a>
-        </ul>
+          } else {
+            return (
+              <div key={index}>
+                <img src={loadingblock} alt="loading" />
+              </div>
+            );
+          }
+        })}
+        <a style={{ display: "none" }} id="scroll" className="to-top" href="#">
+          <img src={toparrow} alt="to top" />
+        </a>
+      </ul>
 
       {isLoaded === false ? (
         <div className="list-group loading-group">
