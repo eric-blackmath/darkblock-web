@@ -10,6 +10,8 @@ import * as MetamaskUtil from "../util/metamask-util";
 import Darkblock from "./DarkblockStates";
 import * as DetailsMeMapper from "../util/details-mapper";
 import * as FileSupportHandler from "../util/file-support-handler";
+import * as TestModeUtil from "../util/test-mode-util";
+
 import Footer from "../components/footer";
 
 export default function DetailsView() {
@@ -25,7 +27,6 @@ export default function DetailsView() {
   const [fileUploadProgress, setFileUploadProgress] = useState("");
   const { contract, token } = useParams();
   const [darkblockDescription, setDarkblockDescription] = useState("");
-  const [isTestMode, setIsTestMode] = useState();
 
   // const accountAddress = "0xc02bdb850930e943f6a6446f2cc9c4f2347c03e7";
 
@@ -46,26 +47,11 @@ export default function DetailsView() {
     };
 
     try {
-      setTestModeDefault();
-
       fetchDataForNft();
     } catch (e) {
       console.log(e);
     }
   }, [contract, token]);
-
-  const setTestModeDefault = () => {
-    var testModeSession = sessionStorage.getItem("test-mode");
-    if (testModeSession) {
-      if (testModeSession === "true") {
-        setIsTestMode(true);
-      } else {
-        setIsTestMode(false);
-      }
-    } else {
-      sessionStorage.setItem("test-mode", false);
-    }
-  };
 
   const onCreateDarkblockClick = async (e) => {
     e.preventDefault();
@@ -99,9 +85,11 @@ export default function DetailsView() {
     data.append("token_schema", nft.blockchain);
     data.append("darkblock_description", darkblockDescription);
     data.append("darkblock_hash", signedHash);
-    if (sessionStorage.getItem("test-mode") === "true") {
+    if (TestModeUtil.isTestModeOn()) {
       data.append("transaction_type", "test-mode");
     } else {
+      console.log(`Test mode off `);
+
       data.append("transaction_type", "normal-mode");
     }
 
@@ -146,23 +134,6 @@ export default function DetailsView() {
     }
   };
 
-  const handleTestModeToggle = async (e) => {
-    // setIsTestMode(!isTestMode);
-    var testModeSession = sessionStorage.getItem("test-mode");
-
-    if (testModeSession) {
-      if (testModeSession === "true") {
-        sessionStorage.setItem("test-mode", false);
-        setIsTestMode(false);
-      } else {
-        sessionStorage.setItem("test-mode", true);
-        setIsTestMode(true);
-      }
-    } else {
-      sessionStorage.setItem("test-mode", true);
-    }
-  };
-
   const onDarkblockDescriptionChange = (e) => {
     //additional info is being added for darkblock creation
     setDarkblockDescription(e.target.value);
@@ -176,8 +147,11 @@ export default function DetailsView() {
 
     if (isFileSupported === true) {
       console.log(`Level One Selected`);
-      document.getElementById("file-upload-form").classList.remove("uploader-bg");
-      document.getElementById("file-upload-form").style.border = "2px solid #FFC324";
+      document
+        .getElementById("file-upload-form")
+        .classList.remove("uploader-bg");
+      document.getElementById("file-upload-form").style.border =
+        "2px solid #FFC324";
       setSelectedLevel("one");
       setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);
@@ -191,8 +165,12 @@ export default function DetailsView() {
 
     if (isFileSupported === true) {
       console.log(`Level Two Selected`);
-      document.getElementById("file-upload-formtwo").classList.remove("uploader-bg");
-      document.getElementById("file-upload-formtwo").classList.add("uploader-bg-filledtwo");
+      document
+        .getElementById("file-upload-formtwo")
+        .classList.remove("uploader-bg");
+      document
+        .getElementById("file-upload-formtwo")
+        .classList.add("uploader-bg-filledtwo");
       setSelectedLevel("two");
       setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);
@@ -213,17 +191,6 @@ export default function DetailsView() {
 
   return (
     <div className="detail-background">
-      {/* Test Mode */}
-      <label>
-        <input
-          style={{marginTop:"100px"}}
-          type="checkbox"
-          checked={isTestMode}
-          onChange={handleTestModeToggle}
-        />
-        Test Mode
-      </label>
-      {/* Test Mode - End */}
       {isLoaded ? (
         <div className="detail-page-container">
           <div className="detail-preview-image ">

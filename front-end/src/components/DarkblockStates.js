@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/preview.scss";
 import "../styles/detail.scss";
 import * as DateUtil from "../util/date";
@@ -8,6 +8,7 @@ import goldblock from "../images/goldblock.png";
 import silverblock from "../images/silverblock.png";
 import loading from "../images/loading.mp4";
 import $ from "jquery";
+import * as TestModeUtil from "../util/test-mode-util";
 
 export default function DarkblockStates({
   levelOneFileSelectionHandler,
@@ -25,6 +26,31 @@ export default function DarkblockStates({
   var levelTwoFileSelectionHandlerMiddle = levelTwoFileSelectionHandler;
 
   var createDarkblockClickHandle = createDarkblockHandle;
+
+  const [isTestMode, setIsTestMode] = useState(false);
+
+  useEffect(() => {
+    //!TODO Handle the id validation, then init requests
+
+    setIsTestMode(TestModeUtil.setTestModeDefault());
+  }, []);
+
+  const handleTestModeToggle = async (e) => {
+    // setIsTestMode(!isTestMode);
+    var testModeSession = sessionStorage.getItem("test-mode");
+
+    if (testModeSession) {
+      if (testModeSession === "true") {
+        sessionStorage.setItem("test-mode", false);
+        setIsTestMode(false);
+      } else {
+        sessionStorage.setItem("test-mode", true);
+        setIsTestMode(true);
+      }
+    } else {
+      sessionStorage.setItem("test-mode", true);
+    }
+  };
 
   // const address = useContext(UserContext);
 
@@ -228,7 +254,8 @@ export default function DarkblockStates({
                 <div className="create-darkblock-container">
                   <h1 className="create-title">Create Darkblock</h1>
                   <p className="create-subtitle">
-                    Upload your file (max 350MB) and select your Darkblock level.{" "}
+                    Upload your file (max 350MB) and select your Darkblock
+                    level.{" "}
                   </p>
                   <p className="create-subtitle subtitle-space">
                     Note: You need the Darkblock Android TV app to view a
@@ -287,16 +314,24 @@ export default function DarkblockStates({
                 </div>
               </div>
               <div className="test-mode">
-                    <div className="checkbox-container">
-                      <div className="testmode-label">
-                      <input type="checkbox" />
-                        <span>Turn on Test Mode</span>
-                      </div>
-                     <div> 
-                       <p className="testmode-text">Test Mode Darklocks will not be seen by the owners of the NFT, only you as the creator will be able to see them. You can create multiple test Darkblocks, the TV App will pick up the most recent one.</p>
-                     </div>
-                     
-                    </div>
+                <div className="checkbox-container">
+                  <div className="testmode-label">
+                    <input
+                      type="checkbox"
+                      checked={isTestMode}
+                      onChange={handleTestModeToggle}
+                    />
+                    <span>Turn on Test Mode</span>
+                  </div>
+                  <div>
+                    <p className="testmode-text">
+                      Test Mode Darklocks will not be seen by the owners of the
+                      NFT, only you as the creator will be able to see them. You
+                      can create multiple test Darkblocks, the TV App will pick
+                      up the most recent one.
+                    </p>
+                  </div>
+                </div>
               </div>
               <div>
                 <p className="about-darkblock">About the Darkblock</p>
