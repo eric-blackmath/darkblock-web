@@ -135,6 +135,10 @@ export default function MyNfts() {
     });
     return noBlanks;
   };
+  
+  function scrollTop() {
+    window.scrollTo(0, 0);
+  }
 
   return (
     <React.Fragment>
@@ -181,7 +185,7 @@ export default function MyNfts() {
             }
           })}
         </ul>
-        <a onClick="window.scroll(0, 0)" id="scroll" className="to-top" href="#">
+        <a onClick={scrollTop} id="scroll" className="to-top" href="#">
           <img src={toparrow} alt="to top" />
         </a>
       </div>
