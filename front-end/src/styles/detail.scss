@@ -546,12 +546,16 @@ input:disabled {
 }
 
 .testmode-label {
+  text-align:center;
   color: #ffc324;
   background-color: #191919;
-  padding: 16px;
+  padding: 16px 0px;
   width: 100%;
   height: max-content;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .testmode-text{

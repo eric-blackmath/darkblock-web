@@ -46,6 +46,7 @@ export default function CreatedByMe() {
   };
 
   useEffect(() => {
+
   //   $(document).ready(function(){
   //     $("#scroll").click(function() {
   //         $("html, body").animate({ 
@@ -183,6 +184,7 @@ export default function CreatedByMe() {
       return [];
     }
   };
+  
 
   // Pagination setup
   // const indexOfLastNft = currentPage * postsPerPage;
@@ -190,6 +192,9 @@ export default function CreatedByMe() {
   // const currentNftsMeta = nfts.slice(indexOfFirstNft, indexOfLastNft);
   // Change page
   var paginate = (pageNumber) => setCurrentPage(currentPage + 1);
+  function scrollTop() {
+    window.scrollTo(0, 0);
+  }
   return (
     <React.Fragment>
       {/* <button>Go to detailsView</button> */}
@@ -239,7 +244,7 @@ export default function CreatedByMe() {
             );
           }
         })}
-        <a onClick="window.scroll(0, 0)" id="scroll" className="to-top" href="#">
+        <a onClick={scrollTop()} id="scroll" className="to-top" href="#">
           <img src={toparrow} alt="to top" />
         </a>
       </ul>
