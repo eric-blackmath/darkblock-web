@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "qs";
 
 // Takes care of all the calls to our Node Api
 
@@ -79,4 +80,29 @@ export const getDarkblockedNftFrom = async (id) => {
     //catch some errors here
     console.log(err);
   }
+};
+
+//fetches nfts associated to accountAddress
+export const confirmTvLogin = (code, wallet, sessionToken) => {
+  const URL = `${baseUrl}/codeset`;
+
+  var data = qs.stringify({
+    wallet: wallet,
+    code: code,
+    session_token: sessionToken,
+  });
+  var config = {
+    method: "post",
+    url: URL,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: data,
+  };
+
+  return axios(config)
+    .then((response) => response)
+    .catch((error) => {
+      throw error;
+    });
 };

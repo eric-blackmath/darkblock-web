@@ -2,14 +2,15 @@ import React from "react";
 import "../App.scss";
 import "../styles/tv.scss";
 import { useState, useEffect } from "react";
-import * as DarkblockApi from "../api/darkblock-api";
+import * as NodeApi from "../api/node-api";
 import * as MetamaskUtil from "../util/metamask-util";
 import Footer from "../components/footer";
 
 export default function TvLogin({ address }) {
   // const address = useContext(UserContext);
   const [code, setCode] = useState("");
-  const [isConnectSuccess, setIsConnectSuccess] = useState(false);
+  const [isResolved, setIsResolved] = useState(false);
+  const [connectResponse, setConnectResponse] = useState("");
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   useEffect(() => {
@@ -34,14 +35,18 @@ export default function TvLogin({ address }) {
         alert("Please make sure you are logged in first");
       } else {
         submitResponse = await submitCode(address);
+        console.log(submitResponse);
 
         if (submitResponse.status === 200) {
           //code submitted succesfully
-          setIsConnectSuccess(true);
+          setIsResolved(true);
+          setConnectResponse("The Darkblock TV App should now be signed in.");
         }
       }
     } catch (e) {
-      console.log(e);
+      setIsResolved(true);
+
+      setConnectResponse("Login Failed! Incorrect code.");
     }
   };
 
@@ -51,7 +56,7 @@ export default function TvLogin({ address }) {
 
   const submitCode = async (address) => {
     const signedSessionToken = await getSignedSession(address);
-    return DarkblockApi.confirmTvLogin(code, address, signedSessionToken);
+    return NodeApi.confirmTvLogin(code, address, signedSessionToken);
   };
 
   const getSignedSession = async (address) => {
@@ -63,11 +68,9 @@ export default function TvLogin({ address }) {
 
   return (
     <div className="tv-login">
-      {isConnectSuccess ? (
+      {isResolved === true ? (
         <div className="tv-success tv-height">
-          <h1 className="tv-success-text">
-            The Darkblock TV App should now be signed in.
-          </h1>
+          <h1 className="tv-success-text">{connectResponse}</h1>
           <p className="tv-app-text">Troubles? Please refresh and try again.</p>
         </div>
       ) : (
@@ -96,6 +99,14 @@ export default function TvLogin({ address }) {
           </div>
         </div>
       )}
+
+      {connectResponse === true ? (
+        <div className="tv-success tv-height">
+          <h1 className="tv-success-text">Login Failed! Incorrect code.</h1>
+          <p className="tv-app-text">Please refresh and try again.</p>
+        </div>
+      ) : null}
+
       <Footer />
     </div>
   );
