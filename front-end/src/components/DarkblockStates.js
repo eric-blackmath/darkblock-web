@@ -280,6 +280,7 @@ export default function DarkblockStates({
                     fileSelectionHandlerLevelOne={
                       levelOneFileSelectionHandlerMiddle
                     }
+                    selectedLevel={selectedLevel}
                   />
 
                   {/* <div className="custom-file mb-4">
@@ -310,6 +311,7 @@ export default function DarkblockStates({
                     fileSelectionHandlerLevelTwo={
                       levelTwoFileSelectionHandlerMiddle
                     }
+                    selectedLevel={selectedLevel}
                   />
                 </div>
               </div>
