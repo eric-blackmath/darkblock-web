@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import "../styles/preview.scss";
 import goldblock from "../images/goldblock.png";
 
-export default function FileChooser({ fileSelectionHandlerLevelTwo }) {
+export default function FileChooser({
+  fileSelectionHandlerLevelTwo,
+  selectedLevel,
+}) {
   var levelTwoFileSelectionHandler = fileSelectionHandlerLevelTwo;
 
   useEffect(() => {
@@ -97,6 +100,8 @@ export default function FileChooser({ fileSelectionHandlerLevelTwo }) {
   return (
     <div>
       <div>
+        {selectedLevel === "two" ? <div>Chooser 2 Border</div> : null}
+
         <div id="file-upload-formtwo" className="uploadertwo uploader-bg">
           <input
             id="file-uploadtwo" //maybe not change this one

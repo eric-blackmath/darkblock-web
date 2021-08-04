@@ -4,10 +4,13 @@ import { useEffect } from "react";
 import "../styles/preview.scss";
 import silverblock from "../images/silverblock.png";
 
-export default function FileChooser({ fileSelectionHandlerLevelOne }) {
+export default function FileChooser({
+  fileSelectionHandlerLevelOne,
+  selectedLevel,
+}) {
   var levelOneFileSelectionHandler = fileSelectionHandlerLevelOne;
 
-  useEffect(() => { 
+  useEffect(() => {
     // File Upload
     //
     function ekUpload() {
@@ -95,9 +98,9 @@ export default function FileChooser({ fileSelectionHandlerLevelOne }) {
     ekUpload();
     // eslint-disable-next-line
     // if ($('#file-upload').get(0).files.length === 0 ) {
-    //   $( "#file-upload-form" ).addClass( "uploader-bg" ); 
+    //   $( "#file-upload-form" ).addClass( "uploader-bg" );
     //   console.log("no file");
-    // } 
+    // }
     //   else {
     //     $( "#file-upload-form" ).removeClass( "uploader-bg" );
     //     console.log("filled");
@@ -107,6 +110,7 @@ export default function FileChooser({ fileSelectionHandlerLevelOne }) {
   return (
     <div>
       <div>
+        {selectedLevel === "one" ? <div>Chooser 1 Border</div> : null}
         <div id="file-upload-form" className="uploader uploader-bg">
           <input
             id="file-upload"
