@@ -100,9 +100,9 @@ export default function FileChooser({
   return (
     <div>
       <div>
-        {selectedLevel === "two" ? <div>Chooser 2 Border</div> : null}
 
         <div id="file-upload-formtwo" className="uploadertwo uploader-bg">
+        {selectedLevel === "two" ? <div className="selected-bordertwo"></div> : null}
           <input
             id="file-uploadtwo" //maybe not change this one
             type="file"

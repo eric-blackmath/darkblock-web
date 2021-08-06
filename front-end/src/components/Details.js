@@ -140,7 +140,7 @@ export default function DetailsView() {
   };
 
   const levelOneFileSelectionHandler = async (e) => {
-    document.getElementById("file-upload-form").style.border ="2px solid #FFC324";
+    // document.getElementById("file-upload-form").style.border ="2px solid #FFC324";
     //level one file is picked
     //TODO handle when user cancels the process
 
@@ -166,12 +166,12 @@ export default function DetailsView() {
 
     if (isFileSupported === true) {
       console.log(`Level Two Selected`);
-      document
-        .getElementById("file-upload-formtwo")
-        .classList.remove("uploader-bg");
-      document
-        .getElementById("file-upload-formtwo")
-        .classList.add("uploader-bg-filledtwo");
+      // document
+      //   .getElementById("file-upload-formtwo")
+      //   .classList.remove("uploader-bg");
+      // document
+      //   .getElementById("file-upload-formtwo")
+      //   .classList.add("uploader-bg-filledtwo");
       setSelectedLevel("two");
       setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);
