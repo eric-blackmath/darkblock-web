@@ -20,6 +20,7 @@ export const postTransaction = (data, options) => {
 //gets an arr of id's matched
 export const verifyNFTs = (data) => {
   const URL = `${baseUrl}/verify`;
+
   return axios
     .post(URL, data, {
       headers: {
