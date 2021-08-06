@@ -8,6 +8,7 @@ export const confirmTvLogin = (code, wallet, sessionToken) => {
     code: code,
     session_token: sessionToken,
   });
+
   var config = {
     method: "post",
     url: "https://app.darkblock.io/api2/codeset",
